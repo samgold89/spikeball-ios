@@ -1,0 +1,18 @@
+# Uncomment this line to define a global platform for your project
+# platform :ios, '6.0'
+
+source 'https://github.com/CocoaPods/Specs.git'
+
+target 'Spikeball' do
+pod 'PonyDebugger', '~> 0.3.0'
+pod 'AFNetworking'
+pod 'NSLayoutConstraint+HAWHelpers', '~> 0.6'
+pod 'MagicalRecord', '~> 2.2'
+#pod 'SDWebImage', '~> 3.7.0'
+
+end
+
+target 'SpikeballTests' do
+
+end
+

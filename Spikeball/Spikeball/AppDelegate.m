@@ -7,8 +7,11 @@
 //
 
 #import "AppDelegate.h"
+#import "SBLoginViewController.h"
 
 @interface AppDelegate ()
+
+@property (nonatomic, strong) SBLoginViewController *loginVc;
 
 @end
 
@@ -16,11 +19,20 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    UIImage *iv = [UIImage imageNamed:@"LaunchImage-700-568h"];
-    UIImageView *launchImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"LaunchImage-700-568h"]];
-    [self.window addSubview:launchImage];
-
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    self.window.backgroundColor = [UIColor whiteColor];
+    [self.window makeKeyAndVisible];
+    
+    [self setupLoginFlow];
+    
     return YES;
+}
+
+- (void)setupLoginFlow {
+    self.loginVc = [[SBLoginViewController alloc] init];
+    self.window.rootViewController = self.loginVc;
+    self.loginVc.view.frame = self.window.bounds;
+    [self.window addSubview:self.loginVc.view];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

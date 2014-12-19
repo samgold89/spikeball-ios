@@ -1,0 +1,44 @@
+PODS:
+  - AFNetworking (2.5.0):
+    - AFNetworking/NSURLConnection
+    - AFNetworking/NSURLSession
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+    - AFNetworking/UIKit
+  - AFNetworking/NSURLConnection (2.5.0):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/NSURLSession (2.5.0):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/Reachability (2.5.0)
+  - AFNetworking/Security (2.5.0)
+  - AFNetworking/Serialization (2.5.0)
+  - AFNetworking/UIKit (2.5.0):
+    - AFNetworking/NSURLConnection
+    - AFNetworking/NSURLSession
+  - MagicalRecord (2.2):
+    - MagicalRecord/Core
+  - MagicalRecord/Core (2.2)
+  - NSLayoutConstraint+HAWHelpers (0.6)
+  - PonyDebugger (0.3.1):
+    - SocketRocket
+  - SocketRocket (0.3.1-beta2)
+
+DEPENDENCIES:
+  - AFNetworking
+  - MagicalRecord (~> 2.2)
+  - NSLayoutConstraint+HAWHelpers (~> 0.6)
+  - PonyDebugger (~> 0.3.0)
+
+SPEC CHECKSUMS:
+  AFNetworking: 0f54cb5d16ce38c1b76948faffb8d5fb705021c7
+  MagicalRecord: 2b471584fc9e3137f3d0a56967917baa4979e224
+  NSLayoutConstraint+HAWHelpers: f475cffe061ffeddf9d76fc92d0e31f55101a827
+  PonyDebugger: 256e19c15c093e15f950f92b1a5017f3feb3c87e
+  SocketRocket: 79a68ae186063c65e1fe6f638b1ae2927aa5f304
+
+COCOAPODS: 0.34.4

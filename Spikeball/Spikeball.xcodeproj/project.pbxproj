@@ -12,6 +12,15 @@
 		A9568E3C1A214B900075CB35 /* Spikeball.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A9568E3A1A214B900075CB35 /* Spikeball.xcdatamodeld */; };
 		A9568E441A214B900075CB35 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A9568E431A214B900075CB35 /* Images.xcassets */; };
 		A9568E531A214B900075CB35 /* SpikeballTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A9568E521A214B900075CB35 /* SpikeballTests.m */; };
+		A99FEB121A25068100F342B2 /* UIColor+SpikeballColors.m in Sources */ = {isa = PBXBuildFile; fileRef = A99FEB111A25068100F342B2 /* UIColor+SpikeballColors.m */; };
+		A99FEB1E1A25092B00F342B2 /* SBLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A99FEB1D1A25092B00F342B2 /* SBLoginViewController.m */; };
+		A99FEB241A251CC800F342B2 /* black_to_yellow_gradient@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A99FEB201A251CC800F342B2 /* black_to_yellow_gradient@2x.png */; };
+		A99FEB251A251CC800F342B2 /* spikeball_net_with_shadow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A99FEB211A251CC800F342B2 /* spikeball_net_with_shadow@2x.png */; };
+		A99FEB261A251CC800F342B2 /* spikeball_yellow_logo_header@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A99FEB221A251CC800F342B2 /* spikeball_yellow_logo_header@2x.png */; };
+		A99FEB271A251CC800F342B2 /* spikeball_yellow_logo_launch@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A99FEB231A251CC800F342B2 /* spikeball_yellow_logo_launch@2x.png */; };
+		A99FEB2B1A25218100F342B2 /* SBAnimatingLogo.m in Sources */ = {isa = PBXBuildFile; fileRef = A99FEB2A1A25218100F342B2 /* SBAnimatingLogo.m */; };
+		A99FEB2D1A2522BF00F342B2 /* spikeball_yellow_logo_s@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A99FEB2C1A2522BF00F342B2 /* spikeball_yellow_logo_s@2x.png */; };
+		D88AEBA711CEB84D4F66FB39 /* libPods-Spikeball.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C821388008106AC9E68D215 /* libPods-Spikeball.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -25,6 +34,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1909138E3C9E14BDBAEAB253 /* Pods-Spikeball.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spikeball.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Spikeball/Pods-Spikeball.debug.xcconfig"; sourceTree = "<group>"; };
+		3C821388008106AC9E68D215 /* libPods-Spikeball.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Spikeball.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9568E301A214B900075CB35 /* Spikeball.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Spikeball.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9568E341A214B900075CB35 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A9568E351A214B900075CB35 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -35,6 +46,18 @@
 		A9568E4C1A214B900075CB35 /* SpikeballTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SpikeballTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9568E511A214B900075CB35 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A9568E521A214B900075CB35 /* SpikeballTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SpikeballTests.m; sourceTree = "<group>"; };
+		A99FEB101A25068100F342B2 /* UIColor+SpikeballColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+SpikeballColors.h"; sourceTree = "<group>"; };
+		A99FEB111A25068100F342B2 /* UIColor+SpikeballColors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+SpikeballColors.m"; sourceTree = "<group>"; };
+		A99FEB1C1A25092B00F342B2 /* SBLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBLoginViewController.h; sourceTree = "<group>"; };
+		A99FEB1D1A25092B00F342B2 /* SBLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBLoginViewController.m; sourceTree = "<group>"; };
+		A99FEB201A251CC800F342B2 /* black_to_yellow_gradient@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "black_to_yellow_gradient@2x.png"; sourceTree = "<group>"; };
+		A99FEB211A251CC800F342B2 /* spikeball_net_with_shadow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "spikeball_net_with_shadow@2x.png"; sourceTree = "<group>"; };
+		A99FEB221A251CC800F342B2 /* spikeball_yellow_logo_header@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "spikeball_yellow_logo_header@2x.png"; sourceTree = "<group>"; };
+		A99FEB231A251CC800F342B2 /* spikeball_yellow_logo_launch@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "spikeball_yellow_logo_launch@2x.png"; sourceTree = "<group>"; };
+		A99FEB291A25218100F342B2 /* SBAnimatingLogo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBAnimatingLogo.h; sourceTree = "<group>"; };
+		A99FEB2A1A25218100F342B2 /* SBAnimatingLogo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBAnimatingLogo.m; sourceTree = "<group>"; };
+		A99FEB2C1A2522BF00F342B2 /* spikeball_yellow_logo_s@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "spikeball_yellow_logo_s@2x.png"; sourceTree = "<group>"; };
+		ACD1208F896E0C4DA9FF0AFE /* Pods-Spikeball.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spikeball.release.xcconfig"; path = "Pods/Target Support Files/Pods-Spikeball/Pods-Spikeball.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -42,6 +65,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D88AEBA711CEB84D4F66FB39 /* libPods-Spikeball.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -55,12 +79,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4B54999A238F9EF827430C65 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3C821388008106AC9E68D215 /* libPods-Spikeball.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A57396B124A2B38FB7152332 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				1909138E3C9E14BDBAEAB253 /* Pods-Spikeball.debug.xcconfig */,
+				ACD1208F896E0C4DA9FF0AFE /* Pods-Spikeball.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		A9568E271A214B900075CB35 = {
 			isa = PBXGroup;
 			children = (
 				A9568E321A214B900075CB35 /* Spikeball */,
 				A9568E4F1A214B900075CB35 /* SpikeballTests */,
 				A9568E311A214B900075CB35 /* Products */,
+				A57396B124A2B38FB7152332 /* Pods */,
+				4B54999A238F9EF827430C65 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -76,8 +119,12 @@
 		A9568E321A214B900075CB35 /* Spikeball */ = {
 			isa = PBXGroup;
 			children = (
+				A99FEB281A25217200F342B2 /* Views */,
+				A99FEB1F1A251CC800F342B2 /* Resources */,
+				A99FEB1B1A25092000F342B2 /* Login Flow */,
 				A9568E371A214B900075CB35 /* AppDelegate.h */,
 				A9568E381A214B900075CB35 /* AppDelegate.m */,
+				A99FEB131A25068B00F342B2 /* Categories */,
 				A9568E431A214B900075CB35 /* Images.xcassets */,
 				A9568E3A1A214B900075CB35 /* Spikeball.xcdatamodeld */,
 				A9568E331A214B900075CB35 /* Supporting Files */,
@@ -111,6 +158,45 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		A99FEB131A25068B00F342B2 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				A99FEB101A25068100F342B2 /* UIColor+SpikeballColors.h */,
+				A99FEB111A25068100F342B2 /* UIColor+SpikeballColors.m */,
+			);
+			path = Categories;
+			sourceTree = "<group>";
+		};
+		A99FEB1B1A25092000F342B2 /* Login Flow */ = {
+			isa = PBXGroup;
+			children = (
+				A99FEB1C1A25092B00F342B2 /* SBLoginViewController.h */,
+				A99FEB1D1A25092B00F342B2 /* SBLoginViewController.m */,
+			);
+			path = "Login Flow";
+			sourceTree = "<group>";
+		};
+		A99FEB1F1A251CC800F342B2 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				A99FEB2C1A2522BF00F342B2 /* spikeball_yellow_logo_s@2x.png */,
+				A99FEB201A251CC800F342B2 /* black_to_yellow_gradient@2x.png */,
+				A99FEB211A251CC800F342B2 /* spikeball_net_with_shadow@2x.png */,
+				A99FEB221A251CC800F342B2 /* spikeball_yellow_logo_header@2x.png */,
+				A99FEB231A251CC800F342B2 /* spikeball_yellow_logo_launch@2x.png */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		A99FEB281A25217200F342B2 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				A99FEB291A25218100F342B2 /* SBAnimatingLogo.h */,
+				A99FEB2A1A25218100F342B2 /* SBAnimatingLogo.m */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -118,9 +204,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = A9568E561A214B900075CB35 /* Build configuration list for PBXNativeTarget "Spikeball" */;
 			buildPhases = (
+				EBB7F82DAF3E34AFD083C238 /* Check Pods Manifest.lock */,
 				A9568E2C1A214B900075CB35 /* Sources */,
 				A9568E2D1A214B900075CB35 /* Frameworks */,
 				A9568E2E1A214B900075CB35 /* Resources */,
+				C3ABE4F00312D3FA88C9C848 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -191,7 +279,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A99FEB251A251CC800F342B2 /* spikeball_net_with_shadow@2x.png in Resources */,
+				A99FEB2D1A2522BF00F342B2 /* spikeball_yellow_logo_s@2x.png in Resources */,
 				A9568E441A214B900075CB35 /* Images.xcassets in Resources */,
+				A99FEB261A251CC800F342B2 /* spikeball_yellow_logo_header@2x.png in Resources */,
+				A99FEB241A251CC800F342B2 /* black_to_yellow_gradient@2x.png in Resources */,
+				A99FEB271A251CC800F342B2 /* spikeball_yellow_logo_launch@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -204,13 +297,49 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		C3ABE4F00312D3FA88C9C848 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Spikeball/Pods-Spikeball-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		EBB7F82DAF3E34AFD083C238 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		A9568E2C1A214B900075CB35 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A99FEB2B1A25218100F342B2 /* SBAnimatingLogo.m in Sources */,
 				A9568E391A214B900075CB35 /* AppDelegate.m in Sources */,
+				A99FEB121A25068100F342B2 /* UIColor+SpikeballColors.m in Sources */,
 				A9568E361A214B900075CB35 /* main.m in Sources */,
+				A99FEB1E1A25092B00F342B2 /* SBLoginViewController.m in Sources */,
 				A9568E3C1A214B900075CB35 /* Spikeball.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -312,6 +441,7 @@
 		};
 		A9568E571A214B900075CB35 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1909138E3C9E14BDBAEAB253 /* Pods-Spikeball.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -323,6 +453,7 @@
 		};
 		A9568E581A214B900075CB35 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = ACD1208F896E0C4DA9FF0AFE /* Pods-Spikeball.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -385,6 +516,7 @@
 				A9568E581A214B900075CB35 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		A9568E591A214B900075CB35 /* Build configuration list for PBXNativeTarget "SpikeballTests" */ = {
 			isa = XCConfigurationList;
@@ -393,6 +525,7 @@
 				A9568E5B1A214B900075CB35 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
