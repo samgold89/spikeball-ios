@@ -28,4 +28,15 @@
     return color;
 }
 
++ (UIColor *)spikeballBlack
+{
+    static UIColor *color;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        color = UIColorFromRGB(0x09094a);
+        
+    });
+    return color;
+}
+
 @end

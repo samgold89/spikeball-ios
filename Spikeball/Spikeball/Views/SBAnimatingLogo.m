@@ -72,30 +72,46 @@ static NSString *kDrawYellowInnerKey = @"drawYellowInnerKey";
         self.innerCircleFaded.fillColor = nil;
         [self.layer addSublayer:self.innerCircleFaded];
         
-        UIBezierPath *outerFullPath = [[UIBezierPath alloc] init];
-        [outerFullPath moveToPoint:CGPointMake(self.frame.size.width/2.0f, self.lineWidthValue/2)]; //start at top in center of where top line should be
-        [outerFullPath addArcWithCenter:CGPointMake(CGRectGetWidth(self.frame)/2, CGRectGetHeight(self.frame)/2) radius:frame.size.height/2-self.lineWidthValue/2 startAngle:3*M_PI/2 endAngle:3*M_PI/2+2*M_PI clockwise:YES];
+        [self setCirclesFullPaths];
         
-        UIBezierPath *innerFullPath = [[UIBezierPath alloc] init];
-        [innerFullPath moveToPoint:CGPointMake(self.frame.size.width/2.0f, 1.5*self.lineWidthValue+self.lineSpacingValue)]; //starts after 1 line and 1 spacing, start in center, so 0.5*width
-        [innerFullPath addArcWithCenter:CGPointMake(CGRectGetWidth(self.frame)/2, CGRectGetHeight(self.frame)/2) radius:self.frame.size.height/2-1.5*self.lineWidthValue-self.lineSpacingValue startAngle:3*M_PI/2 endAngle:3*M_PI/2+2*M_PI clockwise:YES];
-        
-        self.outerCircle.path = self.outerCircleFaded.path = outerFullPath.CGPath;
-        self.innerCircle.path = self.innerCircleFaded.path = innerFullPath.CGPath;
-        
-//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [self eraseYellowOuter];
-//        });
-        
-//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [self eraseYellowInner];
-            [self startLogoAlphaPulse];
-//            [self startLogoSizePulse];
-        });
+        [self startAllAnimations];
     }
     
     return self;
+}
+
+- (void)setCirclesFullPaths {
+    UIBezierPath *outerFullPath = [[UIBezierPath alloc] init];
+    [outerFullPath moveToPoint:CGPointMake(self.frame.size.width/2.0f, self.lineWidthValue/2)]; //start at top in center of where top line should be
+    [outerFullPath addArcWithCenter:CGPointMake(CGRectGetWidth(self.frame)/2, CGRectGetHeight(self.frame)/2) radius:self.frame.size.height/2-self.lineWidthValue/2 startAngle:3*M_PI/2 endAngle:3*M_PI/2+2*M_PI clockwise:YES];
+    
+    UIBezierPath *innerFullPath = [[UIBezierPath alloc] init];
+    [innerFullPath moveToPoint:CGPointMake(self.frame.size.width/2.0f, 1.5*self.lineWidthValue+self.lineSpacingValue)]; //starts after 1 line and 1 spacing, start in center, so 0.5*width
+    [innerFullPath addArcWithCenter:CGPointMake(CGRectGetWidth(self.frame)/2, CGRectGetHeight(self.frame)/2) radius:self.frame.size.height/2-1.5*self.lineWidthValue-self.lineSpacingValue startAngle:3*M_PI/2 endAngle:3*M_PI/2+2*M_PI clockwise:YES];
+    
+    self.outerCircle.path = self.outerCircleFaded.path = outerFullPath.CGPath;
+    self.innerCircle.path = self.innerCircleFaded.path = innerFullPath.CGPath;
+    
+    self.innerCircle.strokeStart = self.outerCircle.strokeStart = 0;
+    self.innerCircle.strokeEnd = self.outerCircle.strokeEnd = 1;
+}
+
+- (void)startAllAnimations {
+    [self stopAllAnimations];
+    
+    [self eraseYellowOuter];
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self eraseYellowInner];
+        [self startLogoAlphaPulse];
+    });
+}
+
+- (void)stopAllAnimations {
+    [self.innerCircle removeAllAnimations];
+    [self.outerCircle removeAllAnimations];
+    [self.sLogo.layer removeAllAnimations];
+    [self setCirclesFullPaths];
 }
 
 - (void)startLogoAlphaPulse {
@@ -168,19 +184,19 @@ static NSString *kDrawYellowInnerKey = @"drawYellowInnerKey";
 
 - (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag {
     if ([anim isEqual:[self.outerCircle animationForKey:kDrawYellowOuterKey]]) {
-        NSLog(@"outer DRAW yellow finished");
+//        NSLog(@"outer DRAW yellow finished");
         [self.outerCircle removeAnimationForKey:kDrawYellowOuterKey];
         [self eraseYellowOuter];
     } else if ([anim isEqual:[self.outerCircle animationForKey:kEraseYellowOuterKey]]) {
-        NSLog(@"outer ERASE yellow finished");
+//        NSLog(@"outer ERASE yellow finished");
         [self.outerCircle removeAnimationForKey:kEraseYellowOuterKey];
         [self drawYellowOuter];
     } else if ([anim isEqual:[self.innerCircle animationForKey:kDrawYellowInnerKey]]) {
-        NSLog(@"inner DRAW yellow finished");
+//        NSLog(@"inner DRAW yellow finished");
         [self.innerCircle removeAnimationForKey:kDrawYellowInnerKey];
         [self eraseYellowInner];
     } else if ([anim isEqual:[self.innerCircle animationForKey:kEraseYellowInnerKey]]) {
-        NSLog(@"inner ERASE yellow finished");
+//        NSLog(@"inner ERASE yellow finished");
         [self.innerCircle removeAnimationForKey:kEraseYellowInnerKey];
         [self drawYellowInner];
         [self spinMiddleLogoOnce];
@@ -188,11 +204,23 @@ static NSString *kDrawYellowInnerKey = @"drawYellowInnerKey";
 }
 
 - (void)spinMiddleLogoOnce {
-    CABasicAnimation *sizePulse = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
-    sizePulse.duration = 0.6;
-    sizePulse.toValue = [NSNumber numberWithDouble:2*M_PI];
-    sizePulse.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-    [self.sLogo.layer addAnimation:sizePulse forKey:@"rotateSpinMove"];
+    CGFloat cockSpinDuration = 0.3;
+    CGFloat fullRotationDuration = 0.6;
+    CGFloat cockbackAngle = -M_PI*30/180; //30˚
+    
+    CABasicAnimation *cockBackAnimation = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
+    cockBackAnimation.duration = cockSpinDuration;
+    cockBackAnimation.toValue = [NSNumber numberWithDouble:cockbackAngle];
+    cockBackAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
+    [self.sLogo.layer addAnimation:cockBackAnimation forKey:@"rotateCockBack"];
+    
+    CABasicAnimation *fullRotationAnimation = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
+    fullRotationAnimation.beginTime = CACurrentMediaTime()+cockSpinDuration;
+    fullRotationAnimation.duration = fullRotationDuration;
+    fullRotationAnimation.toValue = [NSNumber numberWithDouble:2*M_PI];
+    fullRotationAnimation.fromValue = [NSNumber numberWithFloat:cockbackAngle];
+    fullRotationAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    [self.sLogo.layer addAnimation:fullRotationAnimation forKey:@"rotateSpinMove"];
 }
 
 @end

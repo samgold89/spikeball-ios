@@ -10,4 +10,7 @@
 
 @interface SBAnimatingLogo : UIView
 
+- (void)startAllAnimations;
+- (void)stopAllAnimations;
+
 @end
