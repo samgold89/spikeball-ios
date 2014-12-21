@@ -24,7 +24,7 @@
 }
 
 - (BOOL)isValidPassword {
-    BOOL valid = self.length > 5;
+    BOOL valid = self.length > 4;
     return valid;
 }
 

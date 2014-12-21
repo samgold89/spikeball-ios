@@ -101,10 +101,10 @@ static NSString *kDrawYellowInnerKey = @"drawYellowInnerKey";
     
     [self eraseYellowOuter];
     
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self eraseYellowInner];
         [self startLogoAlphaPulse];
-    });
+//    });
 }
 
 - (void)stopAllAnimations {
@@ -137,45 +137,45 @@ static NSString *kDrawYellowInnerKey = @"drawYellowInnerKey";
 
 - (void)eraseYellowOuter {
     self.outerCircle.strokeStart = 1;
-    [self.outerCircle addAnimation:[self getAnimateEraseYellowAnimation] forKey:kEraseYellowOuterKey];
+    [self.outerCircle addAnimation:[self getAnimateEraseYellowAnimationBig:YES] forKey:kEraseYellowOuterKey];
 }
 
 - (void)drawYellowOuter {
-    [self.outerCircle addAnimation:[self getAnimateDrawYellowAnimation] forKey:kDrawYellowOuterKey];
+    [self.outerCircle addAnimation:[self getAnimateDrawYellowAnimationBig:YES] forKey:kDrawYellowOuterKey];
     self.outerCircle.strokeEnd = 1;
     self.outerCircle.strokeStart = 0;
 }
 
 - (void)eraseYellowInner {
     self.innerCircle.strokeStart = 1;
-    [self.innerCircle addAnimation:[self getAnimateEraseYellowAnimation] forKey:kEraseYellowInnerKey];
+    [self.innerCircle addAnimation:[self getAnimateEraseYellowAnimationBig:NO] forKey:kEraseYellowInnerKey];
 }
 
 - (void)drawYellowInner {
-    [self.innerCircle addAnimation:[self getAnimateDrawYellowAnimation] forKey:kDrawYellowInnerKey];
+    [self.innerCircle addAnimation:[self getAnimateDrawYellowAnimationBig:NO] forKey:kDrawYellowInnerKey];
     self.innerCircle.strokeEnd = 1;
     self.innerCircle.strokeStart = 0;
 }
 
-- (CABasicAnimation*)getAnimateEraseYellowAnimation {
+- (CABasicAnimation*)getAnimateEraseYellowAnimationBig:(BOOL)isBig {
     CABasicAnimation *eraseYellowAnimation = [CABasicAnimation animationWithKeyPath:@"strokeStart"];
     eraseYellowAnimation.fromValue = @0;
     eraseYellowAnimation.toValue = @1;
     eraseYellowAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
-    eraseYellowAnimation.duration = 2;
+    eraseYellowAnimation.duration = isBig ? 2 : 2.1;
     eraseYellowAnimation.removedOnCompletion = NO;
     eraseYellowAnimation.delegate = self;
     
     return eraseYellowAnimation;
 }
 
-- (CABasicAnimation*)getAnimateDrawYellowAnimation {
+- (CABasicAnimation*)getAnimateDrawYellowAnimationBig:(BOOL)isBig {
     CABasicAnimation *drawYellowAnimation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
     drawYellowAnimation.fromValue = @-1;
     drawYellowAnimation.toValue = @1;
     drawYellowAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
     drawYellowAnimation.fillMode = kCAFillModeBackwards;
-    drawYellowAnimation.duration = 2;
+    drawYellowAnimation.duration = isBig ? 2 : 2.1;
     drawYellowAnimation.removedOnCompletion = NO;
     drawYellowAnimation.delegate = self;
     

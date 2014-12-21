@@ -10,6 +10,7 @@
 #import "UIColor+SpikeballColors.h"
 #import "SBAnimatingLogo.h"
 #import "SBViewConstants.h"
+#import "NSString+GFCValidation.h"
 #import <NSLayoutConstraint+HAWHelpers/NSLayoutConstraint+HAWHelpers.h>
 
 @interface SBLoginViewController () <UITextFieldDelegate>
@@ -44,6 +45,8 @@
 @property (nonatomic,strong) UIView *nameBottomBorder;
 @property (nonatomic,strong) UIView *nameMiddleDivider;
 
+@property (nonatomic,strong) UIButton *nextButton;
+
 @end
 
 static NSInteger kBigLogoHeight = 191;
@@ -68,7 +71,7 @@ static CGFloat kFieldBufferValue = 10;
     self.bigLogo = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, ig.size.width, ig.size.height)];
     [self.bigLogo setImage:ig forState:UIControlStateNormal];
     self.bigLogo.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.bigLogo addTarget:self action:@selector(logoTouched:) forControlEvents:UIControlEventTouchUpInside];
+//    [self.bigLogo addTarget:self action:@selector(logoTouched:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.bigLogo];
     
     self.topAccountContainerView = [[UIView alloc] init];
@@ -83,14 +86,15 @@ static CGFloat kFieldBufferValue = 10;
     
     UIColor *transparentYellow = [[UIColor spikeballYellow] colorWithAlphaComponent:0.7];
     UIColor *transparentSpikeballBlack = [[UIColor spikeballBlack] colorWithAlphaComponent:0.5];
-    NSInteger titleFontSize = 14;
+    NSInteger titleFontSize = 15;
     UIFont *placholderFont = [UIFont fontWithName:SBFontStandard size:15];
     
     //TOP STUFF
     self.accountTitleLabel = [[UILabel alloc] init];
+    self.accountTitleLabel.translatesAutoresizingMaskIntoConstraints = NO;
     self.accountTitleLabel.text = @"Account";
     self.accountTitleLabel.textColor = [UIColor spikeballYellow];
-    self.accountTitleLabel.font = [UIFont fontWithName:SBFontStandard size:titleFontSize];
+    self.accountTitleLabel.font = [UIFont fontWithName:SBFontStandardBold size:titleFontSize];
     [self.topAccountContainerView addSubview:self.accountTitleLabel];
     
     self.accountTopBorder = [[UIView alloc] init];
@@ -145,6 +149,7 @@ static CGFloat kFieldBufferValue = 10;
     //BOTTOM STUFF
     self.enterNameLabel = [[UILabel alloc] init];
     self.enterNameLabel.text = @"Enter Your Name";
+    self.enterNameLabel.translatesAutoresizingMaskIntoConstraints = NO;
     self.enterNameLabel.textColor = [UIColor spikeballBlack];
     self.enterNameLabel.font = [UIFont fontWithName:SBFontStandard size:titleFontSize];
     [self.bottomNameContainerView addSubview:self.enterNameLabel];
@@ -153,7 +158,7 @@ static CGFloat kFieldBufferValue = 10;
     self.nameTopBorder.translatesAutoresizingMaskIntoConstraints = NO;
     self.nameTopBorder.backgroundColor = transparentSpikeballBlack;
     [self.bottomNameContainerView addSubview:self.nameTopBorder];
-    
+
     self.nameMiddleDivider = [[UIView alloc] init];
     self.nameMiddleDivider.translatesAutoresizingMaskIntoConstraints = NO;
     self.nameMiddleDivider.backgroundColor = transparentSpikeballBlack;
@@ -197,11 +202,33 @@ static CGFloat kFieldBufferValue = 10;
     self.nicknameTextField.delegate = self;
     [self.bottomNameContainerView addSubview:self.nicknameTextField];
     
+    self.nextButton = [[UIButton alloc] init];
+    self.nextButton.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.nextButton setTitle:@"Swipe to continue" forState:UIControlStateNormal];
+    [self.nextButton setTitleColor:[UIColor spikeballBlack] forState:UIControlStateNormal];
+    self.nextButton.titleLabel.textAlignment = NSTextAlignmentCenter;
+    self.nextButton.titleLabel.font = [UIFont fontWithName:SBFontStandard size:15];
+    [self.view addSubview:self.nextButton];
+    
     [self setupConstraints];
+    [self setTopContainerHidden:YES animated:NO];
+    [self setBottomContainerHidden:YES animated:NO];
+    [self setNextButtonHidden:YES animated:NO];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self shrinkLogoShowTopContainer];
+    });
+    
+//    UIView *blackView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 400, 900)];
+//    blackView.backgroundColor = [UIColor blackColor];
+//    [self.view addSubview:blackView];
+//    SBAnimatingLogo *logo = [[SBAnimatingLogo alloc] initWithFrame:CGRectMake(20, 40, 40, 40)];
+//    [self.view addSubview:logo];
 }
 
 - (void)setupConstraints {
     [NSLayoutConstraint extentOfChild:self.gradientBackgroundImageView toExtentOfParent:self.view];
+    [NSLayoutConstraint centerXOfChild:self.nextButton toCenterXOfParent:self.view];
+    [NSLayoutConstraint bottomOfChild:self.nextButton toBottomOfParent:self.view withFixedMargin:-kFieldBufferValue];
     
     //CONTAINER Setup
     [NSLayoutConstraint topOfChild:self.topAccountContainerView toBottomOfSibling:self.bigLogo withFixedMargin:kTextFieldHeight/2 inParent:self.view];
@@ -237,7 +264,6 @@ static CGFloat kFieldBufferValue = 10;
     [NSLayoutConstraint topOfChild:self.emailTextField toBottomOfSibling:self.accountTitleLabel withFixedMargin:kFieldBufferValue inParent:self.topAccountContainerView];
     [NSLayoutConstraint sidesOfChild:self.emailTextField toSidesOfParent:self.topAccountContainerView margin:kFieldBufferValue];
     [NSLayoutConstraint view:self.emailTextField toFixedHeight:kTextFieldHeight];
-    [NSLayoutConstraint topOfChild:self.emailTextField toBottomOfSibling:self.accountTitleLabel withFixedMargin:kFieldBufferValue inParent:self.topAccountContainerView];
     
     [NSLayoutConstraint topOfChild:self.passwordTextField toBottomOfSibling:self.emailTextField withFixedMargin:0 inParent:self.topAccountContainerView];
     [NSLayoutConstraint leftOfChild:self.passwordTextField toLeftOfParent:self.topAccountContainerView withFixedMargin:kFieldBufferValue];
@@ -297,22 +323,52 @@ static CGFloat kFieldBufferValue = 10;
     [self.bigLogoConstraints addObject:bigCenterYConstraint];
 }
 
-- (void)logoTouched:(id)sender {
-    UIButton *button = sender;
-    if (button.selected) { //go big
-        [NSLayoutConstraint deactivateConstraints:self.smallLogoConstraints];
-        [NSLayoutConstraint activateConstraints:self.bigLogoConstraints];
-    } else { //go small
-        [NSLayoutConstraint deactivateConstraints:self.bigLogoConstraints];
-        [NSLayoutConstraint activateConstraints:self.smallLogoConstraints];
-    }
-    button.selected = !button.selected;
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
     
+    [self setNextButtonHidden:YES animated:NO];
+}
+
+- (void)shrinkLogoShowTopContainer {
+    [NSLayoutConstraint deactivateConstraints:self.bigLogoConstraints];
+    [NSLayoutConstraint activateConstraints:self.smallLogoConstraints];
+   
     [UIView animateWithDuration:0.8 delay:0 usingSpringWithDamping:0.65 initialSpringVelocity:0.6 options:UIViewAnimationOptionCurveEaseOut animations:^{
         [self.view layoutIfNeeded];
+        [self setTopContainerHidden:NO animated:YES];
+        [self setBottomContainerHidden:![self validateAccountTextFields] animated:YES];
     } completion:nil];
 }
 
+- (void)setTopContainerHidden:(BOOL)hidden animated:(BOOL)animated {
+    if (hidden) {
+        [UIView animateWithDuration:0.8 delay:0 usingSpringWithDamping:0.65 initialSpringVelocity:0.6 options:UIViewAnimationOptionCurveEaseOut animations:^{
+            self.topAccountContainerView.transform = CGAffineTransformMakeScale(1, 0.001);
+            self.topAccountContainerView.alpha = 0;
+        } completion:nil];
+    } else {
+        [UIView animateWithDuration:0.8 delay:0 usingSpringWithDamping:0.65 initialSpringVelocity:0.6 options:UIViewAnimationOptionCurveEaseOut animations:^{
+            self.topAccountContainerView.transform = CGAffineTransformIdentity;
+            self.topAccountContainerView.alpha = 1;
+        } completion:nil];
+    }
+}
+
+- (void)setBottomContainerHidden:(BOOL)hidden animated:(BOOL)animated {
+    if (hidden) {
+        [UIView animateWithDuration:0.8 delay:0 usingSpringWithDamping:0.65 initialSpringVelocity:0.6 options:UIViewAnimationOptionCurveEaseOut animations:^{
+            self.bottomNameContainerView.transform = CGAffineTransformMakeScale(1, 0.001);
+            self.bottomNameContainerView.alpha = 0;
+        } completion:nil];
+    } else {
+        [UIView animateWithDuration:0.8 delay:0 usingSpringWithDamping:0.65 initialSpringVelocity:0.6 options:UIViewAnimationOptionCurveEaseOut animations:^{
+            self.bottomNameContainerView.transform = CGAffineTransformIdentity;
+            self.bottomNameContainerView.alpha = 1;
+        } completion:nil];
+    }
+}
+
+#pragma mark Text Field Delegate
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     if ([textField isEqual:self.emailTextField]) {
         [self.passwordTextField becomeFirstResponder];
@@ -334,7 +390,53 @@ static CGFloat kFieldBufferValue = 10;
     if ([textField isEqual:self.emailTextField] && [string isEqualToString:@" "]) { //NO SPACES allowed in email
         return NO;
     }
-    return YES;
+    
+    NSString *proposedString = [textField.text stringByReplacingCharactersInRange:range withString:string];
+    textField.text = proposedString;
+    BOOL validAccount = [self validateAccountTextFields];
+    BOOL validName = [self validateNameTextFields];
+    if (validAccount && validName) {
+        [self setNextButtonHidden:NO animated:YES];
+    } else {
+        [self setNextButtonHidden:YES animated:YES];
+    }
+    
+    return NO;
+}
+
+- (void)setNextButtonHidden:(BOOL)hide animated:(BOOL)animated {
+    [UIView animateWithDuration:animated ? 0.8 : 0 delay:0 usingSpringWithDamping:0.65 initialSpringVelocity:0.6 options:UIViewAnimationOptionCurveEaseOut animations:^{
+        if (hide) {
+            self.nextButton.layer.transform = CATransform3DConcat(CATransform3DMakeScale(1.4, 0.8, 1), CATransform3DMakeTranslation(self.view.frame.size.width/2+self.nextButton.frame.size.width, 0, 0));
+        } else {
+            self.nextButton.layer.transform = CATransform3DIdentity;
+        }
+    } completion:nil];
+}
+
+- (BOOL)validateAccountTextFields {
+    BOOL validEmail = [self.emailTextField.text isValidEmailAddress];
+    BOOL validPassword = [self.passwordTextField.text isValidPassword];
+    BOOL passwordsMatch = [self.passwordTextField.text isEqualToString:self.passwordRepeatTextField.text];
+    
+    if (validEmail && validPassword && passwordsMatch) {
+        [self setBottomContainerHidden:NO animated:YES];
+        return YES;
+    } else {
+        return NO;
+    }
+}
+
+- (BOOL)validateNameTextFields {
+    BOOL validFirstName = self.firstNameTextField.text.length >1;
+    BOOL validLastName = self.lastNameTextField.text.length > 1;
+    BOOL validNickname = self.nicknameTextField.text.length > 1;
+    
+    if (validFirstName || validLastName || validNickname) {
+        return YES;
+    } else {
+        return NO;
+    }
 }
 
 - (void)didReceiveMemoryWarning {
