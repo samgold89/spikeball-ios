@@ -27,6 +27,7 @@
 @property (nonatomic,strong) UIView *topAccountContainerView;
 @property (nonatomic,strong) UIView *bottomNameContainerView;
 
+//@property (nonatomic,strong) UIScrollView *
 @property (nonatomic,strong) UILabel *accountTitleLabel;
 @property (nonatomic,strong) UITextField *emailTextField;
 @property (nonatomic,strong) UITextField *passwordTextField;
@@ -423,6 +424,7 @@ static CGFloat kFieldBufferValue = 10;
         [self setBottomContainerHidden:NO animated:YES];
         return YES;
     } else {
+        [self setBottomContainerHidden:YES animated:YES];
         return NO;
     }
 }
