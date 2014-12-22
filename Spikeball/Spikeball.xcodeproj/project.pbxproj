@@ -25,6 +25,7 @@
 		A9A744B41A4782300068876F /* SBLocationAndNotificationsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A9A744B31A4782300068876F /* SBLocationAndNotificationsViewController.m */; };
 		A9A744B71A47840D0068876F /* SBEmailAndNameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A9A744B61A47840D0068876F /* SBEmailAndNameViewController.m */; };
 		A9A744BA1A4798BC0068876F /* white_checkmark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9A744B91A4798BC0068876F /* white_checkmark@2x.png */; };
+		A9B1A5751A48B5B900359FC0 /* yellow_to_black_gradient@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9B1A5741A48B5B900359FC0 /* yellow_to_black_gradient@2x.png */; };
 		A9D9FF311A47C64A00AEF5EA /* spikeball_small_logo_white@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9D9FF301A47C64A00AEF5EA /* spikeball_small_logo_white@2x.png */; };
 		A9D9FF381A47F81000AEF5EA /* SBProductSummaryIntroScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A9D9FF371A47F81000AEF5EA /* SBProductSummaryIntroScreenViewController.m */; };
 		D88AEBA711CEB84D4F66FB39 /* libPods-Spikeball.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C821388008106AC9E68D215 /* libPods-Spikeball.a */; };
@@ -75,6 +76,7 @@
 		A9A744B61A47840D0068876F /* SBEmailAndNameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBEmailAndNameViewController.m; sourceTree = "<group>"; };
 		A9A744B81A478E8C0068876F /* SBLibrary.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SBLibrary.h; sourceTree = "<group>"; };
 		A9A744B91A4798BC0068876F /* white_checkmark@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "white_checkmark@2x.png"; sourceTree = "<group>"; };
+		A9B1A5741A48B5B900359FC0 /* yellow_to_black_gradient@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "yellow_to_black_gradient@2x.png"; sourceTree = "<group>"; };
 		A9D9FF301A47C64A00AEF5EA /* spikeball_small_logo_white@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "spikeball_small_logo_white@2x.png"; sourceTree = "<group>"; };
 		A9D9FF361A47F81000AEF5EA /* SBProductSummaryIntroScreenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBProductSummaryIntroScreenViewController.h; sourceTree = "<group>"; };
 		A9D9FF371A47F81000AEF5EA /* SBProductSummaryIntroScreenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBProductSummaryIntroScreenViewController.m; sourceTree = "<group>"; };
@@ -210,6 +212,7 @@
 		A99FEB1F1A251CC800F342B2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				A9B1A5741A48B5B900359FC0 /* yellow_to_black_gradient@2x.png */,
 				A9A744B91A4798BC0068876F /* white_checkmark@2x.png */,
 				A99FEB2C1A2522BF00F342B2 /* spikeball_small_logo_yellow@2x.png */,
 				A9D9FF301A47C64A00AEF5EA /* spikeball_small_logo_white@2x.png */,
@@ -327,6 +330,7 @@
 				A9568E441A214B900075CB35 /* Images.xcassets in Resources */,
 				A99FEB261A251CC800F342B2 /* spikeball_yellow_logo_header@2x.png in Resources */,
 				A99FEB241A251CC800F342B2 /* black_to_yellow_gradient@2x.png in Resources */,
+				A9B1A5751A48B5B900359FC0 /* yellow_to_black_gradient@2x.png in Resources */,
 				A99FEB271A251CC800F342B2 /* spikeball_yellow_logo_launch@2x.png in Resources */,
 				A9D9FF311A47C64A00AEF5EA /* spikeball_small_logo_white@2x.png in Resources */,
 			);

@@ -13,7 +13,8 @@
 @interface SBProductSummaryIntroScreenViewController ()
 
 @property (nonatomic,strong) UIScrollView *textScrollView;
-@property (nonatomic,strong) UIView *gradientOverlayView;
+@property (nonatomic,strong) UIImageView *backgroundGradient;
+//@property (nonatomic,strong) UIView *gradientOverlayView;
 
 @property (nonatomic,strong) UILabel *soundTheHornLabel;
 @property (nonatomic,strong) UILabel *hornDescriptionLabel;
@@ -32,7 +33,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     self.view.backgroundColor = [UIColor spikeballYellow];
+    
+    self.backgroundGradient = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"yellow_to_black_gradient"]];
+    self.backgroundGradient.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addSubview:self.backgroundGradient];
     
     self.textScrollView = [[UIScrollView alloc] init];
     self.textScrollView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -74,11 +80,11 @@
     self.heedDescriptionLabel.attributedText = [[NSAttributedString alloc] initWithString:@"Now we need to know where you’d like to play! Select areas on the map, and we’ll let you know when other Spikeballers sound the horn." attributes:@{NSForegroundColorAttributeName:[UIColor spikeballBlack], NSFontAttributeName:textFont, NSParagraphStyleAttributeName:paragraphStyle}];
     [self.textScrollView addSubview:self.heedDescriptionLabel];
     
-    self.gradientOverlayView = [[UIView alloc] init];
-    self.gradientOverlayView.translatesAutoresizingMaskIntoConstraints = NO;
-    self.gradientOverlayView.userInteractionEnabled = NO;
-    self.gradientOverlayView.backgroundColor = [UIColor clearColor];
-    [self.view addSubview:self.gradientOverlayView];
+//    self.gradientOverlayView = [[UIView alloc] init];
+//    self.gradientOverlayView.translatesAutoresizingMaskIntoConstraints = NO;
+//    self.gradientOverlayView.userInteractionEnabled = NO;
+//    self.gradientOverlayView.backgroundColor = [UIColor clearColor];
+//    [self.view addSubview:self.gradientOverlayView];
     
     self.getStartedButton = [[UIButton alloc] init];
     self.getStartedButton.translatesAutoresizingMaskIntoConstraints = NO;
@@ -95,8 +101,10 @@
 }
 
 - (void)setupConstraints {
-    CGFloat bufferValue = 20;
     
+    self.gradientConstraints = [NSLayoutConstraint extentOfChild:self.backgroundGradient toExtentOfParent:self.view];
+    
+    CGFloat bufferValue = 20;
     [NSLayoutConstraint sidesOfChild:self.textScrollView toSidesOfParent:self.view];
     [NSLayoutConstraint topOfChild:self.textScrollView toTopOfParent:self.view withFixedMargin:2*bufferValue];
     [NSLayoutConstraint bottomOfChild:self.textScrollView toTopOfSibling:self.getStartedButton withFixedMargin:-bufferValue inParent:self.view];
@@ -122,14 +130,16 @@
     [self.buttonConstraints addObjectsFromArray:[NSLayoutConstraint sidesOfChild:self.getStartedButton toSidesOfParent:self.view margin:40]];
     [self.buttonConstraints addObject:[NSLayoutConstraint bottomOfChild:self.getStartedButton toBottomOfParent:self.view withFixedMargin:-20]];
     
-    self.gradientConstraints = [NSLayoutConstraint extentOfChild:self.gradientOverlayView toExtentOfParent:self.view];
+//    self.gradientConstraints = [NSLayoutConstraint extentOfChild:self.gradientOverlayView toExtentOfParent:self.view];
 }
 
 - (void)getStartedButtonPressed {
     self.animatingToLogin = YES;
     [NSLayoutConstraint deactivateConstraints:self.gradientConstraints];
-    self.gradientOverlayView.translatesAutoresizingMaskIntoConstraints = YES;
-    self.gradientOverlayView.frame = self.view.bounds;
+//    self.gradientOverlayView.translatesAutoresizingMaskIntoConstraints = YES;
+//    self.gradientOverlayView.frame = self.view.bounds;
+    self.backgroundGradient.translatesAutoresizingMaskIntoConstraints = YES;
+    self.backgroundGradient.frame = self.view.bounds;
     
     [NSLayoutConstraint deactivateConstraints:self.buttonConstraints];
     self.getStartedButton.translatesAutoresizingMaskIntoConstraints = YES;
@@ -150,7 +160,8 @@
         [self.view addSubview:login.view];
         
         [UIView animateWithDuration:0.6 delay:0 usingSpringWithDamping:0.75 initialSpringVelocity:0.6 options:UIViewAnimationOptionCurveEaseOut animations:^{
-            self.gradientOverlayView.center = CGPointMake(self.gradientOverlayView.center.x, self.gradientOverlayView.center.y-self.view.frame.size.height);
+//            self.gradientOverlayView.center = CGPointMake(self.gradientOverlayView.center.x, self.gradientOverlayView.center.y-self.view.frame.size.height);
+            self.backgroundGradient.center = CGPointMake(self.backgroundGradient.center.x, self.backgroundGradient.center.y-self.view.frame.size.height);
             login.view.frame = self.view.bounds;
         } completion:nil];
     }];
@@ -160,13 +171,13 @@
     [super viewDidLayoutSubviews];
     
     if (!self.animatingToLogin) {
-        CAGradientLayer *gradient = [[CAGradientLayer alloc] init];
-        gradient.startPoint = CGPointMake(0.5, 1);
-        gradient.endPoint = CGPointMake(0.5, 0.4);
-        gradient.colors = @[(id)[UIColor spikeballBlack].CGColor, (id)[UIColor clearColor].CGColor];
-        gradient.frame = self.gradientOverlayView.bounds;
-        [self.gradientOverlayView.layer addSublayer:gradient];
-        
+//        CAGradientLayer *gradient = [[CAGradientLayer alloc] init];
+//        gradient.startPoint = CGPointMake(0.5, 1);
+//        gradient.endPoint = CGPointMake(0.5, 0.55);
+//        gradient.colors = @[(id)[UIColor spikeballBlack].CGColor, (id)[UIColor spikeballYellow].CGColor];
+//        gradient.frame = self.gradientOverlayView.bounds;
+//        [self.gradientOverlayView.layer addSublayer:gradient];
+    
         self.textScrollView.contentSize = CGSizeMake(self.view.frame.size.width, self.heedDescriptionLabel.frame.origin.y+self.heedDescriptionLabel.frame.size.height);
         self.textScrollView.contentInset = UIEdgeInsetsMake(0, 0, 70, 0);
     }

@@ -38,7 +38,10 @@ static CGFloat kEmailOffset = 0;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
+    
+    self.view.backgroundColor = [UIColor spikeballYellow];
     
     self.bigLogoConstraints = [@[] mutableCopy];
     self.smallLogoConstraints = [@[] mutableCopy];
