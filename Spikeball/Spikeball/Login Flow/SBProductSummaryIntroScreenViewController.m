@@ -149,10 +149,10 @@
         login.view.center = CGPointMake(login.view.center.x, login.view.center.y+login.view.frame.size.height);
         [self.view addSubview:login.view];
         
-        [UIView animateWithDuration:0.6 animations:^{
+        [UIView animateWithDuration:0.6 delay:0 usingSpringWithDamping:0.75 initialSpringVelocity:0.6 options:UIViewAnimationOptionCurveEaseOut animations:^{
             self.gradientOverlayView.center = CGPointMake(self.gradientOverlayView.center.x, self.gradientOverlayView.center.y-self.view.frame.size.height);
             login.view.frame = self.view.bounds;
-        }];
+        } completion:nil];
     }];
 }
 
