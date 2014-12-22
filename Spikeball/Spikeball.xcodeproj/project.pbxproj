@@ -19,9 +19,13 @@
 		A99FEB261A251CC800F342B2 /* spikeball_yellow_logo_header@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A99FEB221A251CC800F342B2 /* spikeball_yellow_logo_header@2x.png */; };
 		A99FEB271A251CC800F342B2 /* spikeball_yellow_logo_launch@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A99FEB231A251CC800F342B2 /* spikeball_yellow_logo_launch@2x.png */; };
 		A99FEB2B1A25218100F342B2 /* SBAnimatingLogo.m in Sources */ = {isa = PBXBuildFile; fileRef = A99FEB2A1A25218100F342B2 /* SBAnimatingLogo.m */; };
-		A99FEB2D1A2522BF00F342B2 /* spikeball_yellow_logo_s@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A99FEB2C1A2522BF00F342B2 /* spikeball_yellow_logo_s@2x.png */; };
+		A99FEB2D1A2522BF00F342B2 /* spikeball_small_logo_yellow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A99FEB2C1A2522BF00F342B2 /* spikeball_small_logo_yellow@2x.png */; };
 		A9A744AA1A4536BF0068876F /* NSString+GFCValidation.m in Sources */ = {isa = PBXBuildFile; fileRef = A9A744A91A4536BF0068876F /* NSString+GFCValidation.m */; };
 		A9A744B01A4540D90068876F /* SBViewConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = A9A744AF1A4540D90068876F /* SBViewConstants.m */; };
+		A9A744B41A4782300068876F /* SBLocationAndNotificationsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A9A744B31A4782300068876F /* SBLocationAndNotificationsViewController.m */; };
+		A9A744B71A47840D0068876F /* SBEmailAndNameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A9A744B61A47840D0068876F /* SBEmailAndNameViewController.m */; };
+		A9A744BA1A4798BC0068876F /* white_checkmark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9A744B91A4798BC0068876F /* white_checkmark@2x.png */; };
+		A9D9FF311A47C64A00AEF5EA /* spikeball_small_logo_white@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9D9FF301A47C64A00AEF5EA /* spikeball_small_logo_white@2x.png */; };
 		D88AEBA711CEB84D4F66FB39 /* libPods-Spikeball.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C821388008106AC9E68D215 /* libPods-Spikeball.a */; };
 /* End PBXBuildFile section */
 
@@ -58,12 +62,19 @@
 		A99FEB231A251CC800F342B2 /* spikeball_yellow_logo_launch@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "spikeball_yellow_logo_launch@2x.png"; sourceTree = "<group>"; };
 		A99FEB291A25218100F342B2 /* SBAnimatingLogo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBAnimatingLogo.h; sourceTree = "<group>"; };
 		A99FEB2A1A25218100F342B2 /* SBAnimatingLogo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBAnimatingLogo.m; sourceTree = "<group>"; };
-		A99FEB2C1A2522BF00F342B2 /* spikeball_yellow_logo_s@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "spikeball_yellow_logo_s@2x.png"; sourceTree = "<group>"; };
+		A99FEB2C1A2522BF00F342B2 /* spikeball_small_logo_yellow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "spikeball_small_logo_yellow@2x.png"; sourceTree = "<group>"; };
 		A9A744A81A4536BF0068876F /* NSString+GFCValidation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+GFCValidation.h"; path = "Categories/NSString+GFCValidation.h"; sourceTree = "<group>"; };
 		A9A744A91A4536BF0068876F /* NSString+GFCValidation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+GFCValidation.m"; path = "Categories/NSString+GFCValidation.m"; sourceTree = "<group>"; };
 		A9A744AB1A4537310068876F /* Spikeball 1.0.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Spikeball 1.0.xcdatamodel"; sourceTree = "<group>"; };
 		A9A744AE1A4540D90068876F /* SBViewConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBViewConstants.h; sourceTree = "<group>"; };
 		A9A744AF1A4540D90068876F /* SBViewConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBViewConstants.m; sourceTree = "<group>"; };
+		A9A744B21A4782300068876F /* SBLocationAndNotificationsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBLocationAndNotificationsViewController.h; sourceTree = "<group>"; };
+		A9A744B31A4782300068876F /* SBLocationAndNotificationsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBLocationAndNotificationsViewController.m; sourceTree = "<group>"; };
+		A9A744B51A47840D0068876F /* SBEmailAndNameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBEmailAndNameViewController.h; sourceTree = "<group>"; };
+		A9A744B61A47840D0068876F /* SBEmailAndNameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBEmailAndNameViewController.m; sourceTree = "<group>"; };
+		A9A744B81A478E8C0068876F /* SBLibrary.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SBLibrary.h; sourceTree = "<group>"; };
+		A9A744B91A4798BC0068876F /* white_checkmark@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "white_checkmark@2x.png"; sourceTree = "<group>"; };
+		A9D9FF301A47C64A00AEF5EA /* spikeball_small_logo_white@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "spikeball_small_logo_white@2x.png"; sourceTree = "<group>"; };
 		ACD1208F896E0C4DA9FF0AFE /* Pods-Spikeball.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spikeball.release.xcconfig"; path = "Pods/Target Support Files/Pods-Spikeball/Pods-Spikeball.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -126,6 +137,7 @@
 		A9568E321A214B900075CB35 /* Spikeball */ = {
 			isa = PBXGroup;
 			children = (
+				A9A744B81A478E8C0068876F /* SBLibrary.h */,
 				A9A744AD1A4540CC0068876F /* Constants */,
 				A99FEB281A25217200F342B2 /* Views */,
 				A99FEB1F1A251CC800F342B2 /* Resources */,
@@ -180,6 +192,10 @@
 		A99FEB1B1A25092000F342B2 /* Login Flow */ = {
 			isa = PBXGroup;
 			children = (
+				A9A744B21A4782300068876F /* SBLocationAndNotificationsViewController.h */,
+				A9A744B31A4782300068876F /* SBLocationAndNotificationsViewController.m */,
+				A9A744B51A47840D0068876F /* SBEmailAndNameViewController.h */,
+				A9A744B61A47840D0068876F /* SBEmailAndNameViewController.m */,
 				A99FEB1C1A25092B00F342B2 /* SBLoginViewController.h */,
 				A99FEB1D1A25092B00F342B2 /* SBLoginViewController.m */,
 			);
@@ -189,7 +205,9 @@
 		A99FEB1F1A251CC800F342B2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				A99FEB2C1A2522BF00F342B2 /* spikeball_yellow_logo_s@2x.png */,
+				A9A744B91A4798BC0068876F /* white_checkmark@2x.png */,
+				A99FEB2C1A2522BF00F342B2 /* spikeball_small_logo_yellow@2x.png */,
+				A9D9FF301A47C64A00AEF5EA /* spikeball_small_logo_white@2x.png */,
 				A99FEB201A251CC800F342B2 /* black_to_yellow_gradient@2x.png */,
 				A99FEB211A251CC800F342B2 /* spikeball_net_with_shadow@2x.png */,
 				A99FEB221A251CC800F342B2 /* spikeball_yellow_logo_header@2x.png */,
@@ -298,12 +316,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A9A744BA1A4798BC0068876F /* white_checkmark@2x.png in Resources */,
 				A99FEB251A251CC800F342B2 /* spikeball_net_with_shadow@2x.png in Resources */,
-				A99FEB2D1A2522BF00F342B2 /* spikeball_yellow_logo_s@2x.png in Resources */,
+				A99FEB2D1A2522BF00F342B2 /* spikeball_small_logo_yellow@2x.png in Resources */,
 				A9568E441A214B900075CB35 /* Images.xcassets in Resources */,
 				A99FEB261A251CC800F342B2 /* spikeball_yellow_logo_header@2x.png in Resources */,
 				A99FEB241A251CC800F342B2 /* black_to_yellow_gradient@2x.png in Resources */,
 				A99FEB271A251CC800F342B2 /* spikeball_yellow_logo_launch@2x.png in Resources */,
+				A9D9FF311A47C64A00AEF5EA /* spikeball_small_logo_white@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -359,7 +379,9 @@
 				A9568E391A214B900075CB35 /* AppDelegate.m in Sources */,
 				A99FEB121A25068100F342B2 /* UIColor+SpikeballColors.m in Sources */,
 				A9568E361A214B900075CB35 /* main.m in Sources */,
+				A9A744B71A47840D0068876F /* SBEmailAndNameViewController.m in Sources */,
 				A9A744AA1A4536BF0068876F /* NSString+GFCValidation.m in Sources */,
+				A9A744B41A4782300068876F /* SBLocationAndNotificationsViewController.m in Sources */,
 				A99FEB1E1A25092B00F342B2 /* SBLoginViewController.m in Sources */,
 				A9568E3C1A214B900075CB35 /* Spikeball.xcdatamodeld in Sources */,
 			);

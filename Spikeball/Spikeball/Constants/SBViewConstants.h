@@ -15,4 +15,13 @@ FOUNDATION_EXPORT NSString *const SBFontStandardLight;
 FOUNDATION_EXPORT NSString *const SBFontStandardBold;
 FOUNDATION_EXPORT NSString *const SBFontStandard;
 
+FOUNDATION_EXPORT NSString *const SBPushNotificationActionAcceptGame;
+FOUNDATION_EXPORT NSString *const SBPushNotificationActionRejectGame;
+FOUNDATION_EXPORT NSString *const SBPushNotificationCategoryNewGame;
+
+FOUNDATION_EXPORT NSString *const SBNotificationDidRegisterForPushNotifications;
+FOUNDATION_EXPORT NSString *const SBNotificationFailedToRegisterForPushNotifications;
+FOUNDATION_EXPORT NSString *const SBNotificationDidRegisterForLocationServices;
+FOUNDATION_EXPORT NSString *const SBNotificationFailedToRegisterForLocationServices;
+
 @end

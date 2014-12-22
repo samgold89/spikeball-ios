@@ -8,8 +8,10 @@
 
 #import "AppDelegate.h"
 #import "SBLoginViewController.h"
+#import "SBLibrary.h"
+#import <CoreLocation/CoreLocation.h>
 
-@interface AppDelegate ()
+@interface AppDelegate () <CLLocationManagerDelegate>
 
 @property (nonatomic, strong) SBLoginViewController *loginVc;
 
@@ -24,6 +26,12 @@
     [self.window makeKeyAndVisible];
     
     [self setupLoginFlow];
+    
+    if ([CLLocationManager authorizationStatus] < kCLAuthorizationStatusAuthorizedAlways) { //no permission yet
+        
+    } else { //there exists permission, so grab their location or something
+        
+    }
     
     return YES;
 }
@@ -58,6 +66,94 @@
     // Saves changes in the application's managed object context before the application terminates.
     [self saveContext];
 }
+
+#pragma mark Push Notifications
+
+-(void)registerForPushNotifications {
+    UIMutableUserNotificationAction *acceptGameAction = [[UIMutableUserNotificationAction alloc] init];
+    acceptGameAction.identifier = SBPushNotificationActionAcceptGame;
+    acceptGameAction.title = @"Rage";
+    acceptGameAction.destructive = NO;
+    acceptGameAction.authenticationRequired = NO;
+    acceptGameAction.activationMode = UIUserNotificationActivationModeBackground;
+    
+    UIMutableUserNotificationAction *rejectGameAction = [[UIMutableUserNotificationAction alloc] init];
+    rejectGameAction.identifier = SBPushNotificationActionRejectGame;
+    rejectGameAction.title = @"Next Time";
+    rejectGameAction.destructive = NO;
+    rejectGameAction.authenticationRequired = NO;
+    rejectGameAction.activationMode = UIUserNotificationActivationModeBackground;
+    
+    UIMutableUserNotificationCategory *newGameCategory = [[UIMutableUserNotificationCategory alloc] init];
+    newGameCategory.identifier = SBPushNotificationCategoryNewGame;
+    [newGameCategory setActions:@[acceptGameAction,rejectGameAction] forContext:UIUserNotificationActionContextDefault];
+    
+    NSSet *categories = [NSSet setWithObjects:newGameCategory, nil];
+    
+    UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeBadge | UIUserNotificationTypeSound | UIUserNotificationTypeAlert) categories:categories];
+    [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+}
+
+- (void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forRemoteNotification:(NSDictionary *)userInfo completionHandler:(void (^)())completionHandler {
+    if ([identifier isEqualToString:SBPushNotificationActionAcceptGame]) {
+        
+    } else if ([identifier isEqualToString:SBPushNotificationActionRejectGame]) {
+        
+    }
+    
+    if (completionHandler) {
+        completionHandler();
+    }
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
+    NSLog(@"%@",userInfo);
+    
+    if (userInfo[@"aps"][@"badge"]) {
+        [[UIApplication sharedApplication] setApplicationIconBadgeNumber:[userInfo[@"aps"][@"badge"] integerValue]];
+    }
+    
+    if (completionHandler) {
+        completionHandler(UIBackgroundFetchResultNoData);
+    }
+}
+
+- (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings
+{
+    if ([[UIApplication sharedApplication] respondsToSelector:@selector(registerForRemoteNotifications)]) {
+        [[UIApplication sharedApplication] registerForRemoteNotifications];
+    }
+}
+
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+    NSLog(@"Something");
+}
+
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
+    NSLog(@"Failed");
+}
+
+#pragma mark Location Request
+
+- (void)requestLocationAccess {
+//    if (![CLLocationManager locationServicesEnabled]) {
+        CLLocationManager *manager = [[CLLocationManager alloc] init];
+        [manager requestWhenInUseAuthorization];
+//    }
+}
+
+- (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {
+    NSLog(@"didChange");
+}
+
+- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
+    NSLog(@"didfail");
+}
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
+    NSLog(@"update");
+}
+
 
 #pragma mark - Core Data stack
 

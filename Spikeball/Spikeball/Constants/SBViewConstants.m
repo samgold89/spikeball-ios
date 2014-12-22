@@ -15,4 +15,13 @@ NSString *const SBFontStandardLight = @"HelveticaNeue-Light";
 NSString *const SBFontStandardBold =  @"HelveticaNeue-Medium";
 NSString *const SBFontStandard = @"HelveticaNeue";
 
+NSString *const SBPushNotificationActionAcceptGame = @"ACCEPT_GAME_ACTION";
+NSString *const SBPushNotificationActionRejectGame = @"REJECT_GAME_ACTION";
+NSString *const SBPushNotificationCategoryNewGame = @"NEW_GAME_CATEGORY";
+
+NSString *const SBNotificationDidRegisterForPushNotifications = @"didRegisterForPushNotifications";
+NSString *const SBNotificationFailedToRegisterForPushNotifications = @"failedToRegisterForPushNotifications";
+NSString *const SBNotificationDidRegisterForLocationServices = @"didRegisterForLocationServices";
+NSString *const SBNotificationFailedToRegisterForLocationServices = @"failedToRegisterForLocationServices";
+
 @end

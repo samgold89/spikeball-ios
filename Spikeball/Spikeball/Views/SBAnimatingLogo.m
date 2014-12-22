@@ -11,6 +11,8 @@
 
 @interface SBAnimatingLogo ()
 
+@property (nonatomic, strong) UIColor *spikeballColor;
+
 @property (nonatomic, assign) CGFloat lineSpacingValue;
 @property (nonatomic, assign) CGFloat lineWidthValue;
 
@@ -37,37 +39,46 @@ static NSString *kDrawYellowInnerKey = @"drawYellowInnerKey";
 @implementation SBAnimatingLogo
 
 - (id)initWithFrame:(CGRect)frame {
+    return [self initWithFrame:frame andLogoColor:[UIColor spikeballYellow]];
+}
+
+- (id)initWithFrame:(CGRect)frame andLogoColor:(UIColor*)color {
     self = [super initWithFrame:frame];
     
     if (self) {
+        self.spikeballColor = color;
+        self.backgroundColor = [UIColor clearColor];
+        
         self.lineSpacingValue = frame.size.height*kHeightToSpacingMultiple;
         self.lineWidthValue = frame.size.height*kHeightToLineWidthMultiple;
         
-        self.sLogo = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"spikeball_yellow_logo_s"]];
+        UIImage *logoImage = [UIImage imageNamed:[NSString stringWithFormat:@"spikeball_small_logo_%@",[self.spikeballColor isEqual:[UIColor whiteColor]] ? @"white" : @"yellow"]];
+        
+        self.sLogo = [[UIImageView alloc] initWithImage:logoImage];
         self.sLogo.frame = CGRectMake(0, 0, kHeightToSHeightMultiple*frame.size.width, kHeightToSHeightMultiple*frame.size.height);
         self.sLogo.center = CGPointMake(frame.size.width/2, frame.size.height/2);
         [self addSubview:self.sLogo];
         
         self.outerCircle = [[CAShapeLayer alloc] init];
-        self.outerCircle.strokeColor = [UIColor spikeballYellow].CGColor;
+        self.outerCircle.strokeColor = color.CGColor;
         self.outerCircle.lineWidth = frame.size.height*kHeightToLineWidthMultiple;
         self.outerCircle.fillColor = nil;
         [self.layer addSublayer:self.outerCircle];
         
         self.innerCircle = [[CAShapeLayer alloc] init];
-        self.innerCircle.strokeColor = [UIColor spikeballYellow].CGColor;
+        self.innerCircle.strokeColor = color.CGColor;
         self.innerCircle.lineWidth = frame.size.height*kHeightToLineWidthMultiple;
         self.innerCircle.fillColor = nil;
         [self.layer addSublayer:self.innerCircle];
         
         self.outerCircleFaded = [[CAShapeLayer alloc] init];
-        self.outerCircleFaded.strokeColor = [[UIColor spikeballYellow] colorWithAlphaComponent:kFadedAlphaComponent].CGColor;
+        self.outerCircleFaded.strokeColor = [color colorWithAlphaComponent:kFadedAlphaComponent].CGColor;
         self.outerCircleFaded.lineWidth = frame.size.height*kHeightToLineWidthMultiple;
         self.outerCircleFaded.fillColor = nil;
         [self.layer addSublayer:self.outerCircleFaded];
         
         self.innerCircleFaded = [[CAShapeLayer alloc] init];
-        self.innerCircleFaded.strokeColor = [[UIColor spikeballYellow] colorWithAlphaComponent:kFadedAlphaComponent].CGColor;
+        self.innerCircleFaded.strokeColor = [color colorWithAlphaComponent:kFadedAlphaComponent].CGColor;
         self.innerCircleFaded.lineWidth = frame.size.height*kHeightToLineWidthMultiple;
         self.innerCircleFaded.fillColor = nil;
         [self.layer addSublayer:self.innerCircleFaded];
@@ -79,6 +90,17 @@ static NSString *kDrawYellowInnerKey = @"drawYellowInnerKey";
     
     return self;
 }
+
+//- (void)drawRect:(CGRect)rect
+//{
+//    CGRect bounds = [self.sLogo bounds];
+//    [self.spikeballColor set];
+//    CGContextRef context = UIGraphicsGetCurrentContext();
+//    CGContextClipToMask(context, bounds, [self.img CGImage]);
+//    CGContextFillRect(context, bounds);
+//    [self.sLogo setImage:self.img];
+//    [self.sLogo sizeToFit];
+//}
 
 - (void)setCirclesFullPaths {
     UIBezierPath *outerFullPath = [[UIBezierPath alloc] init];

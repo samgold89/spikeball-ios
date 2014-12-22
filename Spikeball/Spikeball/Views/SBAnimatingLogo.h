@@ -10,6 +10,7 @@
 
 @interface SBAnimatingLogo : UIView
 
+- (id)initWithFrame:(CGRect)frame andLogoColor:(UIColor*)color;
 - (void)startAllAnimations;
 - (void)stopAllAnimations;
 
