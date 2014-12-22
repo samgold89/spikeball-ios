@@ -14,8 +14,10 @@ static CGFloat kTextFieldHeight = 44;
 
 - (void)translateViewByValue:(CGFloat)shift;
 - (void)restoreViewToIdentity;
+- (void)moveToLocationAndPush;
 - (void)updateLocationWithName:(NSString*)name;
-- (void)setPannerEnabled:(BOOL)enabled;
+- (void)animateTopLogo;
+- (void)stopAnimatingTopLogo;
 
 @end
 

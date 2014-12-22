@@ -97,7 +97,7 @@ static CGFloat kLabelToButtonBuffer = 18;
     self.locationStatusImageView = [[UIImageView alloc] init];
     self.locationStatusImageView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.locationStatusImageView setImage:[UIImage imageNamed:@"white_checkmark"]];
-    self.locationStatusImageView.hidden = YES;
+    self.locationStatusImageView.alpha = 0;
     [self.view addSubview:self.locationStatusImageView];
     
     self.notificationPrompt = [[UILabel alloc] init];
@@ -123,8 +123,10 @@ static CGFloat kLabelToButtonBuffer = 18;
     self.notificationStatusImageView = [[UIImageView alloc] init];
     self.notificationStatusImageView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.notificationStatusImageView setImage:[UIImage imageNamed:@"white_checkmark"]];
-    self.notificationStatusImageView.hidden = YES;
+    self.notificationStatusImageView.alpha = 0;
     [self.view addSubview:self.notificationStatusImageView];
+    
+    [self setupHiddenTransforms];
     
     [self setupConstraints];
 }
@@ -168,6 +170,21 @@ static CGFloat kLabelToButtonBuffer = 18;
     [NSLayoutConstraint rightOfChild:self.notificationStatusImageView toRightOfSibling:self.notificationButton withFixedMargin:-10 inParent:self.view];
 }
 
+- (void)setupHiddenTransforms {
+    self.fakeLabel.transform = self.locationPrompt.transform = self.locationButton.transform = self.locationStatusImageView.transform = self.locationLoading.transform = self.notificationPrompt.transform = self.notificationButton.transform = self.notificationStatusImageView.transform = self.notificationLoading.transform =
+    CGAffineTransformMakeScale(0.01, 0.01);
+}
+
+- (void)showAllContent {
+    int counter = 0;
+    for (UIView *view in @[self.fakeLabel,self.locationPrompt, self.locationButton, self.locationStatusImageView, self.notificationPrompt, self.notificationButton, self.notificationStatusImageView]) {
+        [UIView animateWithDuration:0.7 delay:0.04*counter usingSpringWithDamping:0.7 initialSpringVelocity:0.6 options:UIViewAnimationOptionCurveEaseOut animations:^{
+            view.transform = CGAffineTransformIdentity;
+        } completion:nil];
+        counter += 1;
+    }
+}
+
 - (void)shareLocationButtonPressed:(id)sender {
     if (self.locationLoading) {
         [self.locationLoading removeFromSuperview];
@@ -181,6 +198,10 @@ static CGFloat kLabelToButtonBuffer = 18;
 }
 
 - (void)notificationButtonPresesed:(id)sender {
+    if (self.notificationLoading) {
+        [self.notificationLoading removeFromSuperview];
+        self.notificationLoading = nil;
+    }
     self.notificationLoading = [[SBAnimatingLogo alloc] initWithFrame:self.notificationStatusImageView.bounds andLogoColor:[UIColor whiteColor]];
     self.notificationLoading.center = self.notificationStatusImageView.center;
     [self.view addSubview:self.notificationLoading];
@@ -188,16 +209,31 @@ static CGFloat kLabelToButtonBuffer = 18;
     [((AppDelegate*)[[UIApplication sharedApplication] delegate]) registerForPushNotifications];
 }
 
+#pragma mark Push & Location NSNotification Handlers
 - (void)didRegisterForPush:(NSNotification*)note {
+    self.notificationButton.enabled = NO;
     
+    self.notificationStatusImageView.transform = CGAffineTransformMakeScale(0.01, 0.01);
+    self.notificationStatusImageView.alpha = 1;
+    [UIView animateWithDuration:0.8 delay:0 usingSpringWithDamping:0.7 initialSpringVelocity:0.6 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+        self.notificationStatusImageView.transform = CGAffineTransformIdentity;
+        self.notificationLoading.alpha = 0;
+        self.notificationLoading.transform = CGAffineTransformMakeScale(0.01, 0.01);
+    } completion:nil];
 }
 
 - (void)failedToRegisterForPush:(NSNotification*)note {
-    
+    [self didRegisterForPush:nil];
 }
 
 - (void)didRegisterForLocation:(NSNotification*)note {
-    
+    self.locationStatusImageView.transform = CGAffineTransformMakeScale(0.01, 0.01);
+    self.locationStatusImageView.alpha = 1;
+    [UIView animateWithDuration:0.8 delay:0 usingSpringWithDamping:0.7 initialSpringVelocity:0.6 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+        self.locationStatusImageView.transform = CGAffineTransformIdentity;
+        self.locationLoading.alpha = 0;
+        self.locationLoading.transform = CGAffineTransformMakeScale(0.01, 0.01);
+    } completion:nil];
 }
 
 - (void)failedToRegisterForLocation:(NSNotification*)note {

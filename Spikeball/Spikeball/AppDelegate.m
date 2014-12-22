@@ -8,12 +8,14 @@
 
 #import "AppDelegate.h"
 #import "SBLoginViewController.h"
+#import "SBProductSummaryIntroScreenViewController.h"
 #import "SBLibrary.h"
 #import <CoreLocation/CoreLocation.h>
 
 @interface AppDelegate () <CLLocationManagerDelegate>
 
 @property (nonatomic, strong) SBLoginViewController *loginVc;
+@property (nonatomic, strong) SBProductSummaryIntroScreenViewController *prodSum;
 
 @end
 
@@ -37,10 +39,15 @@
 }
 
 - (void)setupLoginFlow {
-    self.loginVc = [[SBLoginViewController alloc] init];
-    self.window.rootViewController = self.loginVc;
-    self.loginVc.view.frame = self.window.bounds;
-    [self.window addSubview:self.loginVc.view];
+    self.prodSum = [[SBProductSummaryIntroScreenViewController alloc] init];
+    self.window.rootViewController = self.prodSum;
+    self.self.prodSum.view.frame = self.window.bounds;
+    [self.window addSubview:self.self.prodSum.view];
+    
+//    self.loginVc = [[SBLoginViewController alloc] init];
+//    self.window.rootViewController = self.loginVc;
+//    self.loginVc.view.frame = self.window.bounds;
+//    [self.window addSubview:self.loginVc.view];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
@@ -127,23 +134,27 @@
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
     NSLog(@"Something");
+    [[NSNotificationCenter defaultCenter] postNotificationName:SBNotificationDidRegisterForPushNotifications object:nil];
 }
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
     NSLog(@"Failed");
+    [[NSNotificationCenter defaultCenter] postNotificationName:SBNotificationFailedToRegisterForPushNotifications object:nil];
 }
 
 #pragma mark Location Request
 
 - (void)requestLocationAccess {
 //    if (![CLLocationManager locationServicesEnabled]) {
-        CLLocationManager *manager = [[CLLocationManager alloc] init];
-        [manager requestWhenInUseAuthorization];
+    CLLocationManager *manager = [[CLLocationManager alloc] init];
+    
+    [manager requestWhenInUseAuthorization];
 //    }
 }
 
 - (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {
     NSLog(@"didChange");
+    [[NSNotificationCenter defaultCenter] postNotificationName:SBNotificationDidRegisterForLocationServices object:nil];
 }
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {

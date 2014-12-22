@@ -8,6 +8,7 @@
 
 #import "SBEmailAndNameViewController.h"
 #import "SBLibrary.h"
+#import "SBAnimatingLogo.h"
 
 @interface SBEmailAndNameViewController () <UITextFieldDelegate>
 
@@ -34,9 +35,7 @@
 @property (nonatomic,strong) UIView *nameBottomBorder;
 @property (nonatomic,strong) UIView *nameMiddleDivider;
 
-@property (nonatomic,strong) UIView *loginButtonContainerView;
 @property (nonatomic,strong) UIButton *loginButton;
-@property (nonatomic,strong) UIButton *imNewButton;
 @property (nonatomic,strong) UIView *middleLoginDivider;
 
 @property (nonatomic,strong) UIButton *createAccountButton;
@@ -100,6 +99,7 @@ static CGFloat kFieldBufferValue = 10;
     self.emailTextField = [[UITextField alloc] init];
     self.emailTextField.translatesAutoresizingMaskIntoConstraints = NO;
     self.emailTextField.keyboardType = UIKeyboardTypeEmailAddress;
+    self.emailTextField.autocapitalizationType = UITextAutocapitalizationTypeNone;
     self.emailTextField.returnKeyType = UIReturnKeyNext;
     self.emailTextField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"Email - we will never spam you" attributes:@{NSForegroundColorAttributeName : transparentYellow, NSFontAttributeName : placholderFont}];
     self.emailTextField.textColor = [UIColor spikeballYellow];
@@ -129,33 +129,13 @@ static CGFloat kFieldBufferValue = 10;
     self.passwordRepeatTextField.delegate = self;
     [self.topAccountContainerView addSubview:self.passwordRepeatTextField];
     
-    self.loginButtonContainerView = [[UIView alloc] init];
-    self.loginButtonContainerView.translatesAutoresizingMaskIntoConstraints = NO;
-    self.loginButtonContainerView.backgroundColor = [UIColor clearColor];
-    [self.topAccountContainerView addSubview:self.loginButtonContainerView];
-    
     self.loginButton = [[UIButton alloc] init];
     self.loginButton.translatesAutoresizingMaskIntoConstraints = NO;
     [self.loginButton setTitle:@"Login" forState:UIControlStateNormal];
     self.loginButton.titleLabel.font = placholderFont;
-    self.loginButton.backgroundColor = [UIColor spikeballYellow];
-    [self.loginButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [self.loginButton setTitleColor:[UIColor spikeballYellow] forState:UIControlStateNormal];
     [self.loginButton addTarget:self action:@selector(loginButtonPressed) forControlEvents:UIControlEventTouchUpInside];
-    [self.loginButtonContainerView addSubview:self.loginButton];
-    
-    self.middleLoginDivider = [[UIView alloc] init];
-    self.middleLoginDivider.translatesAutoresizingMaskIntoConstraints = NO;
-    self.middleLoginDivider.backgroundColor = [UIColor spikeballBlack];
-    [self.loginButtonContainerView addSubview:self.middleLoginDivider];
-    
-    self.imNewButton = [[UIButton alloc] init];
-    self.imNewButton.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.imNewButton setTitle:@"I'm New" forState:UIControlStateNormal];
-    self.imNewButton.titleLabel.font = placholderFont;
-    self.imNewButton.backgroundColor = [UIColor spikeballYellow];
-    [self.imNewButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [self.imNewButton addTarget:self action:@selector(imNewButtonPressed) forControlEvents:UIControlEventTouchUpInside];
-    [self.loginButtonContainerView addSubview:self.imNewButton];
+    [self.view addSubview:self.loginButton];
     
     //BOTTOM STUFF
     self.enterNameLabel = [[UILabel alloc] init];
@@ -295,26 +275,9 @@ static CGFloat kFieldBufferValue = 10;
     [NSLayoutConstraint centerXOfChild:self.accountMiddleDivider toCenterXOfParent:self.topAccountContainerView];
     
     //TOP login buttons
-    //identical to password repeat
-    [NSLayoutConstraint topOfChild:self.loginButtonContainerView toTopOfSibling:self.passwordTextField withFixedMargin:0 inParent:self.topAccountContainerView];
-    [NSLayoutConstraint leftOfChild:self.loginButtonContainerView toRightOfSibling:self.accountMiddleDivider withFixedMargin:0 inParent:self.topAccountContainerView];
-    [NSLayoutConstraint rightOfChild:self.loginButtonContainerView toRightOfParent:self.topAccountContainerView withFixedMargin:0];
-    [NSLayoutConstraint view:self.loginButtonContainerView toFixedHeight:kTextFieldHeight];
-    
-    [NSLayoutConstraint leftOfChild:self.loginButton toLeftOfParent:self.loginButtonContainerView withFixedMargin:0];
-    [NSLayoutConstraint topOfChild:self.loginButton toTopOfParent:self.loginButtonContainerView];
-    [NSLayoutConstraint bottomOfChild:self.loginButton toBottomOfParent:self.loginButtonContainerView];
-    [NSLayoutConstraint rightOfChild:self.loginButton toLeftOfSibling:self.middleLoginDivider withFixedMargin:0 inParent:self.loginButtonContainerView];
-    
-    [NSLayoutConstraint topOfChild:self.middleLoginDivider toTopOfParent:self.loginButtonContainerView];
-    [NSLayoutConstraint bottomOfChild:self.middleLoginDivider toBottomOfParent:self.loginButtonContainerView];
-    [NSLayoutConstraint view:self.middleLoginDivider toFixedWidth:borderLineHeight];
-    [NSLayoutConstraint centerXOfChild:self.middleLoginDivider toCenterXOfParent:self.loginButtonContainerView];
-    
-    [NSLayoutConstraint leftOfChild:self.imNewButton toRightOfSibling:self.middleLoginDivider withFixedMargin:0 inParent:self.loginButtonContainerView];
-    [NSLayoutConstraint topOfChild:self.imNewButton toTopOfParent:self.loginButtonContainerView];
-    [NSLayoutConstraint bottomOfChild:self.imNewButton toBottomOfParent:self.loginButtonContainerView];
-    [NSLayoutConstraint rightOfChild:self.imNewButton toRightOfParent:self.loginButtonContainerView withFixedMargin:0];
+    [NSLayoutConstraint centerXOfChild:self.loginButton toCenterXOfParent:self.view];
+    [NSLayoutConstraint topOfChild:self.loginButton toBottomOfSibling:self.topAccountContainerView withFixedMargin:20 inParent:self.view];
+
     
     //BOTTOM / Name fields
     [NSLayoutConstraint centerXOfChild:self.enterNameLabel toCenterXOfParent:self.bottomNameContainerView];
@@ -355,12 +318,12 @@ static CGFloat kFieldBufferValue = 10;
 
 - (void)setTopContainerHidden:(BOOL)hidden animated:(BOOL)animated {
     if (hidden) {
-        [UIView animateWithDuration:0.8 delay:0 usingSpringWithDamping:0.65 initialSpringVelocity:0.6 options:UIViewAnimationOptionCurveEaseOut animations:^{
+        [UIView animateWithDuration:animated ? 0.8 : 0 delay:0 usingSpringWithDamping:0.65 initialSpringVelocity:0.6 options:UIViewAnimationOptionCurveEaseOut animations:^{
             self.topAccountContainerView.transform = CGAffineTransformMakeScale(1, 0.001);
             self.topAccountContainerView.alpha = 0;
         } completion:nil];
     } else {
-        [UIView animateWithDuration:0.8 delay:0 usingSpringWithDamping:0.65 initialSpringVelocity:0.6 options:UIViewAnimationOptionCurveEaseOut animations:^{
+        [UIView animateWithDuration:animated ? 0.8 : 0 delay:0 usingSpringWithDamping:0.65 initialSpringVelocity:0.6 options:UIViewAnimationOptionCurveEaseOut animations:^{
             self.topAccountContainerView.transform = CGAffineTransformIdentity;
             self.topAccountContainerView.alpha = 1;
         } completion:nil];
@@ -369,12 +332,12 @@ static CGFloat kFieldBufferValue = 10;
 
 - (void)setBottomContainerHidden:(BOOL)hidden animated:(BOOL)animated {
     if (hidden) {
-        [UIView animateWithDuration:0.8 delay:0 usingSpringWithDamping:0.65 initialSpringVelocity:0.6 options:UIViewAnimationOptionCurveEaseOut animations:^{
+        [UIView animateWithDuration:animated ? 0.8 : 0 delay:0 usingSpringWithDamping:0.65 initialSpringVelocity:0.6 options:UIViewAnimationOptionCurveEaseOut animations:^{
             self.bottomNameContainerView.transform = CGAffineTransformMakeScale(1, 0.001);
             self.bottomNameContainerView.alpha = 0;
         } completion:nil];
     } else {
-        [UIView animateWithDuration:0.8 delay:0 usingSpringWithDamping:0.65 initialSpringVelocity:0.6 options:UIViewAnimationOptionCurveEaseOut animations:^{
+        [UIView animateWithDuration:animated ? 0.8 : 0 delay:0 usingSpringWithDamping:0.65 initialSpringVelocity:0.6 options:UIViewAnimationOptionCurveEaseOut animations:^{
             self.bottomNameContainerView.transform = CGAffineTransformIdentity;
             self.bottomNameContainerView.alpha = 1;
         } completion:nil];
@@ -408,15 +371,16 @@ static CGFloat kFieldBufferValue = 10;
     textField.text = proposedString;
     BOOL validAccount = [self validateAccountTextFields];
     BOOL validName = [self validateNameTextFields];
+    
+    [self setBottomContainerHidden:!validAccount animated:YES];
+    [self setNameInLocationView];
     if (validAccount && validName) {
         [self setNextButtonHidden:NO animated:YES];
     } else {
         [self setNextButtonHidden:YES animated:YES];
     }
     
-    if ([self.delegate respondsToSelector:@selector(setPannerEnabled:)]) {
-        [self.delegate setPannerEnabled:([self validateNameTextFields] && [self validateAccountTextFields])];
-    }
+    [self setBottomLoginButtonBasedOnFields];
     
     return NO;
 }
@@ -436,13 +400,7 @@ static CGFloat kFieldBufferValue = 10;
     BOOL validPassword = [self.passwordTextField.text isValidPassword];
     BOOL passwordsMatch = [self.passwordTextField.text isEqualToString:self.passwordRepeatTextField.text];
     
-    if (validEmail && validPassword && passwordsMatch) {
-        [self setBottomContainerHidden:NO animated:YES];
-        return YES;
-    } else {
-        [self setBottomContainerHidden:YES animated:YES];
-        return NO;
-    }
+    return validEmail && validPassword && passwordsMatch;
 }
 
 - (BOOL)validateNameTextFields {
@@ -450,48 +408,74 @@ static CGFloat kFieldBufferValue = 10;
     BOOL validLastName = self.lastNameTextField.text.length > 1;
     BOOL validNickname = self.nicknameTextField.text.length > 1;
     
-    if (validFirstName || validLastName || validNickname) {
-        NSString *currentName;
-        if (validNickname) {
-            currentName = self.nicknameTextField.text;
-        } else if (validFirstName) {
-            currentName = self.firstNameTextField.text;
-        } else if (validLastName) {
-            currentName = self.lastNameTextField.text;
-        }
-        if ([self.delegate respondsToSelector:@selector(updateLocationWithName:)]) {
-            [self.delegate updateLocationWithName:currentName];
-        }
+    return validFirstName || validLastName || validNickname;
+}
 
-        return YES;
-    } else {
-        return NO;
+- (void)setNameInLocationView {
+    NSString *currentName = @"";
+    if (self.nicknameTextField.text.length > 1) {
+        currentName = self.nicknameTextField.text;
+    } else if (self.firstNameTextField.text.length > 1) {
+        currentName = self.firstNameTextField.text;
+    } else if (self.lastNameTextField.text.length > 1) {
+        currentName = self.lastNameTextField.text;
+    }
+    if ([self.delegate respondsToSelector:@selector(updateLocationWithName:)]) {
+        [self.delegate updateLocationWithName:currentName];
     }
 }
 
 #pragma mark Button Handlers
+- (void)setBottomLoginButtonBasedOnFields {
+    BOOL hide;
+    NSString *buttonText;
+    if (![self.emailTextField.text isValidEmailAddress] && ![self.emailTextField isFirstResponder]) { //invalid email
+        hide = NO;
+        buttonText = @"Invalid email address";
+    } else if (self.passwordRepeatTextField.text.length == 0) { //login button
+        hide = NO;
+        buttonText = @"Login";
+    } else if (![self.passwordTextField isFirstResponder] && ![self.passwordTextField.text isValidPassword]) {
+        hide = NO;
+        buttonText = @"Password must be at least 5 characters!";
+    } else if (![self.passwordRepeatTextField.text isEqualToString:self.passwordTextField.text]) { //passwords don't match
+        hide = NO;
+        buttonText = @"Passwords don't match";
+    } else { //hide it!
+        hide = [self.passwordTextField isFirstResponder];
+    }
+    [UIView animateWithDuration:0.8 delay:0 usingSpringWithDamping:0.65 initialSpringVelocity:0.6 options:UIViewAnimationOptionCurveEaseOut animations:^{
+        self.loginButton.transform = hide ? CGAffineTransformMakeScale(0.01, 0.01) : CGAffineTransformIdentity;
+        [self.loginButton setTitle:buttonText forState:UIControlStateNormal];
+        self.loginButton.alpha = !hide;
+    } completion:^(BOOL finished) {
+        if (hide) {
+            self.loginButton.alpha = 0;
+        }
+    }];
+}
+
 - (void)loginButtonPressed {
     
 }
 
-- (void)imNewButtonPressed {
-    [self setLoginContainerHidden:YES];
-}
-
 - (void)createNewAccountButtonPressed {
+    //TODO: wait on Eli's dumb ass to set up the create user endpoint
+    self.view.userInteractionEnabled = NO;
     
-}
-
-- (void)setLoginContainerHidden:(BOOL)hide {
-    if (!hide) {
-        self.loginButtonContainerView.alpha = 1;
+    if ([self.delegate respondsToSelector:@selector(animateTopLogo)]) {
+        [self.delegate animateTopLogo];
     }
-    [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-        self.loginButtonContainerView.transform = hide ? CGAffineTransformMakeScale(1, 0.01) : CGAffineTransformIdentity;
-    } completion:^(BOOL finished) {
-        if (hide)
-            self.loginButtonContainerView.alpha = 0;
-    }];
+    
+    //TODO: on callback, remove loader and progress
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        if ([self.delegate respondsToSelector:@selector(stopAnimatingTopLogo)]) {
+            [self.delegate stopAnimatingTopLogo];
+        }
+        if ([self.delegate respondsToSelector:@selector(moveToLocationAndPush)]) {
+            [self.delegate moveToLocationAndPush];
+        }
+    });
 }
 
 - (void)keyboardWillChangeFrame:(NSNotification*)note {

@@ -11,5 +11,6 @@
 @interface SBLocationAndNotificationsViewController : UIViewController
 
 @property (readonly) UILabel *topNameabel;
+- (void)showAllContent;
 
 @end

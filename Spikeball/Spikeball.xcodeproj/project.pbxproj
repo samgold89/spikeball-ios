@@ -26,6 +26,7 @@
 		A9A744B71A47840D0068876F /* SBEmailAndNameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A9A744B61A47840D0068876F /* SBEmailAndNameViewController.m */; };
 		A9A744BA1A4798BC0068876F /* white_checkmark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9A744B91A4798BC0068876F /* white_checkmark@2x.png */; };
 		A9D9FF311A47C64A00AEF5EA /* spikeball_small_logo_white@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9D9FF301A47C64A00AEF5EA /* spikeball_small_logo_white@2x.png */; };
+		A9D9FF381A47F81000AEF5EA /* SBProductSummaryIntroScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A9D9FF371A47F81000AEF5EA /* SBProductSummaryIntroScreenViewController.m */; };
 		D88AEBA711CEB84D4F66FB39 /* libPods-Spikeball.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C821388008106AC9E68D215 /* libPods-Spikeball.a */; };
 /* End PBXBuildFile section */
 
@@ -75,6 +76,8 @@
 		A9A744B81A478E8C0068876F /* SBLibrary.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SBLibrary.h; sourceTree = "<group>"; };
 		A9A744B91A4798BC0068876F /* white_checkmark@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "white_checkmark@2x.png"; sourceTree = "<group>"; };
 		A9D9FF301A47C64A00AEF5EA /* spikeball_small_logo_white@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "spikeball_small_logo_white@2x.png"; sourceTree = "<group>"; };
+		A9D9FF361A47F81000AEF5EA /* SBProductSummaryIntroScreenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBProductSummaryIntroScreenViewController.h; sourceTree = "<group>"; };
+		A9D9FF371A47F81000AEF5EA /* SBProductSummaryIntroScreenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBProductSummaryIntroScreenViewController.m; sourceTree = "<group>"; };
 		ACD1208F896E0C4DA9FF0AFE /* Pods-Spikeball.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spikeball.release.xcconfig"; path = "Pods/Target Support Files/Pods-Spikeball/Pods-Spikeball.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -192,6 +195,8 @@
 		A99FEB1B1A25092000F342B2 /* Login Flow */ = {
 			isa = PBXGroup;
 			children = (
+				A9D9FF361A47F81000AEF5EA /* SBProductSummaryIntroScreenViewController.h */,
+				A9D9FF371A47F81000AEF5EA /* SBProductSummaryIntroScreenViewController.m */,
 				A9A744B21A4782300068876F /* SBLocationAndNotificationsViewController.h */,
 				A9A744B31A4782300068876F /* SBLocationAndNotificationsViewController.m */,
 				A9A744B51A47840D0068876F /* SBEmailAndNameViewController.h */,
@@ -376,6 +381,7 @@
 			files = (
 				A99FEB2B1A25218100F342B2 /* SBAnimatingLogo.m in Sources */,
 				A9A744B01A4540D90068876F /* SBViewConstants.m in Sources */,
+				A9D9FF381A47F81000AEF5EA /* SBProductSummaryIntroScreenViewController.m in Sources */,
 				A9568E391A214B900075CB35 /* AppDelegate.m in Sources */,
 				A99FEB121A25068100F342B2 /* UIColor+SpikeballColors.m in Sources */,
 				A9568E361A214B900075CB35 /* main.m in Sources */,

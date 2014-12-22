@@ -17,14 +17,13 @@
 @property (nonatomic,strong) UIImageView *gradientBackgroundImageView;
 
 @property (nonatomic,strong) UIButton *bigLogo;
+@property (nonatomic,strong) SBAnimatingLogo *animatingLogo;
+@property (nonatomic,strong) UIView *blackOverlay;
 
 @property (nonatomic,strong) NSMutableArray *bigLogoConstraints;
 @property (nonatomic,strong) NSMutableArray *smallLogoConstraints;
 
 @property (nonatomic,strong) NSLayoutConstraint *accountConstraint;
-
-@property (nonatomic,strong) UIPanGestureRecognizer *panner;
-@property (nonatomic,assign) CGFloat previousPanX;
 
 @property (nonatomic,strong) SBEmailAndNameViewController *emailAndNameViewController;
 @property (nonatomic,strong) SBLocationAndNotificationsViewController *locationAndNotificationsViewController;
@@ -39,6 +38,7 @@ static CGFloat kEmailOffset = 0;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
     
     self.bigLogoConstraints = [@[] mutableCopy];
     self.smallLogoConstraints = [@[] mutableCopy];
@@ -72,10 +72,6 @@ static CGFloat kEmailOffset = 0;
     [self.locationAndNotificationsViewController willMoveToParentViewController:self];
     [self addChildViewController:self.locationAndNotificationsViewController];
     [self.locationAndNotificationsViewController didMoveToParentViewController:self];
-    
-    self.panner = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(pannerPanned:)];
-    self.panner.enabled = NO;
-    [self.view addGestureRecognizer:self.panner];
     
     [self setupConstraints];
 }
@@ -121,46 +117,16 @@ static CGFloat kEmailOffset = 0;
     } completion:nil];
 }
 
-- (void)pannerPanned:(UIPanGestureRecognizer*)pan {
-    CGFloat xLocation = [pan locationInView:self.view].x;
-    switch (pan.state) {
-        case UIGestureRecognizerStateBegan:
-            self.previousPanX = xLocation;
-            [self.emailAndNameViewController endAllEditing];
-            break;
-        case UIGestureRecognizerStateChanged: {
-            CGFloat xDiff = self.previousPanX-xLocation;
-            self.emailAndNameViewController.view.center = CGPointMake(self.emailAndNameViewController.view.center.x - xDiff, self.emailAndNameViewController.view.center.y);
-            self.locationAndNotificationsViewController.view.center = CGPointMake(self.locationAndNotificationsViewController.view.center.x - xDiff, self.locationAndNotificationsViewController.view.center.y);
-        }
-            break;
-        case UIGestureRecognizerStateEnded: {
-            CGFloat xVelocity = [pan velocityInView:self.view].x;
-            if (xVelocity < 0) {
-                [self moveToLocationView];
-            } else if (xVelocity > 0) {
-                [self moveToAccountView];
-            } else if (self.emailAndNameViewController.view.center.x < 0) {
-                [self moveToLocationView];
-            } else {
-                [self moveToLocationView];
-            }
-        }
-            break;
-            
-        default:
-            break;
-    }
-    self.previousPanX = xLocation;
-}
-
 - (void)moveToLocationView {
     self.accountConstraint.constant = -[[UIScreen mainScreen] bounds].size.width;
-    [UIView animateWithDuration:0.8 delay:0 usingSpringWithDamping:0.65 initialSpringVelocity:0.6 options:UIViewAnimationOptionCurveEaseOut animations:^{
+    CGFloat animationTime = 0.8;
+    [UIView animateWithDuration:animationTime delay:0 usingSpringWithDamping:0.65 initialSpringVelocity:0.6 options:UIViewAnimationOptionCurveEaseOut animations:^{
         [self.view setNeedsUpdateConstraints];
         [self.view updateConstraints];
         [self.view layoutIfNeeded];
-    } completion:nil];
+    } completion:^(BOOL finished) {
+        [self.locationAndNotificationsViewController showAllContent];
+    }];
 }
 
 - (void)moveToAccountView {
@@ -174,7 +140,47 @@ static CGFloat kEmailOffset = 0;
 }
 
 #pragma mark Account View Delegate
-- (void)moveToLocationPushView {
+- (void)animateTopLogo {
+    if (self.animatingLogo) {
+        [self.animatingLogo removeFromSuperview];
+        self.animatingLogo = nil;
+    }
+    if (self.blackOverlay) {
+        [self.blackOverlay removeFromSuperview];
+        self.blackOverlay = nil;
+    }
+    
+    self.blackOverlay = [[UIView alloc] initWithFrame:self.view.bounds];
+    self.blackOverlay.backgroundColor = [[UIColor spikeballBlack] colorWithAlphaComponent:0.35];
+    self.blackOverlay.alpha = 0;
+    [self.view addSubview:self.blackOverlay];
+    
+    self.animatingLogo = [[SBAnimatingLogo alloc] initWithFrame:self.bigLogo.bounds];
+    self.animatingLogo.center = self.bigLogo.center;
+    self.animatingLogo.alpha = 0;
+    [self.view addSubview:self.animatingLogo];
+    
+    [UIView animateWithDuration:0.3 animations:^{
+        self.animatingLogo.alpha = 1;
+        self.blackOverlay.alpha = 1;
+        self.bigLogo.alpha = 0;
+    }];
+}
+
+- (void)stopAnimatingTopLogo {
+    [UIView animateWithDuration:0.3 animations:^{
+        self.animatingLogo.alpha = 0;
+        self.blackOverlay.alpha = 0;
+        self.bigLogo.alpha = 1;
+    } completion:^(BOOL finished) {
+        [self.animatingLogo removeFromSuperview];
+        self.animatingLogo = nil;
+        [self.blackOverlay removeFromSuperview];
+        self.blackOverlay = nil;
+    }];
+}
+
+- (void)moveToLocationAndPush {
     [self moveToLocationView];
 }
 
@@ -184,10 +190,6 @@ static CGFloat kEmailOffset = 0;
 
 - (void)restoreViewToIdentity {
     self.view.transform = CGAffineTransformIdentity;
-}
-
-- (void)setPannerEnabled:(BOOL)enabled {
-    self.panner.enabled = enabled;
 }
 
 - (void)updateLocationWithName:(NSString *)name {
