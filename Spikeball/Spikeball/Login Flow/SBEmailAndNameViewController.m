@@ -349,14 +349,16 @@ static CGFloat kFieldBufferValue = 10;
         [self.passwordTextField becomeFirstResponder];
     } else if ([textField isEqual:self.passwordTextField]) {
         [self.passwordRepeatTextField becomeFirstResponder];
-    } else if ([textField isEqual:self.passwordRepeatTextField]) {
-        [self.firstNameTextField becomeFirstResponder];
-    } else if ([textField isEqual:self.firstNameTextField]) {
-        [self.lastNameTextField becomeFirstResponder];
-    } else if ([textField isEqual:self.lastNameTextField]) {
-        [self.nicknameTextField becomeFirstResponder];
-    } else if ([textField isEqual:self.nicknameTextField]) {
-        [self.nicknameTextField resignFirstResponder];
+    } else if ([self validateAccountTextFields]) {
+        if ([textField isEqual:self.passwordRepeatTextField]) {
+            [self.firstNameTextField becomeFirstResponder];
+        } else if ([textField isEqual:self.firstNameTextField]) {
+            [self.lastNameTextField becomeFirstResponder];
+        } else if ([textField isEqual:self.lastNameTextField]) {
+            [self.nicknameTextField becomeFirstResponder];
+        } else if ([textField isEqual:self.nicknameTextField]) {
+            [self.nicknameTextField resignFirstResponder];
+        }
     }
     return YES;
 }
@@ -431,15 +433,19 @@ static CGFloat kFieldBufferValue = 10;
     if (![self.emailTextField.text isValidEmailAddress] && ![self.emailTextField isFirstResponder]) { //invalid email
         hide = NO;
         buttonText = @"Invalid email address";
+        self.loginButton.enabled = NO;
     } else if (self.passwordRepeatTextField.text.length == 0) { //login button
         hide = NO;
         buttonText = @"Login";
+        self.loginButton.enabled = YES;
     } else if (![self.passwordTextField isFirstResponder] && ![self.passwordTextField.text isValidPassword]) {
         hide = NO;
         buttonText = @"Password must be at least 5 characters!";
+        self.loginButton.enabled = NO;
     } else if (![self.passwordRepeatTextField.text isEqualToString:self.passwordTextField.text]) { //passwords don't match
         hide = NO;
         buttonText = @"Passwords don't match";
+        self.loginButton.enabled = NO;
     } else { //hide it!
         hide = [self.passwordTextField isFirstResponder];
     }
