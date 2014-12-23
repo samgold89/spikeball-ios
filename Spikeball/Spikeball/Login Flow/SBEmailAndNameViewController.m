@@ -217,8 +217,8 @@ static CGFloat kFieldBufferValue = 10;
 
 - (void)setupConstraints {
 //    [NSLayoutConstraint centerXOfChild:self.createAccountButton toCenterXOfParent:self.view];
-    CGFloat buttonBuffer = 25;
-    [NSLayoutConstraint sidesOfChild:self.createAccountButton toSidesOfParent:self.view margin:buttonBuffer];
+    CGFloat buttonBuffer = 20;
+    [NSLayoutConstraint sidesOfChild:self.createAccountButton toSidesOfParent:self.view margin:buttonBuffer*2];
     [NSLayoutConstraint view:self.createAccountButton toFixedHeight:kTextFieldHeight];
     [NSLayoutConstraint bottomOfChild:self.createAccountButton toBottomOfParent:self.view withFixedMargin:-buttonBuffer];
     
@@ -277,7 +277,6 @@ static CGFloat kFieldBufferValue = 10;
     //TOP login buttons
     [NSLayoutConstraint centerXOfChild:self.loginButton toCenterXOfParent:self.view];
     [NSLayoutConstraint topOfChild:self.loginButton toBottomOfSibling:self.topAccountContainerView withFixedMargin:20 inParent:self.view];
-
     
     //BOTTOM / Name fields
     [NSLayoutConstraint centerXOfChild:self.enterNameLabel toCenterXOfParent:self.bottomNameContainerView];

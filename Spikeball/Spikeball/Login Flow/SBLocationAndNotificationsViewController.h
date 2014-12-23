@@ -8,9 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol SBLocationAndNotificationsViewControllerDelegate <NSObject>
+
+- (void)moveToFinalSummaryView;
+
+@end
+
 @interface SBLocationAndNotificationsViewController : UIViewController
 
+@property (nonatomic,weak) id <SBLocationAndNotificationsViewControllerDelegate>delegate;
 @property (readonly) UILabel *topNameabel;
+
 - (void)showAllContent;
 
 @end

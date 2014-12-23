@@ -10,9 +10,10 @@
 #import "SBEmailAndNameViewController.h"
 #import "SBLocationAndNotificationsViewController.h"
 #import "SBAnimatingLogo.h"
+#import "SBLoginCompleteViewController.h"
 #import "SBLibrary.h"
 
-@interface SBLoginViewController () <SBEmailAndNameViewControllerDelegate>
+@interface SBLoginViewController () <SBEmailAndNameViewControllerDelegate,SBLocationAndNotificationsViewControllerDelegate>
 
 @property (nonatomic,strong) UIImageView *gradientBackgroundImageView;
 
@@ -27,6 +28,7 @@
 
 @property (nonatomic,strong) SBEmailAndNameViewController *emailAndNameViewController;
 @property (nonatomic,strong) SBLocationAndNotificationsViewController *locationAndNotificationsViewController;
+@property (nonatomic,strong) SBLoginCompleteViewController *loginCompleteViewController;
 
 @end
 
@@ -70,11 +72,20 @@ static CGFloat kEmailOffset = 0;
     [self.emailAndNameViewController didMoveToParentViewController:self];
     
     self.locationAndNotificationsViewController = [[SBLocationAndNotificationsViewController alloc] init];
-    [self.view addSubview:self.locationAndNotificationsViewController.view];
     self.locationAndNotificationsViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
+    self.locationAndNotificationsViewController.delegate = self;
+    [self.view addSubview:self.locationAndNotificationsViewController.view];
     [self.locationAndNotificationsViewController willMoveToParentViewController:self];
     [self addChildViewController:self.locationAndNotificationsViewController];
     [self.locationAndNotificationsViewController didMoveToParentViewController:self];
+    
+    self.loginCompleteViewController = [[SBLoginCompleteViewController alloc] init];
+    self.loginCompleteViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
+    self.loginCompleteViewController.view.hidden = YES;
+    [self.view addSubview:self.loginCompleteViewController.view];
+    [self.loginCompleteViewController willMoveToParentViewController:self];
+    [self addChildViewController:self.loginCompleteViewController];
+    [self.loginCompleteViewController didMoveToParentViewController:self];
     
     [self setupConstraints];
 }
@@ -92,17 +103,26 @@ static CGFloat kEmailOffset = 0;
     [NSLayoutConstraint leftOfChild:self.locationAndNotificationsViewController.view toRightOfSibling:self.emailAndNameViewController.view withFixedMargin:0 inParent:self.view];
     [NSLayoutConstraint topOfChild:self.locationAndNotificationsViewController.view toTopOfSibling:self.emailAndNameViewController.view withFixedMargin:0 inParent:self.view];
     [NSLayoutConstraint bottomOfChild:self.locationAndNotificationsViewController.view toBottomOfSibling:self.emailAndNameViewController.view withFixedMargin:0 inParent:self.view];
+    
+    [NSLayoutConstraint view:self.loginCompleteViewController.view toFixedWidth:screenWidth];
+    [NSLayoutConstraint leftOfChild:self.loginCompleteViewController.view toRightOfSibling:self.locationAndNotificationsViewController.view withFixedMargin:0 inParent:self.view];
+    [NSLayoutConstraint topOfChild:self.loginCompleteViewController.view toTopOfSibling:self.locationAndNotificationsViewController.view withFixedMargin:0 inParent:self.view];
+    [NSLayoutConstraint bottomOfChild:self.loginCompleteViewController.view toBottomOfSibling:self.locationAndNotificationsViewController.view withFixedMargin:0 inParent:self.view];
 
     //LOGO constraints
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.bigLogo attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1 constant:0]];
+    [NSLayoutConstraint centerXOfChild:self.bigLogo toCenterXOfParent:self.view];
+//    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.bigLogo attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1 constant:0]];
     
-    NSLayoutConstraint *bigCenterYConstraint = [NSLayoutConstraint constraintWithItem:self.bigLogo attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterY multiplier:1 constant:-103.];
+    NSLayoutConstraint *bigCenterYConstraint = [NSLayoutConstraint topOfChild:self.bigLogo toTopOfParent:self.view withFixedMargin:87];
+    [NSLayoutConstraint deactivateConstraints:@[bigCenterYConstraint]];
+    //[NSLayoutConstraint constraintWithItem:self.bigLogo attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterY multiplier:1 constant:-103.];
     
-    NSLayoutConstraint *smallCenterYConstraint = [NSLayoutConstraint constraintWithItem:self.bigLogo attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterY multiplier:1 constant:-205];
+    NSLayoutConstraint *smallCenterYConstraint = [NSLayoutConstraint topOfChild:self.bigLogo toTopOfParent:self.view withFixedMargin:41.5];
+    //[NSLayoutConstraint constraintWithItem:self.bigLogo attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterY multiplier:1 constant:-205];
     NSLayoutConstraint *smallLogoHeightConstraint = [NSLayoutConstraint constraintWithItem:self.bigLogo attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1 constant:kSmallLogoHeight];
-    NSLayoutConstraint *smallLogoWidthConstraing = [NSLayoutConstraint constraintWithItem:self.bigLogo attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1 constant:kSmallLogoHeight];
+    NSLayoutConstraint *smallLogoWidthConstraint = [NSLayoutConstraint constraintWithItem:self.bigLogo attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1 constant:kSmallLogoHeight];
     
-    [self.smallLogoConstraints addObjectsFromArray:@[smallCenterYConstraint,smallLogoHeightConstraint,smallLogoWidthConstraing]];
+    [self.smallLogoConstraints addObjectsFromArray:@[smallCenterYConstraint,smallLogoHeightConstraint,smallLogoWidthConstraint]];
     [self.view addConstraints:self.smallLogoConstraints];
     [NSLayoutConstraint deactivateConstraints:self.smallLogoConstraints];
     [self.view addConstraint:bigCenterYConstraint];
@@ -140,6 +160,20 @@ static CGFloat kEmailOffset = 0;
         [self.view layoutIfNeeded];
 
     } completion:nil];
+}
+
+- (void)moveToFinalLoginView {
+    self.loginCompleteViewController.view.hidden = NO;
+    
+    self.accountConstraint.constant = -2.0*[[UIScreen mainScreen] bounds].size.width;
+    CGFloat animationTime = 0.8;
+    [UIView animateWithDuration:animationTime delay:0 usingSpringWithDamping:0.65 initialSpringVelocity:0.6 options:UIViewAnimationOptionCurveEaseOut animations:^{
+        [self.view setNeedsUpdateConstraints];
+        [self.view updateConstraints];
+        [self.view layoutIfNeeded];
+    } completion:^(BOOL finished) {
+//        [self.loginCompleteViewController showAllContent];
+    }];
 }
 
 #pragma mark Account View Delegate
@@ -185,6 +219,10 @@ static CGFloat kEmailOffset = 0;
 
 - (void)moveToLocationAndPush {
     [self moveToLocationView];
+}
+
+- (void)moveToFinalSummaryView {
+    [self moveToFinalLoginView];
 }
 
 - (void)translateViewByValue:(CGFloat)shift {

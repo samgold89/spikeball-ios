@@ -133,12 +133,12 @@
 }
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
-    NSLog(@"Something");
+    NSLog(@"Registered for push notifications");
     [[NSNotificationCenter defaultCenter] postNotificationName:SBNotificationDidRegisterForPushNotifications object:nil];
 }
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
-    NSLog(@"Failed");
+    NSLog(@"Failed to register remote :: %@",error.localizedDescription);
     [[NSNotificationCenter defaultCenter] postNotificationName:SBNotificationFailedToRegisterForPushNotifications object:nil];
 }
 
@@ -153,16 +153,16 @@
 }
 
 - (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {
-    NSLog(@"didChange");
+    NSLog(@"didChange location");
     [[NSNotificationCenter defaultCenter] postNotificationName:SBNotificationDidRegisterForLocationServices object:nil];
 }
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
-    NSLog(@"didfail");
+    NSLog(@"didfail get location");
 }
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
-    NSLog(@"update");
+    NSLog(@"update location");
 }
 
 

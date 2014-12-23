@@ -12,6 +12,7 @@
 		A9568E3C1A214B900075CB35 /* Spikeball.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A9568E3A1A214B900075CB35 /* Spikeball.xcdatamodeld */; };
 		A9568E441A214B900075CB35 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A9568E431A214B900075CB35 /* Images.xcassets */; };
 		A9568E531A214B900075CB35 /* SpikeballTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A9568E521A214B900075CB35 /* SpikeballTests.m */; };
+		A98587F91A4924E3006C0035 /* SBLoginCompleteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A98587F81A4924E3006C0035 /* SBLoginCompleteViewController.m */; };
 		A99FEB121A25068100F342B2 /* UIColor+SpikeballColors.m in Sources */ = {isa = PBXBuildFile; fileRef = A99FEB111A25068100F342B2 /* UIColor+SpikeballColors.m */; };
 		A99FEB1E1A25092B00F342B2 /* SBLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A99FEB1D1A25092B00F342B2 /* SBLoginViewController.m */; };
 		A99FEB241A251CC800F342B2 /* black_to_yellow_gradient@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A99FEB201A251CC800F342B2 /* black_to_yellow_gradient@2x.png */; };
@@ -54,6 +55,8 @@
 		A9568E4C1A214B900075CB35 /* SpikeballTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SpikeballTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9568E511A214B900075CB35 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A9568E521A214B900075CB35 /* SpikeballTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SpikeballTests.m; sourceTree = "<group>"; };
+		A98587F71A4924E3006C0035 /* SBLoginCompleteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBLoginCompleteViewController.h; sourceTree = "<group>"; };
+		A98587F81A4924E3006C0035 /* SBLoginCompleteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBLoginCompleteViewController.m; sourceTree = "<group>"; };
 		A99FEB101A25068100F342B2 /* UIColor+SpikeballColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+SpikeballColors.h"; sourceTree = "<group>"; };
 		A99FEB111A25068100F342B2 /* UIColor+SpikeballColors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+SpikeballColors.m"; sourceTree = "<group>"; };
 		A99FEB1C1A25092B00F342B2 /* SBLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBLoginViewController.h; sourceTree = "<group>"; };
@@ -197,6 +200,8 @@
 		A99FEB1B1A25092000F342B2 /* Login Flow */ = {
 			isa = PBXGroup;
 			children = (
+				A98587F71A4924E3006C0035 /* SBLoginCompleteViewController.h */,
+				A98587F81A4924E3006C0035 /* SBLoginCompleteViewController.m */,
 				A9D9FF361A47F81000AEF5EA /* SBProductSummaryIntroScreenViewController.h */,
 				A9D9FF371A47F81000AEF5EA /* SBProductSummaryIntroScreenViewController.m */,
 				A9A744B21A4782300068876F /* SBLocationAndNotificationsViewController.h */,
@@ -387,6 +392,7 @@
 				A9A744B01A4540D90068876F /* SBViewConstants.m in Sources */,
 				A9D9FF381A47F81000AEF5EA /* SBProductSummaryIntroScreenViewController.m in Sources */,
 				A9568E391A214B900075CB35 /* AppDelegate.m in Sources */,
+				A98587F91A4924E3006C0035 /* SBLoginCompleteViewController.m in Sources */,
 				A99FEB121A25068100F342B2 /* UIColor+SpikeballColors.m in Sources */,
 				A9568E361A214B900075CB35 /* main.m in Sources */,
 				A9A744B71A47840D0068876F /* SBEmailAndNameViewController.m in Sources */,

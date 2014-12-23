@@ -42,6 +42,7 @@
     
     self.textScrollView = [[UIScrollView alloc] init];
     self.textScrollView.translatesAutoresizingMaskIntoConstraints = NO;
+    self.textScrollView.showsVerticalScrollIndicator = NO;
     self.textScrollView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:self.textScrollView];
     

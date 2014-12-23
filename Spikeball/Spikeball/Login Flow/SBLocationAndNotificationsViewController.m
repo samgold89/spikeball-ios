@@ -24,11 +24,13 @@ static CGFloat kLabelToButtonBuffer = 18;
 @property (nonatomic,strong) UIButton *locationButton;
 @property (nonatomic,strong) UIImageView *locationStatusImageView;
 @property (nonatomic,strong) SBAnimatingLogo *locationLoading;
+@property (nonatomic,assign) BOOL locationResultReceived;
 
 @property (nonatomic,strong) UILabel *notificationPrompt;
 @property (nonatomic,strong) UIButton *notificationButton;
 @property (nonatomic,strong) UIImageView *notificationStatusImageView;
 @property (nonatomic,strong) SBAnimatingLogo *notificationLoading;
+@property (nonatomic,assign) BOOL notificationResultReceived;
 
 @end
 
@@ -159,12 +161,23 @@ static CGFloat kLabelToButtonBuffer = 18;
     [NSLayoutConstraint centerYOfChild:self.locationStatusImageView toCenterYOfSibling:self.locationButton inParent:self.view];
     [NSLayoutConstraint rightOfChild:self.locationStatusImageView toRightOfSibling:self.locationButton withFixedMargin:-10 inParent:self.view];
     
-    [NSLayoutConstraint sidesOfChild:self.notificationPrompt toSidesOfParent:self.view margin:labelSideMargin];
-    [NSLayoutConstraint topOfChild:self.notificationPrompt toBottomOfSibling:self.locationButton withFixedMargin:2*kLabelToButtonBuffer inParent:self.view];
-    
-    [NSLayoutConstraint sidesOfChild:self.notificationButton toSidesOfParent:self.view margin:20];
-    [NSLayoutConstraint topOfChild:self.notificationButton toBottomOfSibling:self.notificationPrompt withFixedMargin:kLabelToButtonBuffer inParent:self.view];
-    [NSLayoutConstraint view:self.notificationButton toFixedHeight:buttonHeight];
+    if (IS_IPHONE_4) { //iphone 4 we'll stack 'em on top of each other
+        [NSLayoutConstraint sidesOfChild:self.notificationPrompt toSidesOfParent:self.view margin:labelSideMargin];
+        [NSLayoutConstraint topOfChild:self.notificationPrompt toBottomOfSibling:self.nameBottomBorder withFixedMargin:2*kLabelToButtonBuffer inParent:self.view];
+        
+        [NSLayoutConstraint sidesOfChild:self.notificationButton toSidesOfParent:self.view margin:20];
+        [NSLayoutConstraint topOfChild:self.notificationButton toBottomOfSibling:self.notificationPrompt withFixedMargin:kLabelToButtonBuffer inParent:self.view];
+        [NSLayoutConstraint view:self.notificationButton toFixedHeight:buttonHeight];
+        
+        self.notificationPrompt.alpha = self.notificationButton.alpha = 0;
+    } else {
+        [NSLayoutConstraint sidesOfChild:self.notificationPrompt toSidesOfParent:self.view margin:labelSideMargin];
+        [NSLayoutConstraint topOfChild:self.notificationPrompt toBottomOfSibling:self.locationButton withFixedMargin:2*kLabelToButtonBuffer inParent:self.view];
+        
+        [NSLayoutConstraint sidesOfChild:self.notificationButton toSidesOfParent:self.view margin:20];
+        [NSLayoutConstraint topOfChild:self.notificationButton toBottomOfSibling:self.notificationPrompt withFixedMargin:kLabelToButtonBuffer inParent:self.view];
+        [NSLayoutConstraint view:self.notificationButton toFixedHeight:buttonHeight];
+    }
     
     [NSLayoutConstraint centerYOfChild:self.notificationStatusImageView toCenterYOfSibling:self.notificationButton inParent:self.view];
     [NSLayoutConstraint rightOfChild:self.notificationStatusImageView toRightOfSibling:self.notificationButton withFixedMargin:-10 inParent:self.view];
@@ -221,6 +234,8 @@ static CGFloat kLabelToButtonBuffer = 18;
 
 #pragma mark Push & Location NSNotification Handlers
 - (void)didRegisterForPush:(NSNotification*)note {
+    self.notificationResultReceived = YES;
+    
     self.notificationButton.enabled = NO;
     
     self.notificationStatusImageView.transform = CGAffineTransformMakeScale(0.01, 0.01);
@@ -235,11 +250,13 @@ static CGFloat kLabelToButtonBuffer = 18;
 }
 
 - (void)failedToRegisterForPush:(NSNotification*)note {
-    
-    [self checkCompletionAndAdvanceIfReady];
+//    self.notificationResultReceived = YES;
+//    [self checkCompletionAndAdvanceIfReady];
 }
 
 - (void)didRegisterForLocation:(NSNotification*)note {
+    self.locationResultReceived = YES;
+    
     self.locationStatusImageView.transform = CGAffineTransformMakeScale(0.01, 0.01);
     self.locationButton.enabled = NO;
     
@@ -249,16 +266,35 @@ static CGFloat kLabelToButtonBuffer = 18;
         self.locationLoading.alpha = 0;
         self.locationLoading.transform = CGAffineTransformMakeScale(0.01, 0.01);
     } completion:^(BOOL finished) {
+        [self setLocationsHiddenIfIphone4];
         [self checkCompletionAndAdvanceIfReady];
     }];
 }
 
 - (void)failedToRegisterForLocation:(NSNotification*)note {
-    [self checkCompletionAndAdvanceIfReady];
+    [self setLocationsHiddenIfIphone4];
+//    self.locationResultReceived = YES;
+//    [self checkCompletionAndAdvanceIfReady];
+}
+
+- (void)setLocationsHiddenIfIphone4 {
+    if (IS_IPHONE_4) {
+        [UIView animateWithDuration:0.4 animations:^{
+            self.locationStatusImageView.alpha = self.locationButton.alpha = self.locationPrompt.alpha = 0;
+            self.notificationButton.alpha = self.notificationPrompt.alpha = 1;
+        }];
+    }
 }
 
 - (void)checkCompletionAndAdvanceIfReady {
     //ADVANCE TO COMPLETION SCREEN / GET STARTED
+    //TODO: go to games if there are games nearby
+    //TODO: go to summon if there are no games
+    if (self.notificationResultReceived && self.locationResultReceived) {
+        if ([self.delegate respondsToSelector:@selector(moveToFinalSummaryView)]) {
+            [self.delegate moveToFinalSummaryView];
+        }
+    }
 }
 
 - (void)didReceiveMemoryWarning {

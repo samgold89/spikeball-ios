@@ -9,6 +9,9 @@
 #ifndef Spikeball_SBLibrary_h
 #define Spikeball_SBLibrary_h
 
+#define HEIGHT_IPHONE_4 480
+#define IS_IPHONE_4 ( [ [ UIScreen mainScreen ] bounds ].size.height == HEIGHT_IPHONE_4 )
+
 #import "UIColor+SpikeballColors.h"
 #import "SBViewConstants.h"
 #import <NSLayoutConstraint+HAWHelpers/NSLayoutConstraint+HAWHelpers.h>
