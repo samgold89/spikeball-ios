@@ -7,15 +7,21 @@
 //
 
 #import "AppDelegate.h"
-#import "SBLoginViewController.h"
 #import "SBProductSummaryIntroScreenViewController.h"
 #import "SBLibrary.h"
 #import <CoreLocation/CoreLocation.h>
 
+//Tab Bar View Controllers
+#import "SBGamesViewController.h"
+#import "SBFriendsViewController.h"
+#import "SBSummonViewController.h"
+#import "SBAccountViewController.h"
+
 @interface AppDelegate () <CLLocationManagerDelegate>
 
-@property (nonatomic, strong) SBLoginViewController *loginVc;
 @property (nonatomic, strong) SBProductSummaryIntroScreenViewController *prodSum;
+@property (nonatomic, strong) UITabBarController *tabBarController;
+@property (nonatomic, strong) CLLocationManager *locationManager;
 
 @end
 
@@ -27,7 +33,12 @@
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     
-    [self setupLoginFlow];
+    BOOL userIsLoggedIn = NO;
+    if (userIsLoggedIn) {
+        [self setupRootViewControllersFromLogin:NO];
+    } else {
+        [self setupLoginFlow];
+    }
     
     if ([CLLocationManager authorizationStatus] < kCLAuthorizationStatusAuthorizedAlways) { //no permission yet
         
@@ -41,13 +52,55 @@
 - (void)setupLoginFlow {
     self.prodSum = [[SBProductSummaryIntroScreenViewController alloc] init];
     self.window.rootViewController = self.prodSum;
-    self.self.prodSum.view.frame = self.window.bounds;
-    [self.window addSubview:self.self.prodSum.view];
+}
+
+- (void)setupRootViewControllersFromLogin:(BOOL)fromLogin {
+    SBSummonViewController *summonVc = [[SBSummonViewController alloc] init];
+    summonVc.title = @"Summon";
+    summonVc.tabBarItem.image = [UIImage imageNamed:@"summon_tab_bar"];
+//    summonVc.tabBarItem.selectedImage = [UIImage imageNamed:@"summon_tab_bar_selected"];
+    UINavigationController *summonNav = [[UINavigationController alloc] initWithRootViewController:summonVc];
     
-//    self.loginVc = [[SBLoginViewController alloc] init];
-//    self.window.rootViewController = self.loginVc;
-//    self.loginVc.view.frame = self.window.bounds;
-//    [self.window addSubview:self.loginVc.view];
+    SBGamesViewController *gamesVc = [[SBGamesViewController alloc] init];
+    gamesVc.title = @"Games";
+    gamesVc.tabBarItem.image = [UIImage imageNamed:@"games_tab_bar"];
+//    gamesVc.tabBarItem.selectedImage = [UIImage imageNamed:@"games_tab_bar_selected"];
+    UINavigationController *gamesNav = [[UINavigationController alloc] initWithRootViewController:gamesVc];
+    
+    SBFriendsViewController *friendsVc = [[SBFriendsViewController alloc] init];
+    friendsVc.title = @"Friends";
+    friendsVc.tabBarItem.image = [UIImage imageNamed:@"friends_tab_bar"];
+//    friendsVc.tabBarItem.selectedImage = [UIImage imageNamed:@"friends_tab_bar_selected"];
+    UINavigationController *friendsNav = [[UINavigationController alloc] initWithRootViewController:friendsVc];
+    
+    SBAccountViewController *accountVc = [[SBAccountViewController alloc] init];
+    accountVc.title = @"Account";
+    accountVc.tabBarItem.image = [UIImage imageNamed:@"account_tab_bar"];
+//    accountVc.tabBarItem.selectedImage = [UIImage imageNamed:@"summon_tab_bar_selected"];
+    UINavigationController *accountNav = [[UINavigationController alloc] initWithRootViewController:accountVc];
+    
+    self.tabBarController = [[UITabBarController alloc] init];
+    self.tabBarController.viewControllers = @[summonNav,gamesNav,friendsNav,accountNav];
+    self.tabBarController.tabBar.tintColor = [UIColor spikeballYellow];
+    self.tabBarController.tabBar.barStyle = UIBarStyleBlack;
+    
+    UIView *windowSnapshot;
+    if (fromLogin) {
+        windowSnapshot = [self.window snapshotViewAfterScreenUpdates:YES];
+    }
+    self.window.rootViewController = self.tabBarController;
+    if (fromLogin) {
+        windowSnapshot.frame = self.window.bounds;
+        [self.window addSubview:windowSnapshot];
+        self.tabBarController.view.transform = CGAffineTransformMakeScale(0.85, 0.85);
+        [UIView animateWithDuration:0.9
+                              delay:0 usingSpringWithDamping:0.65 initialSpringVelocity:0.6 options:UIViewAnimationOptionCurveEaseOut animations:^{
+            windowSnapshot.center = CGPointMake(windowSnapshot.center.x, windowSnapshot.center.y+self.window.frame.size.height+50);
+            self.tabBarController.view.transform = CGAffineTransformIdentity;
+        } completion:^(BOOL finished) {
+            [windowSnapshot removeFromSuperview];
+        }];
+    }
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
@@ -145,16 +198,16 @@
 #pragma mark Location Request
 
 - (void)requestLocationAccess {
-//    if (![CLLocationManager locationServicesEnabled]) {
-    CLLocationManager *manager = [[CLLocationManager alloc] init];
-    
-    [manager requestWhenInUseAuthorization];
-//    }
+    self.locationManager = [[CLLocationManager alloc] init];
+    self.locationManager.delegate = self;
+    [self.locationManager requestWhenInUseAuthorization];
 }
 
 - (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {
-    NSLog(@"didChange location");
-    [[NSNotificationCenter defaultCenter] postNotificationName:SBNotificationDidRegisterForLocationServices object:nil];
+    NSLog(@"didChange location :: %i",status);
+    if ([CLLocationManager authorizationStatus] >= kCLAuthorizationStatusAuthorizedAlways) { //got permission
+        [[NSNotificationCenter defaultCenter] postNotificationName:SBNotificationDidRegisterForLocationServices object:nil];
+    }
 }
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {

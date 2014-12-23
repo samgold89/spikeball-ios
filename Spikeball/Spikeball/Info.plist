@@ -6,8 +6,6 @@
 	<string>en</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
-	<key>CFBundleHelpBookFolder</key>
-	<string></string>
 	<key>CFBundleIdentifier</key>
 	<string>SammyG.$(PRODUCT_NAME:rfc1034identifier)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
@@ -26,6 +24,8 @@
 	<true/>
 	<key>NSLocationUsageDescription</key>
 	<string>Your secrets are safe with us!</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>We use it for justice.</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>location</string>

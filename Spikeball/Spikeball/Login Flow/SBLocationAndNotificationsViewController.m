@@ -208,11 +208,6 @@ static CGFloat kLabelToButtonBuffer = 18;
     [self.view addSubview:self.locationLoading];
     
     [((AppDelegate*)[[UIApplication sharedApplication] delegate]) requestLocationAccess];
-    
-    //TODO: TAKE THIS OUT
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.6 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self didRegisterForLocation:nil];
-    });
 }
 
 - (void)notificationButtonPresesed:(id)sender {
@@ -273,8 +268,8 @@ static CGFloat kLabelToButtonBuffer = 18;
 
 - (void)failedToRegisterForLocation:(NSNotification*)note {
     [self setLocationsHiddenIfIphone4];
-//    self.locationResultReceived = YES;
-//    [self checkCompletionAndAdvanceIfReady];
+    self.locationResultReceived = YES;
+    [self checkCompletionAndAdvanceIfReady];
 }
 
 - (void)setLocationsHiddenIfIphone4 {

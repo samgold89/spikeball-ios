@@ -13,6 +13,17 @@
 		A9568E441A214B900075CB35 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A9568E431A214B900075CB35 /* Images.xcassets */; };
 		A9568E531A214B900075CB35 /* SpikeballTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A9568E521A214B900075CB35 /* SpikeballTests.m */; };
 		A98587F91A4924E3006C0035 /* SBLoginCompleteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A98587F81A4924E3006C0035 /* SBLoginCompleteViewController.m */; };
+		A98588021A4934BE006C0035 /* SBAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A98588011A4934BE006C0035 /* SBAccountViewController.m */; };
+		A98588051A4934C9006C0035 /* SBGamesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A98588041A4934C9006C0035 /* SBGamesViewController.m */; };
+		A98588081A4934D5006C0035 /* SBFriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A98588071A4934D5006C0035 /* SBFriendsViewController.m */; };
+		A985880B1A4934E0006C0035 /* SBSummonViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A985880A1A4934E0006C0035 /* SBSummonViewController.m */; };
+		A98588111A493797006C0035 /* account_tab_bar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A985880D1A493797006C0035 /* account_tab_bar@2x.png */; };
+		A98588121A493797006C0035 /* friends_tab_bar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A985880E1A493797006C0035 /* friends_tab_bar@2x.png */; };
+		A98588131A493797006C0035 /* games_tab_bar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A985880F1A493797006C0035 /* games_tab_bar@2x.png */; };
+		A98588141A493797006C0035 /* summon_tab_bar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A98588101A493797006C0035 /* summon_tab_bar@2x.png */; };
+		A98588161A493A0A006C0035 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A98588151A493A0A006C0035 /* MapKit.framework */; };
+		A98588191A49450F006C0035 /* geo_button_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A98588171A49450F006C0035 /* geo_button_selected@2x.png */; };
+		A985881A1A49450F006C0035 /* geo_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A98588181A49450F006C0035 /* geo_button@2x.png */; };
 		A99FEB121A25068100F342B2 /* UIColor+SpikeballColors.m in Sources */ = {isa = PBXBuildFile; fileRef = A99FEB111A25068100F342B2 /* UIColor+SpikeballColors.m */; };
 		A99FEB1E1A25092B00F342B2 /* SBLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A99FEB1D1A25092B00F342B2 /* SBLoginViewController.m */; };
 		A99FEB241A251CC800F342B2 /* black_to_yellow_gradient@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A99FEB201A251CC800F342B2 /* black_to_yellow_gradient@2x.png */; };
@@ -57,6 +68,21 @@
 		A9568E521A214B900075CB35 /* SpikeballTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SpikeballTests.m; sourceTree = "<group>"; };
 		A98587F71A4924E3006C0035 /* SBLoginCompleteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBLoginCompleteViewController.h; sourceTree = "<group>"; };
 		A98587F81A4924E3006C0035 /* SBLoginCompleteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBLoginCompleteViewController.m; sourceTree = "<group>"; };
+		A98588001A4934BE006C0035 /* SBAccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBAccountViewController.h; sourceTree = "<group>"; };
+		A98588011A4934BE006C0035 /* SBAccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBAccountViewController.m; sourceTree = "<group>"; };
+		A98588031A4934C9006C0035 /* SBGamesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBGamesViewController.h; sourceTree = "<group>"; };
+		A98588041A4934C9006C0035 /* SBGamesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBGamesViewController.m; sourceTree = "<group>"; };
+		A98588061A4934D5006C0035 /* SBFriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBFriendsViewController.h; sourceTree = "<group>"; };
+		A98588071A4934D5006C0035 /* SBFriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBFriendsViewController.m; sourceTree = "<group>"; };
+		A98588091A4934E0006C0035 /* SBSummonViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBSummonViewController.h; sourceTree = "<group>"; };
+		A985880A1A4934E0006C0035 /* SBSummonViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBSummonViewController.m; sourceTree = "<group>"; };
+		A985880D1A493797006C0035 /* account_tab_bar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "account_tab_bar@2x.png"; sourceTree = "<group>"; };
+		A985880E1A493797006C0035 /* friends_tab_bar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "friends_tab_bar@2x.png"; sourceTree = "<group>"; };
+		A985880F1A493797006C0035 /* games_tab_bar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "games_tab_bar@2x.png"; sourceTree = "<group>"; };
+		A98588101A493797006C0035 /* summon_tab_bar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "summon_tab_bar@2x.png"; sourceTree = "<group>"; };
+		A98588151A493A0A006C0035 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		A98588171A49450F006C0035 /* geo_button_selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "geo_button_selected@2x.png"; sourceTree = "<group>"; };
+		A98588181A49450F006C0035 /* geo_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "geo_button@2x.png"; sourceTree = "<group>"; };
 		A99FEB101A25068100F342B2 /* UIColor+SpikeballColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+SpikeballColors.h"; sourceTree = "<group>"; };
 		A99FEB111A25068100F342B2 /* UIColor+SpikeballColors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+SpikeballColors.m"; sourceTree = "<group>"; };
 		A99FEB1C1A25092B00F342B2 /* SBLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBLoginViewController.h; sourceTree = "<group>"; };
@@ -91,6 +117,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A98588161A493A0A006C0035 /* MapKit.framework in Frameworks */,
 				D88AEBA711CEB84D4F66FB39 /* libPods-Spikeball.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -108,6 +135,7 @@
 		4B54999A238F9EF827430C65 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A98588151A493A0A006C0035 /* MapKit.framework */,
 				3C821388008106AC9E68D215 /* libPods-Spikeball.a */,
 			);
 			name = Frameworks;
@@ -145,6 +173,7 @@
 		A9568E321A214B900075CB35 /* Spikeball */ = {
 			isa = PBXGroup;
 			children = (
+				A98587FB1A4934B1006C0035 /* View Controllers */,
 				A9A744B81A478E8C0068876F /* SBLibrary.h */,
 				A9A744AD1A4540CC0068876F /* Constants */,
 				A99FEB281A25217200F342B2 /* Views */,
@@ -188,6 +217,64 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		A98587FB1A4934B1006C0035 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				A98587FC1A4934B1006C0035 /* Account */,
+				A98587FD1A4934B1006C0035 /* Friends */,
+				A98587FE1A4934B1006C0035 /* Games */,
+				A98587FF1A4934B1006C0035 /* Summon */,
+			);
+			path = "View Controllers";
+			sourceTree = "<group>";
+		};
+		A98587FC1A4934B1006C0035 /* Account */ = {
+			isa = PBXGroup;
+			children = (
+				A98588001A4934BE006C0035 /* SBAccountViewController.h */,
+				A98588011A4934BE006C0035 /* SBAccountViewController.m */,
+			);
+			path = Account;
+			sourceTree = "<group>";
+		};
+		A98587FD1A4934B1006C0035 /* Friends */ = {
+			isa = PBXGroup;
+			children = (
+				A98588061A4934D5006C0035 /* SBFriendsViewController.h */,
+				A98588071A4934D5006C0035 /* SBFriendsViewController.m */,
+			);
+			path = Friends;
+			sourceTree = "<group>";
+		};
+		A98587FE1A4934B1006C0035 /* Games */ = {
+			isa = PBXGroup;
+			children = (
+				A98588031A4934C9006C0035 /* SBGamesViewController.h */,
+				A98588041A4934C9006C0035 /* SBGamesViewController.m */,
+			);
+			path = Games;
+			sourceTree = "<group>";
+		};
+		A98587FF1A4934B1006C0035 /* Summon */ = {
+			isa = PBXGroup;
+			children = (
+				A98588091A4934E0006C0035 /* SBSummonViewController.h */,
+				A985880A1A4934E0006C0035 /* SBSummonViewController.m */,
+			);
+			path = Summon;
+			sourceTree = "<group>";
+		};
+		A985880C1A493797006C0035 /* Tab Bar Items */ = {
+			isa = PBXGroup;
+			children = (
+				A985880D1A493797006C0035 /* account_tab_bar@2x.png */,
+				A985880E1A493797006C0035 /* friends_tab_bar@2x.png */,
+				A985880F1A493797006C0035 /* games_tab_bar@2x.png */,
+				A98588101A493797006C0035 /* summon_tab_bar@2x.png */,
+			);
+			path = "Tab Bar Items";
+			sourceTree = "<group>";
+		};
 		A99FEB131A25068B00F342B2 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
@@ -217,6 +304,9 @@
 		A99FEB1F1A251CC800F342B2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				A98588171A49450F006C0035 /* geo_button_selected@2x.png */,
+				A98588181A49450F006C0035 /* geo_button@2x.png */,
+				A985880C1A493797006C0035 /* Tab Bar Items */,
 				A9B1A5741A48B5B900359FC0 /* yellow_to_black_gradient@2x.png */,
 				A9A744B91A4798BC0068876F /* white_checkmark@2x.png */,
 				A99FEB2C1A2522BF00F342B2 /* spikeball_small_logo_yellow@2x.png */,
@@ -329,15 +419,21 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A98588121A493797006C0035 /* friends_tab_bar@2x.png in Resources */,
 				A9A744BA1A4798BC0068876F /* white_checkmark@2x.png in Resources */,
 				A99FEB251A251CC800F342B2 /* spikeball_net_with_shadow@2x.png in Resources */,
 				A99FEB2D1A2522BF00F342B2 /* spikeball_small_logo_yellow@2x.png in Resources */,
+				A985881A1A49450F006C0035 /* geo_button@2x.png in Resources */,
 				A9568E441A214B900075CB35 /* Images.xcassets in Resources */,
+				A98588111A493797006C0035 /* account_tab_bar@2x.png in Resources */,
 				A99FEB261A251CC800F342B2 /* spikeball_yellow_logo_header@2x.png in Resources */,
 				A99FEB241A251CC800F342B2 /* black_to_yellow_gradient@2x.png in Resources */,
+				A98588131A493797006C0035 /* games_tab_bar@2x.png in Resources */,
 				A9B1A5751A48B5B900359FC0 /* yellow_to_black_gradient@2x.png in Resources */,
 				A99FEB271A251CC800F342B2 /* spikeball_yellow_logo_launch@2x.png in Resources */,
+				A98588191A49450F006C0035 /* geo_button_selected@2x.png in Resources */,
 				A9D9FF311A47C64A00AEF5EA /* spikeball_small_logo_white@2x.png in Resources */,
+				A98588141A493797006C0035 /* summon_tab_bar@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -393,10 +489,14 @@
 				A9D9FF381A47F81000AEF5EA /* SBProductSummaryIntroScreenViewController.m in Sources */,
 				A9568E391A214B900075CB35 /* AppDelegate.m in Sources */,
 				A98587F91A4924E3006C0035 /* SBLoginCompleteViewController.m in Sources */,
+				A98588051A4934C9006C0035 /* SBGamesViewController.m in Sources */,
+				A985880B1A4934E0006C0035 /* SBSummonViewController.m in Sources */,
 				A99FEB121A25068100F342B2 /* UIColor+SpikeballColors.m in Sources */,
+				A98588081A4934D5006C0035 /* SBFriendsViewController.m in Sources */,
 				A9568E361A214B900075CB35 /* main.m in Sources */,
 				A9A744B71A47840D0068876F /* SBEmailAndNameViewController.m in Sources */,
 				A9A744AA1A4536BF0068876F /* NSString+SBValidation.m in Sources */,
+				A98588021A4934BE006C0035 /* SBAccountViewController.m in Sources */,
 				A9A744B41A4782300068876F /* SBLocationAndNotificationsViewController.m in Sources */,
 				A99FEB1E1A25092B00F342B2 /* SBLoginViewController.m in Sources */,
 				A9568E3C1A214B900075CB35 /* Spikeball.xcdatamodeld in Sources */,

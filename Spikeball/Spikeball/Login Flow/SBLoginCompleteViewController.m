@@ -8,12 +8,14 @@
 
 #import "SBLoginCompleteViewController.h"
 #import "SBLibrary.h"
+#import "AppDelegate.h"
 
 @interface SBLoginCompleteViewController ()
 
 @property (nonatomic,strong) UILabel *congatulatoryLabel;
 @property (nonatomic,strong) UIImageView *spikeballNetImageView;
 @property (nonatomic,strong) UIButton *startSpikingButton;
+@property (nonatomic,strong) UIView *invisibleSpacerView;
 @property (nonatomic,strong) UIButton *inviteFriendsButton;
 
 @end
@@ -48,6 +50,11 @@
     self.startSpikingButton.layer.borderWidth = 1;
     [self.view addSubview:self.startSpikingButton];
     
+    self.invisibleSpacerView = [[UIView alloc] init];
+    self.invisibleSpacerView.translatesAutoresizingMaskIntoConstraints = NO;
+    self.invisibleSpacerView.hidden = YES;
+    [self.view addSubview:self.invisibleSpacerView];
+    
     self.inviteFriendsButton = [[UIButton alloc] init];
     self.inviteFriendsButton.translatesAutoresizingMaskIntoConstraints = NO;
     [self.inviteFriendsButton setTitle:@"Invite Friends" forState:UIControlStateNormal];
@@ -67,26 +74,29 @@
     [NSLayoutConstraint topOfChild:self.congatulatoryLabel toTopOfParent:self.view withFixedMargin:5];
     [NSLayoutConstraint centerXOfChild:self.congatulatoryLabel toCenterXOfParent:self.view];
     
-    [NSLayoutConstraint topOfChild:self.spikeballNetImageView toBottomOfSibling:self.congatulatoryLabel withFixedMargin:IS_IPHONE_4 ? 50 : 90 inParent:self.view];
+    [NSLayoutConstraint bottomOfChild:self.spikeballNetImageView toTopOfSibling:self.startSpikingButton withFixedMargin:IS_IPHONE_4 ? 40 : -10 inParent:self.view];
     [NSLayoutConstraint centerXOfChild:self.spikeballNetImageView toCenterXOfParent:self.view withFixedMargin:36]; //image is off center
     
-    CGFloat buttonWidth = 130;
     CGFloat buttonHeight = 44;
     CGFloat buttonMargin = 15;
     
     [NSLayoutConstraint view:self.startSpikingButton toFixedHeight:buttonHeight];
-    [NSLayoutConstraint view:self.startSpikingButton toFixedWidth:buttonWidth];
+    [NSLayoutConstraint leftOfChild:self.startSpikingButton toRightOfSibling:self.invisibleSpacerView withFixedMargin:buttonMargin/2 inParent:self.view];
     [NSLayoutConstraint rightOfChild:self.startSpikingButton toRightOfParent:self.view withFixedMargin:-buttonMargin];
     [NSLayoutConstraint bottomOfChild:self.startSpikingButton toBottomOfParent:self.view withFixedMargin:-buttonMargin];
     
+    [NSLayoutConstraint centerOfChild:self.invisibleSpacerView toCenterOfParent:self.view];
+    [NSLayoutConstraint view:self.invisibleSpacerView toFixedWidth:1];
+    
     [NSLayoutConstraint view:self.inviteFriendsButton toFixedHeight:buttonHeight];
-    [NSLayoutConstraint view:self.inviteFriendsButton toFixedWidth:buttonWidth];
+    [NSLayoutConstraint rightOfChild:self.inviteFriendsButton toLeftOfSibling:self.invisibleSpacerView withFixedMargin:-buttonMargin/2 inParent:self.view];
     [NSLayoutConstraint leftOfChild:self.inviteFriendsButton toLeftOfParent:self.view withFixedMargin:buttonMargin];
     [NSLayoutConstraint bottomOfChild:self.inviteFriendsButton toBottomOfParent:self.view withFixedMargin:-buttonMargin];
 }
 
 - (void)startSpikingButtonPressed {
-    
+    AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
+    [appDelegate setupRootViewControllersFromLogin:YES];
 }
 
 - (void)inviteFriendsButtonPressed {

@@ -9,6 +9,7 @@
 #import "SBEmailAndNameViewController.h"
 #import "SBLibrary.h"
 #import "SBAnimatingLogo.h"
+#import "AppDelegate.h"
 
 @interface SBEmailAndNameViewController () <UITextFieldDelegate>
 
@@ -320,11 +321,15 @@ static CGFloat kFieldBufferValue = 10;
         [UIView animateWithDuration:animated ? 0.8 : 0 delay:0 usingSpringWithDamping:0.65 initialSpringVelocity:0.6 options:UIViewAnimationOptionCurveEaseOut animations:^{
             self.topAccountContainerView.transform = CGAffineTransformMakeScale(1, 0.001);
             self.topAccountContainerView.alpha = 0;
+            self.loginButton.transform = CGAffineTransformMakeScale(1, 0.001);
+            self.loginButton.alpha = 0;
         } completion:nil];
     } else {
         [UIView animateWithDuration:animated ? 0.8 : 0 delay:0 usingSpringWithDamping:0.65 initialSpringVelocity:0.6 options:UIViewAnimationOptionCurveEaseOut animations:^{
             self.topAccountContainerView.transform = CGAffineTransformIdentity;
             self.topAccountContainerView.alpha = 1;
+            self.loginButton.transform = CGAffineTransformIdentity;
+            self.loginButton.alpha = 1;
         } completion:nil];
     }
 }
@@ -360,6 +365,8 @@ static CGFloat kFieldBufferValue = 10;
             [self.nicknameTextField resignFirstResponder];
         }
     }
+    
+    [self setBottomLoginButtonBasedOnFields];
     return YES;
 }
 
@@ -461,13 +468,34 @@ static CGFloat kFieldBufferValue = 10;
 }
 
 - (void)loginButtonPressed {
+    if (![self.passwordTextField.text isValidPassword]) {
+        [self.loginButton setTitle:@"Please enter password" forState:UIControlStateNormal];
+        return;
+    }
     
+    if (![self.emailTextField.text isValidEmailAddress]) {
+        [self.loginButton setTitle:@"Invalid email address" forState:UIControlStateNormal];
+        return;
+    }
+    
+//    [self endAllEditing];
+    if ([self.delegate respondsToSelector:@selector(animateTopLogo)]) {
+        [self.delegate animateTopLogo];
+    }
+    
+    //TODO: authenticate and log in
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        if ([self.delegate respondsToSelector:@selector(stopAnimatingTopLogo)]) {
+            [self.delegate stopAnimatingTopLogo];
+        }
+        
+        AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
+        [appDelegate setupRootViewControllersFromLogin:YES];
+    });
 }
 
 - (void)createNewAccountButtonPressed {
     //TODO: wait on Eli's dumb ass to set up the create user endpoint
-    self.view.userInteractionEnabled = NO;
-    
     if ([self.delegate respondsToSelector:@selector(animateTopLogo)]) {
         [self.delegate animateTopLogo];
     }
