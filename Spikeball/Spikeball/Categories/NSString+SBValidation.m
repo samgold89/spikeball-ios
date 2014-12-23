@@ -1,24 +1,32 @@
 //
-//  NSString+GFCValidation.m
+//  NSString+SBValidation.m
 //  Spikeball
 //
 //  Created by Sam Goldstein on 7/8/14.
 //
 
-#import "NSString+GFCValidation.h"
+#import "NSString+SBValidation.h"
 
-@implementation NSString (GFCValidation)
+@implementation NSString (SBalidation)
 
 - (BOOL)isValidEmailAddress {
     if ([self length] < 6) { //minimum is a@b.c
         return NO;
     }
     
-    BOOL valid = [[self componentsSeparatedByString:@"@"] count] == 2 && [[self componentsSeparatedByString:@"."] count] >= 2 && [[[self componentsSeparatedByString:@"."] lastObject] length] > 1;
-    
-    if ([self rangeOfString:@" "].location != NSNotFound) {
+    if ([self rangeOfString:@" "].location != NSNotFound) { // no spaces
         return NO;
     }
+    
+    if ([self rangeOfString:@"."].location == NSNotFound) { // must be 1 "."
+        return NO;
+    }
+    
+    if ([self rangeOfString:@"@"].location == NSNotFound) { // must be 1 "@"
+        return NO;
+    }
+    
+    BOOL valid = [[self componentsSeparatedByString:@"@"] count] == 2 && [[self componentsSeparatedByString:@"."] count] >= 2 && [[[self componentsSeparatedByString:@"."] lastObject] length] > 1;
     
     return valid;
 }
