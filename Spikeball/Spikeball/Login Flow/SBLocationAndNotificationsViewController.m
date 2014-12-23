@@ -195,6 +195,11 @@ static CGFloat kLabelToButtonBuffer = 18;
     [self.view addSubview:self.locationLoading];
     
     [((AppDelegate*)[[UIApplication sharedApplication] delegate]) requestLocationAccess];
+    
+    //TODO: TAKE THIS OUT
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.6 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self didRegisterForLocation:nil];
+    });
 }
 
 - (void)notificationButtonPresesed:(id)sender {
@@ -207,6 +212,11 @@ static CGFloat kLabelToButtonBuffer = 18;
     [self.view addSubview:self.notificationLoading];
     
     [((AppDelegate*)[[UIApplication sharedApplication] delegate]) registerForPushNotifications];
+    
+    //TODO: TAKE THIS OUT
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self didRegisterForPush:nil];
+    });
 }
 
 #pragma mark Push & Location NSNotification Handlers
@@ -219,25 +229,36 @@ static CGFloat kLabelToButtonBuffer = 18;
         self.notificationStatusImageView.transform = CGAffineTransformIdentity;
         self.notificationLoading.alpha = 0;
         self.notificationLoading.transform = CGAffineTransformMakeScale(0.01, 0.01);
-    } completion:nil];
+    } completion:^(BOOL finished) {
+        [self checkCompletionAndAdvanceIfReady];
+    }];
 }
 
 - (void)failedToRegisterForPush:(NSNotification*)note {
-    [self didRegisterForPush:nil];
+    
+    [self checkCompletionAndAdvanceIfReady];
 }
 
 - (void)didRegisterForLocation:(NSNotification*)note {
     self.locationStatusImageView.transform = CGAffineTransformMakeScale(0.01, 0.01);
+    self.locationButton.enabled = NO;
+    
     self.locationStatusImageView.alpha = 1;
     [UIView animateWithDuration:0.8 delay:0 usingSpringWithDamping:0.7 initialSpringVelocity:0.6 options:UIViewAnimationOptionCurveEaseInOut animations:^{
         self.locationStatusImageView.transform = CGAffineTransformIdentity;
         self.locationLoading.alpha = 0;
         self.locationLoading.transform = CGAffineTransformMakeScale(0.01, 0.01);
-    } completion:nil];
+    } completion:^(BOOL finished) {
+        [self checkCompletionAndAdvanceIfReady];
+    }];
 }
 
 - (void)failedToRegisterForLocation:(NSNotification*)note {
-    
+    [self checkCompletionAndAdvanceIfReady];
+}
+
+- (void)checkCompletionAndAdvanceIfReady {
+    //ADVANCE TO COMPLETION SCREEN / GET STARTED
 }
 
 - (void)didReceiveMemoryWarning {
