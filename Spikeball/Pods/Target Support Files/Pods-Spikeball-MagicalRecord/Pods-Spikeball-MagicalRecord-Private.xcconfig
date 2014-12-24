@@ -1,5 +1,5 @@
 #include "Pods-Spikeball-MagicalRecord.xcconfig"
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
-HEADER_SEARCH_PATHS = "${PODS_ROOT}/Headers/Build" "${PODS_ROOT}/Headers/Build/MagicalRecord" "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/AFNetworking" "${PODS_ROOT}/Headers/Public/MagicalRecord" "${PODS_ROOT}/Headers/Public/NSLayoutConstraint+HAWHelpers" "${PODS_ROOT}/Headers/Public/PonyDebugger" "${PODS_ROOT}/Headers/Public/SocketRocket"
+HEADER_SEARCH_PATHS = "${PODS_ROOT}/Headers/Build" "${PODS_ROOT}/Headers/Build/MagicalRecord" "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/AFNetworking" "${PODS_ROOT}/Headers/Public/MagicalRecord" "${PODS_ROOT}/Headers/Public/NSLayoutConstraint+HAWHelpers" "${PODS_ROOT}/Headers/Public/PonyDebugger" "${PODS_ROOT}/Headers/Public/SDWebImage" "${PODS_ROOT}/Headers/Public/SocketRocket"
 OTHER_LDFLAGS = ${PODS_SPIKEBALL_MAGICALRECORD_OTHER_LDFLAGS} -ObjC
 PODS_ROOT = ${SRCROOT}

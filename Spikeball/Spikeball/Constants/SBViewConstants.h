@@ -10,6 +10,8 @@
 
 @interface SBViewConstants : NSObject
 
+FOUNDATION_EXPORT NSString *const SBAppModelName;
+
 FOUNDATION_EXPORT NSString *const SBFontStandardUltraLight;
 FOUNDATION_EXPORT NSString *const SBFontStandardLight;
 FOUNDATION_EXPORT NSString *const SBFontStandardBold;

@@ -9,6 +9,7 @@
 #import "SBSummonViewController.h"
 #import "SBLibrary.h"
 #import <MapKit/MapKit.h>
+#import "AppDelegate.h"
 
 @interface SBSummonViewController () <MKMapViewDelegate>
 
@@ -21,6 +22,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
+    [appDelegate requestLocationAccess];
+    
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
     
     [self.navigationItem setRightBarButtonItem:[[UIBarButtonItem alloc] initWithTitle:@"Favorites" style:UIBarButtonItemStylePlain target:self action:@selector(favoritesButtonPressed)]];
 //    [self.navigationItem setLeftBarButtonItem:[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"geo_button"] style:UIBarButtonItemStylePlain target:self action:@selector(geoButtonPressed)]];

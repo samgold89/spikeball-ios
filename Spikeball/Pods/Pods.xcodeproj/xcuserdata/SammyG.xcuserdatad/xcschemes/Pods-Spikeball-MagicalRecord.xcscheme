@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "0C4E2D4B4AAD112A47423CAE"
+               BlueprintIdentifier = "0411B8949458D3396B35720C"
                BuildableName = "libPods-Spikeball-MagicalRecord.a"
                BlueprintName = "Pods-Spikeball-MagicalRecord"
                ReferencedContainer = "container:Pods.xcodeproj">

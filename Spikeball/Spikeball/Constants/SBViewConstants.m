@@ -10,6 +10,8 @@
 
 @implementation SBViewConstants
 
+NSString *const SBAppModelName = @"SpikeballModel_1.sqlite";
+
 NSString *const SBFontStandardUltraLight = @"HelveticaNeue-UltraLight";
 NSString *const SBFontStandardLight = @"HelveticaNeue-Light";
 NSString *const SBFontStandardBold =  @"HelveticaNeue-Medium";

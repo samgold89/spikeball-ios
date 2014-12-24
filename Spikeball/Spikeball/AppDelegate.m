@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "SBProductSummaryIntroScreenViewController.h"
 #import "SBLibrary.h"
+#import <CoreData+MagicalRecord.h>
 #import <CoreLocation/CoreLocation.h>
 
 //Tab Bar View Controllers
@@ -29,11 +30,13 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    [MagicalRecord setupCoreDataStackWithAutoMigratingSqliteStoreNamed:SBAppModelName];
+    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     
-    BOOL userIsLoggedIn = NO;
+    BOOL userIsLoggedIn = YES;
     if (userIsLoggedIn) {
         [self setupRootViewControllersFromLogin:NO];
     } else {

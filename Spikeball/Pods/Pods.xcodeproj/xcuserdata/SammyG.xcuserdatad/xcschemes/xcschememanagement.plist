@@ -24,6 +24,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Pods-Spikeball-SDWebImage.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-Spikeball-SocketRocket.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -37,32 +42,37 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>0C4E2D4B4AAD112A47423CAE</key>
+		<key>0411B8949458D3396B35720C</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>51947F55B90FADAE8E071551</key>
+		<key>1B8F86D0C0B7BBDD7EB1A3FE</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>9A135D690FB763E877BD67FF</key>
+		<key>286280C035421FFC91D5A2C2</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>9CD29CDA25EA7B181EEB5139</key>
+		<key>6313D5D29C2CB0C72855FEDE</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>D01E0E934C8E240171295DAA</key>
+		<key>67B07FF68B928EAE6A1C131A</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>FC0B2A6F0C51725D8173CAB2</key>
+		<key>95838AC6F4648C58C5C213E9</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>DA80AD2C6DA4C2A9E200D387</key>
 		<dict>
 			<key>primary</key>
 			<true/>

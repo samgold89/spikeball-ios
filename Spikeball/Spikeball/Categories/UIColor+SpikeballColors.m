@@ -39,4 +39,27 @@
     return color;
 }
 
++ (UIColor *)greenAccept
+{
+    static UIColor *color;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        color = UIColorFromRGB(0x0bc72e);
+        
+    });
+    return color;
+}
+
++ (UIColor *)redDecline
+{
+    static UIColor *color;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        color = UIColorFromRGB(0xef0202);
+        
+    });
+    return color;
+}
+
+
 @end

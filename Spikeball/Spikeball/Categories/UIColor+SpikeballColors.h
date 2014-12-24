@@ -13,5 +13,7 @@
 + (UIColor *)colorWithWebRed:(NSInteger)red green:(NSInteger)green blue:(NSInteger)blue;
 + (UIColor *)spikeballYellow;
 + (UIColor *)spikeballBlack;
++ (UIColor *)greenAccept;
++ (UIColor *)redDecline;
 
 @end

@@ -72,7 +72,7 @@ static CGFloat kFieldBufferValue = 10;
     //TOP STUFF
     self.accountTitleLabel = [[UILabel alloc] init];
     self.accountTitleLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    self.accountTitleLabel.text = @"Account";
+    self.accountTitleLabel.text = @"Account Setup";
     self.accountTitleLabel.textColor = [UIColor spikeballYellow];
     self.accountTitleLabel.font = [UIFont fontWithName:SBFontStandardBold size:titleFontSize];
     [self.topAccountContainerView addSubview:self.accountTitleLabel];
