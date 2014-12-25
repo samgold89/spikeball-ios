@@ -180,6 +180,7 @@ static NSInteger labelSeparationBuffer = 5;
     }
 }
 
+#pragma mark Content Setup
 - (void)setupCellContentWithGame:(Game*)game {
     self.game = game;
     self.gameNamesLabel.text = @"Sarah, John & Mike";
@@ -192,15 +193,27 @@ static NSInteger labelSeparationBuffer = 5;
     self.responseStatusVerticalBar.backgroundColor = [gameUserIdArray containsObject:user.userId] ? [UIColor greenAccept] : [UIColor redDecline];
 }
 
+- (void)closeScrollView {
+    [self.scrollViewContainer setContentOffset:CGPointMake(0, 0) animated:YES];
+}
+
+- (void)setCellStateForXOffset:(CGFloat)offset {
+    if (offset == 0) {
+        self.acceptButton.enabled = self.declineButton.enabled = NO;
+    } else {
+        self.acceptButton.enabled = self.declineButton.enabled = YES;
+    }
+    
+    [UIView animateWithDuration:0.3 animations:^{
+        self.responseStatusVerticalBar.alpha = offset == 0;
+    }];
+}
+
 - (void)cellSwipeBegan:(NSNotification*)note {
     SBGameTableViewCell *cell = note.object;
     if (![cell isEqual:self]) {
         [self closeScrollView];
     }
-}
-
-- (void)closeScrollView {
-    [self.scrollViewContainer setContentOffset:CGPointMake(0, 0) animated:YES];
 }
 
 #pragma mark Button Handlers
@@ -228,18 +241,6 @@ static NSInteger labelSeparationBuffer = 5;
     self.responseStatusVerticalBar.backgroundColor = [UIColor redDecline];
     
     [self closeScrollView];
-}
-
-- (void)setCellStateForXOffset:(CGFloat)offset {
-    if (offset == 0) {
-        self.acceptButton.enabled = self.declineButton.enabled = NO;
-    } else {
-        self.acceptButton.enabled = self.declineButton.enabled = YES;
-    }
-    
-    [UIView animateWithDuration:0.3 animations:^{
-        self.responseStatusVerticalBar.alpha = offset == 0;
-    }];
 }
 
 - (void)closeScrollOrShowGameButtonPressed {

@@ -36,6 +36,9 @@
     [self.mapView.userLocation setTitle:@"You are here!"];
     [self.view addSubview:self.mapView];
     [self.mapView setUserTrackingMode:MKUserTrackingModeFollow animated:YES];
+    
+    UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(dropPinFromLongPress:)];
+    [self.mapView addGestureRecognizer:longPress];
 
     [self setupConstraints];
 }
@@ -44,11 +47,78 @@
     [NSLayoutConstraint extentOfChild:self.mapView toExtentOfParent:self.view];
 }
 
+#pragma mark Annotation Handlers
+- (void)dropPinFromLongPress:(UIGestureRecognizer *)gestureRecognizer {
+    switch (gestureRecognizer.state) {
+        case UIGestureRecognizerStateBegan: {
+            CGPoint touchPoint = [gestureRecognizer locationInView:self.mapView];
+            CLLocationCoordinate2D touchMapCoordinate = [self.mapView convertPoint:touchPoint toCoordinateFromView:self.mapView];
+            [self getInformationForCoordinate:touchMapCoordinate];
+            
+            MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
+            annotation.coordinate = touchMapCoordinate;
+            [self.mapView addAnnotation:annotation];
+        }
+            
+            break;
+            
+        default:
+            break;
+    }
+}
+
+- (void)getInformationForCoordinate:(CLLocationCoordinate2D)coordinate {
+    CLLocation *location = [[CLLocation alloc] initWithLatitude:coordinate.latitude longitude:coordinate.longitude];
+    CLGeocoder *coder = [[CLGeocoder alloc] init];
+    [coder reverseGeocodeLocation:location completionHandler:^(NSArray *placemarks, NSError *error) {
+        NSLog(@"NAME OF LOCATION :: %@",[[placemarks firstObject] name]);
+    }];
+}
+
+- (void)mapView:(MKMapView *)mapView didAddAnnotationViews:(NSArray *)views {
+    for (id view in views) {
+        if ([view isKindOfClass:[MKPinAnnotationView class]]) {
+            [view setAnimatesDrop:YES];
+            [view setDraggable:YES];
+        } else {
+            ((UIView*)view).transform = CGAffineTransformMakeScale(0.01, 0.01);
+            [UIView animateWithDuration:0.8 delay:0 usingSpringWithDamping:0.65 initialSpringVelocity:0.6 options:UIViewAnimationOptionCurveEaseOut animations:^{
+                ((UIView*)view).transform = CGAffineTransformIdentity;
+            } completion:nil];
+        }
+    }
+}
+
+- (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view {
+    NSLog(@"SELECT");
+}
+
+- (void)mapView:(MKMapView *)mapView didDeselectAnnotationView:(MKAnnotationView *)view {
+    NSLog(@"DESSELC");
+}
+
+- (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control {
+    [view setCanShowCallout:YES];
+}
+
+- (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view didChangeDragState:(MKAnnotationViewDragState)newState fromOldState:(MKAnnotationViewDragState)oldState {
+    
+    switch (newState) {
+        case MKAnnotationViewDragStateEnding:
+            [self getInformationForCoordinate:view.annotation.coordinate];
+            break;
+            
+        default:
+            break;
+    }
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark Nav Bar Button Handlers
 - (void)favoritesButtonPressed {
     
 }
