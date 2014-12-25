@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A9328ADD1A4CBF2B005B915D /* SBPlayerImageCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A9328ADC1A4CBF2B005B915D /* SBPlayerImageCollectionViewController.m */; };
+		A9328AE31A4CBF74005B915D /* SBPlayerCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A9328AE21A4CBF74005B915D /* SBPlayerCollectionViewCell.m */; };
+		A9328AE81A4CCC91005B915D /* NSArray+GFCRandomElement.m in Sources */ = {isa = PBXBuildFile; fileRef = A9328AE71A4CCC91005B915D /* NSArray+GFCRandomElement.m */; };
 		A93B4EC91A4A53C5003FFC9E /* SBGameTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A93B4EC81A4A53C5003FFC9E /* SBGameTableViewCell.m */; };
 		A9568E361A214B900075CB35 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A9568E351A214B900075CB35 /* main.m */; };
 		A9568E391A214B900075CB35 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A9568E381A214B900075CB35 /* AppDelegate.m */; };
@@ -64,6 +67,12 @@
 /* Begin PBXFileReference section */
 		1909138E3C9E14BDBAEAB253 /* Pods-Spikeball.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spikeball.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Spikeball/Pods-Spikeball.debug.xcconfig"; sourceTree = "<group>"; };
 		3C821388008106AC9E68D215 /* libPods-Spikeball.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Spikeball.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A9328ADB1A4CBF2B005B915D /* SBPlayerImageCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBPlayerImageCollectionViewController.h; sourceTree = "<group>"; };
+		A9328ADC1A4CBF2B005B915D /* SBPlayerImageCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBPlayerImageCollectionViewController.m; sourceTree = "<group>"; };
+		A9328AE11A4CBF74005B915D /* SBPlayerCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBPlayerCollectionViewCell.h; sourceTree = "<group>"; };
+		A9328AE21A4CBF74005B915D /* SBPlayerCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBPlayerCollectionViewCell.m; sourceTree = "<group>"; };
+		A9328AE61A4CCC91005B915D /* NSArray+GFCRandomElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+GFCRandomElement.h"; sourceTree = "<group>"; };
+		A9328AE71A4CCC91005B915D /* NSArray+GFCRandomElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+GFCRandomElement.m"; sourceTree = "<group>"; };
 		A93B4EC71A4A53C5003FFC9E /* SBGameTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBGameTableViewCell.h; sourceTree = "<group>"; };
 		A93B4EC81A4A53C5003FFC9E /* SBGameTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBGameTableViewCell.m; sourceTree = "<group>"; };
 		A9568E301A214B900075CB35 /* Spikeball.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Spikeball.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -272,6 +281,10 @@
 		A98587FE1A4934B1006C0035 /* Games */ = {
 			isa = PBXGroup;
 			children = (
+				A9328AE11A4CBF74005B915D /* SBPlayerCollectionViewCell.h */,
+				A9328AE21A4CBF74005B915D /* SBPlayerCollectionViewCell.m */,
+				A9328ADB1A4CBF2B005B915D /* SBPlayerImageCollectionViewController.h */,
+				A9328ADC1A4CBF2B005B915D /* SBPlayerImageCollectionViewController.m */,
 				A96114F21A4BE92F008948C3 /* SBMapWithGameViewController.h */,
 				A96114F31A4BE92F008948C3 /* SBMapWithGameViewController.m */,
 				A98588031A4934C9006C0035 /* SBGamesViewController.h */,
@@ -305,6 +318,8 @@
 		A99FEB131A25068B00F342B2 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				A9328AE61A4CCC91005B915D /* NSArray+GFCRandomElement.h */,
+				A9328AE71A4CCC91005B915D /* NSArray+GFCRandomElement.m */,
 				A96114ED1A4BD765008948C3 /* NSLayoutConstraint+SBLayoutContraintHelpers.h */,
 				A96114EE1A4BD765008948C3 /* NSLayoutConstraint+SBLayoutContraintHelpers.m */,
 				A96114E01A4A6C0F008948C3 /* SBUser+SBUserHelper.h */,
@@ -555,6 +570,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A9328ADD1A4CBF2B005B915D /* SBPlayerImageCollectionViewController.m in Sources */,
 				A99FEB2B1A25218100F342B2 /* SBAnimatingLogo.m in Sources */,
 				A9A744B01A4540D90068876F /* SBViewConstants.m in Sources */,
 				A9D9FF381A47F81000AEF5EA /* SBProductSummaryIntroScreenViewController.m in Sources */,
@@ -562,12 +578,14 @@
 				A98587F91A4924E3006C0035 /* SBLoginCompleteViewController.m in Sources */,
 				A96114EF1A4BD765008948C3 /* NSLayoutConstraint+SBLayoutContraintHelpers.m in Sources */,
 				A98588051A4934C9006C0035 /* SBGamesViewController.m in Sources */,
+				A9328AE31A4CBF74005B915D /* SBPlayerCollectionViewCell.m in Sources */,
 				A985880B1A4934E0006C0035 /* SBSummonViewController.m in Sources */,
 				A99FEB121A25068100F342B2 /* UIColor+SpikeballColors.m in Sources */,
 				A96114E21A4A6C0F008948C3 /* SBUser+SBUserHelper.m in Sources */,
 				A98588081A4934D5006C0035 /* SBFriendsViewController.m in Sources */,
 				A9568E361A214B900075CB35 /* main.m in Sources */,
 				A96114E51A4A6C8D008948C3 /* SBUser.m in Sources */,
+				A9328AE81A4CCC91005B915D /* NSArray+GFCRandomElement.m in Sources */,
 				A96114DC1A4A6B49008948C3 /* Game.m in Sources */,
 				A9A744B71A47840D0068876F /* SBEmailAndNameViewController.m in Sources */,
 				A9A744AA1A4536BF0068876F /* NSString+SBValidation.m in Sources */,

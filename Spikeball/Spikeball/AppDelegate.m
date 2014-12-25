@@ -11,6 +11,7 @@
 #import "SBLibrary.h"
 #import <CoreData+MagicalRecord.h>
 #import "Game.h"
+#import "SBUser+SBUserHelper.h"
 
 //Tab Bar View Controllers
 #import "SBGamesViewController.h"
@@ -56,57 +57,88 @@
 }
 
 - (void)BULLSHITERASEME{
-[Game MR_truncateAllInContext:[NSManagedObjectContext MR_defaultContext]];
+    [Game MR_truncateAllInContext:[NSManagedObjectContext MR_defaultContext]];
+    [SBUser MR_truncateAllInContext:[NSManagedObjectContext MR_defaultContext]];
 
-Game *game1 = [Game MR_createInContext:[NSManagedObjectContext MR_defaultContext]];
-game1.userIdArray = [NSKeyedArchiver archivedDataWithRootObject:arc4random_uniform(2)%2 == 0 ? @[@3,@4] : @[@1,@2,@3,@4]];
-game1.locationLat = [NSNumber numberWithFloat:37.759889];
-game1.locationLong = [NSNumber numberWithFloat:-122.427018];
-game1.address = @"Mission Dolores Park";
+    Game *game1 = [Game MR_createInContext:[NSManagedObjectContext MR_defaultContext]];
+    game1.userIdArray = [NSKeyedArchiver archivedDataWithRootObject:@[@1,@2,@3]];
+    game1.locationLat = [NSNumber numberWithFloat:37.759889];
+    game1.locationLong = [NSNumber numberWithFloat:-122.427018];
+    game1.address = @"Mission Dolores Park";
 
-Game *game2 = [Game MR_createInContext:[NSManagedObjectContext MR_defaultContext]];
-game2.userIdArray = [NSKeyedArchiver archivedDataWithRootObject:arc4random_uniform(2)%2 == 0 ? @[@3,@4] : @[@1,@2,@3,@4]];
-game2.locationLat = [NSNumber numberWithFloat:37.766867];
-game2.locationLong = [NSNumber numberWithFloat:-122.442688];
-game2.address = @"Buena Vista Park";
+    Game *game2 = [Game MR_createInContext:[NSManagedObjectContext MR_defaultContext]];
+    game2.userIdArray = [NSKeyedArchiver archivedDataWithRootObject:@[@3,@4,@5]];
+    game2.locationLat = [NSNumber numberWithFloat:37.766867];
+    game2.locationLong = [NSNumber numberWithFloat:-122.442688];
+    game2.address = @"Buena Vista Park";
 
-Game *game3 = [Game MR_createInContext:[NSManagedObjectContext MR_defaultContext]];
-game3.userIdArray = [NSKeyedArchiver archivedDataWithRootObject:arc4random_uniform(2)%2 == 0 ? @[@3,@4] : @[@1,@2,@3,@4]];
-game3.locationLat = [NSNumber numberWithFloat:37.772447];
-game3.locationLong = [NSNumber numberWithFloat:-122.446867];
-game3.address = @"San Francisco Bicycle Route 30";
+    Game *game3 = [Game MR_createInContext:[NSManagedObjectContext MR_defaultContext]];
+    game3.userIdArray = [NSKeyedArchiver archivedDataWithRootObject:@[@2,@4,@6]];
+    game3.locationLat = [NSNumber numberWithFloat:37.772447];
+    game3.locationLong = [NSNumber numberWithFloat:-122.446867];
+    game3.address = @"San Francisco Bicycle Route 30";
 
-Game *game4 = [Game MR_createInContext:[NSManagedObjectContext MR_defaultContext]];
-game4.userIdArray = [NSKeyedArchiver archivedDataWithRootObject:arc4random_uniform(2)%2 == 0 ? @[@3,@4] : @[@1,@2,@3,@4]];
-game4.locationLat = [NSNumber numberWithFloat:35.099008];
-game4.locationLong = [NSNumber numberWithFloat:-89.853844];
-game4.address = @"6243 Poplar Pike";
+    Game *game4 = [Game MR_createInContext:[NSManagedObjectContext MR_defaultContext]];
+    game4.userIdArray = [NSKeyedArchiver archivedDataWithRootObject:@[@1,@2,@3,@5,@6]];
+    game4.locationLat = [NSNumber numberWithFloat:35.099008];
+    game4.locationLong = [NSNumber numberWithFloat:-89.853844];
+    game4.address = @"6243 Poplar Pike";
 
-Game *game5 = [Game MR_createInContext:[NSManagedObjectContext MR_defaultContext]];
-game5.userIdArray = [NSKeyedArchiver archivedDataWithRootObject:arc4random_uniform(2)%2 == 0 ? @[@3,@4] : @[@1,@2,@3,@4]];
-game5.locationLat = [NSNumber numberWithFloat:35.072780];
-game5.locationLong = [NSNumber numberWithFloat:-89.808768];
-game5.address = @"Hacks Cross Road Park";
+    Game *game5 = [Game MR_createInContext:[NSManagedObjectContext MR_defaultContext]];
+    game5.userIdArray = [NSKeyedArchiver archivedDataWithRootObject:@[@5,@6,@1]];
+    game5.locationLat = [NSNumber numberWithFloat:35.072780];
+    game5.locationLong = [NSNumber numberWithFloat:-89.808768];
+    game5.address = @"Hacks Cross Road Park";
 
-Game *game6 = [Game MR_createInContext:[NSManagedObjectContext MR_defaultContext]];
-game6.userIdArray = [NSKeyedArchiver archivedDataWithRootObject:arc4random_uniform(2)%2 == 0 ? @[@3,@4] : @[@1,@2,@3,@4]];
-game6.locationLat = [NSNumber numberWithFloat:35.116250];
-game6.locationLong = [NSNumber numberWithFloat:-89.836239];
-game6.address = @"Poplar Estates Parkway";
+    Game *game6 = [Game MR_createInContext:[NSManagedObjectContext MR_defaultContext]];
+    game6.userIdArray = [NSKeyedArchiver archivedDataWithRootObject:@[@1,@2,@4]];
+    game6.locationLat = [NSNumber numberWithFloat:35.116250];
+    game6.locationLong = [NSNumber numberWithFloat:-89.836239];
+    game6.address = @"Poplar Estates Parkway";
 
-Game *game7 = [Game MR_createInContext:[NSManagedObjectContext MR_defaultContext]];
-game7.userIdArray = [NSKeyedArchiver archivedDataWithRootObject:arc4random_uniform(2)%2 == 0 ? @[@3,@4] : @[@1,@2,@3,@4]];
-game7.locationLat = [NSNumber numberWithFloat:35.114395];
-game7.locationLong = [NSNumber numberWithFloat:-89.871687];
-game7.address = @"5668 Poplar Ave";
+    Game *game7 = [Game MR_createInContext:[NSManagedObjectContext MR_defaultContext]];
+    game7.userIdArray = [NSKeyedArchiver archivedDataWithRootObject:@[@1,@2,@3,@4,@5,@6]];
+    game7.locationLat = [NSNumber numberWithFloat:35.114395];
+    game7.locationLong = [NSNumber numberWithFloat:-89.871687];
+    game7.address = @"5668 Poplar Ave";
 
-Game *game8 = [Game MR_createInContext:[NSManagedObjectContext MR_defaultContext]];
-game8.userIdArray = [NSKeyedArchiver archivedDataWithRootObject:arc4random_uniform(2)%2 == 0 ? @[@3,@4] : @[@1,@2,@3,@4]];
-game8.locationLat = [NSNumber numberWithFloat:37.769556];
-game8.locationLong = [NSNumber numberWithFloat:-122.432676];
-game8.address = @"Duboce Park";
+    Game *game8 = [Game MR_createInContext:[NSManagedObjectContext MR_defaultContext]];
+    game8.userIdArray = [NSKeyedArchiver archivedDataWithRootObject:@[@1,@2,@4,@5,@6]];
+    game8.locationLat = [NSNumber numberWithFloat:37.769556];
+    game8.locationLong = [NSNumber numberWithFloat:-122.432676];
+    game8.address = @"Duboce Park";
+    
+    SBUser *user1 = [SBUser MR_createInContext:[NSManagedObjectContext MR_defaultContext]];
+    user1.userId = @1;
+    user1.nickName = @"NICKname";
+    user1.imageUrl = @"https://s3.amazonaws.com/hybrid-users/images%2F426007231-C1DcHmHT0t-0a3uVm2DyR-profileImage%2FprofileImage.jpeg";
+    
+    SBUser *user2 = [SBUser MR_createInContext:[NSManagedObjectContext MR_defaultContext]];
+    user2.userId = @2;
+    user2.firstName = @"First";
+    user2.imageUrl = @"https://s3.amazonaws.com/hybrid-users/images%2F1404858470744-3548.1661674566567%2Ftrainer_sam.png";
+    
+    SBUser *user3 = [SBUser MR_createInContext:[NSManagedObjectContext MR_defaultContext]];
+    user3.userId = @3;
+    user3.lastName = @"Lastly";
+    user3.imageUrl = @"https://s3.amazonaws.com/hybrid-users/images%2F434670589-gZPIfiLXqr-m0GazxlDoW-profileImage%2FprofileImage.jpeg";
+    
+    SBUser *user4 = [SBUser MR_createInContext:[NSManagedObjectContext MR_defaultContext]];
+    user4.userId = @4;
+    user4.nickName = @"Sleepy";
+    user4.imageUrl = @"https://s3.amazonaws.com/hybrid-users/images%2F434328894-BUNnS3bkMl-3btA1mCp3P-profileImage%2FprofileImage.jpeg";
+    
+    SBUser *user5 = [SBUser MR_createInContext:[NSManagedObjectContext MR_defaultContext]];
+    user5.userId = @5;
+    user5.nickName = @"Sammy G";
+    user5.imageUrl = @"https://s3.amazonaws.com/hybrid-users/images/Chuck.png";
+    
+    SBUser *user6 = [SBUser MR_createInContext:[NSManagedObjectContext MR_defaultContext]];
+    user6.userId = @6;
+    user6.nickName = @"Karenski";
+    user6.imageUrl = @"https://s3.amazonaws.com/hybrid-users/images%2F1412008313175-9743.80403989926%2F1bce718.jpg";
 
-[[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
+    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
 }
 
 - (void)setupLoginFlow {

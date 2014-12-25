@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "Game.h"
 
-static CGFloat kCellHeight = 79;
+static CGFloat kCellHeight = 80;
 static CGFloat kCellSelectedHeight = 286;
 
 typedef enum {
@@ -31,7 +31,7 @@ typedef enum {
 @property (nonatomic, assign) SBCellSlideState cellSlideState;
 
 - (void)setupCellContentWithGame:(Game*)game setOtherCellIsExpanded:(BOOL)otherCellIsEpanded;
-- (void)setCellExpandedMode;
-- (void)collapseCellFromExpanded;
+- (void)setCellExpandedModeAnimated:(BOOL)animated;
+- (void)collapseCellFromExpandedAnimated:(BOOL)animated;
 
 @end

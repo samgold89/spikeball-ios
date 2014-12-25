@@ -51,13 +51,13 @@ static NSInteger kNumberOfCells = 8;
         self.selectedIndexPath = path;
     }
     
+    if ([self.selectedIndexPath isEqual:path]) {
+        [cell setCellExpandedModeAnimated:YES];
+    } else {
+        [cell collapseCellFromExpandedAnimated:YES];
+    }
     [UIView animateWithDuration:0.35 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
         [self.gameTableView beginUpdates];
-        if ([self.selectedIndexPath isEqual:path]) {
-            [cell setCellExpandedMode];
-        } else {
-            [cell collapseCellFromExpanded];
-        }
         [self.gameTableView endUpdates];
         if (self.selectedIndexPath) {
             [self.gameTableView scrollToRowAtIndexPath:[self.gameTableView indexPathForCell:cell] atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
@@ -65,11 +65,13 @@ static NSInteger kNumberOfCells = 8;
     } completion:nil];
 }
 
-//- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
-//    if ([self.navigationController.tabBarController.selectedViewController isKindOfClass:[SBGamesViewController class]]) {
-//        [self.tabBarController.tabBar setHidden:UIDeviceOrientationIsLandscape([[UIDevice currentDevice] orientation])];
-//    }
-//}
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+    NSLog(@"navTop = %lu",self.navigationController.tabBarController.selectedIndex);
+    NSLog(@"me = %@",self.navigationController.tabBarController.selectedViewController);
+    if ([self.navigationController.tabBarController.selectedViewController isEqual:self.navigationController]) {
+        [self.tabBarController.tabBar setHidden:UIDeviceOrientationIsLandscape([[UIDevice currentDevice] orientation])]; //hide during landscape
+    }
+}
 
 #pragma mark Tableview Delegate & Datasource
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {

@@ -16,5 +16,6 @@
 #import "SBViewConstants.h"
 #import "NSLayoutConstraint+SBLayoutContraintHelpers.h"
 #import "NSString+SBValidation.h"
+#import "NSArray+GFCRandomElement.h"
 
 #endif

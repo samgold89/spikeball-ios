@@ -12,11 +12,13 @@
 #import <CoreData+MagicalRecord.h>
 #import "AppDelegate.h"
 #import "SBMapWithGameViewController.h"
+#import "SBPlayerImageCollectionViewController.h"
 
 @interface SBGameTableViewCell () <UIScrollViewDelegate>
 
 @property (nonatomic, strong) UIView *mapTopBorder;
 @property (nonatomic, strong) SBMapWithGameViewController *mapGameViewController;
+@property (nonatomic, strong) SBPlayerImageCollectionViewController *playerHeadCollectionView;
 
 @property (nonatomic, assign) BOOL anotherCellIsExpanded;
 
@@ -29,6 +31,7 @@
 @property (nonatomic, strong) UILabel *distanceAddressLabel;
 @property (nonatomic, strong) UIImageView *creatorImageView;
 @property (nonatomic, strong) UIView *responseStatusVerticalBar;
+@property (nonatomic, strong) NSArray *collectionViewConstraints;
 
 @property (nonatomic, strong) NSLayoutConstraint *acceptButtonWidthConstraint;
 @property (nonatomic, strong) NSLayoutConstraint *declineButtonWidthConstraint;
@@ -153,7 +156,6 @@ static NSInteger kMapExpandedSize = 183;
 }
 
 - (void)setupConstraints {
-//    [NSLayoutConstraint extentOfChild:self.scrollViewContainer toExtentOfParent:self];
     [NSLayoutConstraint view:self.scrollViewContainer toFixedHeight:kCellHeight];
     [NSLayoutConstraint sidesOfChild:self.scrollViewContainer toSidesOfParent:self.contentView];
     [NSLayoutConstraint topOfChild:self.scrollViewContainer toTopOfParent:self.contentView];
@@ -292,14 +294,14 @@ static NSInteger kMapExpandedSize = 183;
 - (void)setAnotherCellIsExpanded:(BOOL)anotherCellIsExpanded {
     _anotherCellIsExpanded = anotherCellIsExpanded;
     if (_anotherCellIsExpanded) {
-        [self collapseCellFromExpanded];
+        [self collapseCellFromExpandedAnimated:YES];
         self.scrollViewContainer.alpha = 0.4;
     } else {
         self.scrollViewContainer.alpha = 1;
     }
 }
 
-- (void)setCellExpandedMode {
+- (void)setCellExpandedModeAnimated:(BOOL)animated {
     [[NSNotificationCenter defaultCenter] postNotificationName:SBNotificationGameCellExpanding object:self];
     
     self.scrollViewContainer.scrollEnabled = NO;
@@ -308,20 +310,71 @@ static NSInteger kMapExpandedSize = 183;
         [self.mapGameViewController setMapViewZoomForGameWithLocation:appDelegate.lastUserLocation animated:NO];
     }
     
-    self.mapTopBorder.alpha = 1;
-    self.gameNamesLabel.alpha = self.startsWhenLabel.alpha = self.distanceAddressLabel.alpha = 0;
-    self.collapsedCellConstraint.constant = kMapExpandedSize;
-    self.responseStatusVerticalBarRightConstraint.constant = self.frame.size.width;
-    [self layoutIfNeeded];
+    [UIView animateWithDuration:0.35 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+        self.mapTopBorder.alpha = 1;
+        self.collapsedCellConstraint.constant = kMapExpandedSize;
+    } completion:^(BOOL finished) {
+        [self setupAllPlayersFacesAndAnimate:YES];
+    }];
 }
 
-- (void)collapseCellFromExpanded {
-    self.scrollViewContainer.scrollEnabled = YES;
-    self.mapTopBorder.alpha = 0;
-    self.gameNamesLabel.alpha = self.startsWhenLabel.alpha = self.distanceAddressLabel.alpha = 1;
-    self.collapsedCellConstraint.constant = 0;
-    self.responseStatusVerticalBarRightConstraint.constant = 0;
+- (void)collapseCellFromExpandedAnimated:(BOOL)animated {
+    if (self.collectionViewConstraints) {
+        [NSLayoutConstraint deactivateConstraints:self.collectionViewConstraints];
+        self.collectionViewConstraints = nil;
+    }
+    
+    [UIView animateWithDuration:0.35 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+        self.playerHeadCollectionView.view.center = CGPointMake(self.playerHeadCollectionView.view.center.x-self.frame.size.width, self.playerHeadCollectionView.view.center.y);
+        self.creatorImageView.alpha = 1;
+        
+        self.mapTopBorder.alpha = 0;
+        self.gameNamesLabel.alpha = self.startsWhenLabel.alpha = self.distanceAddressLabel.alpha = 1;
+        self.collapsedCellConstraint.constant = 0;
+        self.responseStatusVerticalBarRightConstraint.constant = 0;
+        [self layoutIfNeeded];
+    } completion:^(BOOL finished) {
+        self.scrollViewContainer.scrollEnabled = YES;
+        
+        [self.playerHeadCollectionView.view removeFromSuperview];
+        self.playerHeadCollectionView = nil;
+    }];
+}
+
+#pragma mark Bubble Head Setup
+- (void)setupAllPlayersFacesAndAnimate:(BOOL)animate {
+    self.playerHeadCollectionView = [[SBPlayerImageCollectionViewController alloc] init];
+    self.playerHeadCollectionView.playerIdArray = [NSKeyedUnarchiver unarchiveObjectWithData:self.game.userIdArray];
+    self.playerHeadCollectionView.view.translatesAutoresizingMaskIntoConstraints = NO;
+    self.playerHeadCollectionView.view.alpha = 0;
+    [self.contentView addSubview:self.playerHeadCollectionView.view];
+    self.collectionViewConstraints = [NSLayoutConstraint extentOfChild:self.playerHeadCollectionView.view toExtentOfSibling:self.scrollViewContainer inParent:self.contentView];
     [self layoutIfNeeded];
+    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(closeScrollOrShowGameButtonPressed)];
+    [self.playerHeadCollectionView.view addGestureRecognizer:tap];
+    
+    [UIView animateWithDuration:animate ? 0.35 : 0 animations:^{
+        self.creatorImageView.alpha = 0;
+        
+        self.gameNamesLabel.alpha = self.startsWhenLabel.alpha = self.distanceAddressLabel.alpha = 0;
+        
+        self.responseStatusVerticalBarRightConstraint.constant = self.frame.size.width;
+        [self layoutIfNeeded];
+    }];
+    
+    NSArray *allCells = [self.playerHeadCollectionView allVisibleCellsOrderedByX];
+    for (UIView *cell in allCells) {
+        cell.center = CGPointMake(cell.center.x+self.frame.size.width, cell.center.y);
+    }
+    self.playerHeadCollectionView.view.alpha = 1;
+    CGFloat counter = 0;
+    for (UIView *cell in allCells) {
+        [UIView animateWithDuration:0.7 delay:0.1*counter+0.05 usingSpringWithDamping:0.7 initialSpringVelocity:0.6 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+            cell.center = CGPointMake(cell.center.x-self.frame.size.width, cell.center.y);
+        } completion:nil];
+        counter += 1;
+    }
 }
 
 #pragma mark Button Handlers
