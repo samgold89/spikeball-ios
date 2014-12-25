@@ -311,6 +311,10 @@ static CGFloat kFieldBufferValue = 10;
     [self setNextButtonHidden:YES animated:NO];
 }
 
+- (void)activateEmailKeyboard {
+    [self.emailTextField becomeFirstResponder];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

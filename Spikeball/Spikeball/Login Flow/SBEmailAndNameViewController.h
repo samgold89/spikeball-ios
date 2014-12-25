@@ -27,6 +27,7 @@ static CGFloat kTextFieldHeight = 44;
 @property (nonatomic,weak) id <SBEmailAndNameViewControllerDelegate>delegate;
 
 - (void)endAllEditing;
+- (void)activateEmailKeyboard;
 - (void)setTopContainerHidden:(BOOL)hidden animated:(BOOL)animated;
 - (void)setBottomContainerHidden:(BOOL)hidden animated:(BOOL)animated;
 

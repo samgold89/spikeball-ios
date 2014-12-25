@@ -137,7 +137,11 @@ static CGFloat kEmailOffset = 0;
         [self.view layoutIfNeeded];
         [self.emailAndNameViewController setTopContainerHidden:NO animated:NO];
         [self.emailAndNameViewController setBottomContainerHidden:YES animated:NO];
-    } completion:nil];
+    } completion:^(BOOL finished) {
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.75 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self.emailAndNameViewController activateEmailKeyboard];
+        });
+    }];
 }
 
 - (void)moveToLocationView {

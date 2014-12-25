@@ -7,7 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Game.h"
+
+static CGFloat kCellHeight = 79;
 
 @interface SBGameTableViewCell : UITableViewCell
+
+- (void)setupCellContentWithGame:(Game*)game;
 
 @end

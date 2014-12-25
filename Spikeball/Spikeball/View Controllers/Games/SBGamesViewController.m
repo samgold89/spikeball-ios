@@ -7,13 +7,14 @@
 //
 
 #import "SBGamesViewController.h"
-#import "SWTableViewCell+GameInfoSetup.h"
+//#import "SWTableViewCell+GameInfoSetup.h"
+#import "SBGameTableViewCell.h"
 #import "SBLibrary.h"
 
 //TAKE ME OUT
 #import <CoreData+MagicalRecord.h>
 
-@interface SBGamesViewController () <UITableViewDataSource, UITableViewDelegate, SWTableViewCellDelegate>
+@interface SBGamesViewController () <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate>//, SWTableViewCellDelegate>
 
 @property (nonatomic,strong) UITableView *gameTableView;
 
@@ -36,6 +37,10 @@
     return kCellHeight;
 }
 
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    NSLog(@"sdf");
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return 4;
 }
@@ -44,12 +49,13 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *cellIdentifier = @"Cell";
     
-    SWTableViewCell *cell = (SWTableViewCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+//    SWTableViewCell *cell = (SWTableViewCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    SBGameTableViewCell *cell = (SBGameTableViewCell*)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     
     if (cell == nil) {
-        cell = [[SWTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifier];
-        cell.rightUtilityButtons = [self rightButtons];
-        cell.delegate = self;
+        cell = [[SBGameTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+//        cell.rightUtilityButtons = [self rightButtons];
+//        cell.delegate = self;
     }
     
     Game *game = [Game MR_createInContext:[NSManagedObjectContext MR_defaultContext]];
@@ -61,14 +67,14 @@
     return cell;
 }
 
-- (NSArray *)rightButtons
-{
-    NSMutableArray *rightUtilityButtons = [NSMutableArray new];
-    [rightUtilityButtons sw_addUtilityButtonWithColor:[UIColor redDecline] title:@"Lame\nExcuse"];
-    [rightUtilityButtons sw_addUtilityButtonWithColor:[UIColor greenAccept] title:@"Rage"];
-    
-    return rightUtilityButtons;
-}
+//- (NSArray *)rightButtons
+//{
+//    NSMutableArray *rightUtilityButtons = [NSMutableArray new];
+//    [rightUtilityButtons sw_addUtilityButtonWithColor:[UIColor redDecline] title:@"Lame\nExcuse"];
+//    [rightUtilityButtons sw_addUtilityButtonWithColor:[UIColor greenAccept] title:@"Rage"];
+//    
+//    return rightUtilityButtons;
+//}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
