@@ -10,6 +10,7 @@
 #import "SBLibrary.h"
 #import "SBUser+SBUserHelper.h"
 #import <CoreData+MagicalRecord.h>
+#import "AppDelegate.h"
 
 @interface SBGameTableViewCell () <UIScrollViewDelegate>
 
@@ -44,6 +45,7 @@ static NSInteger labelSeparationBuffer = 5;
     if (self) {
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(cellSwipeBegan:) name:SBNotificationGameCellSwipeBeganWithCell object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setDistanceLabelBasedOnLocation:) name:SBNotificationUserLocationUpdated object:nil];
         
         self.scrollViewContainer = [[UIScrollView alloc] init];
         self.scrollViewContainer.translatesAutoresizingMaskIntoConstraints = NO;
@@ -186,11 +188,34 @@ static NSInteger labelSeparationBuffer = 5;
     self.gameNamesLabel.text = @"Sarah, John & Mike";
     self.startsWhenLabel.text = @"Starts in 10 min!";
     self.startsWhenLabel.textColor = [UIColor greenAccept];
-    self.distanceAddressLabel.text = @"10 mi away - 536 Waller St";
+    
+    //get location and distance
+    [self setDistanceLabelBasedOnLocation:nil];
+    
     NSArray *gameUserIdArray = [NSKeyedUnarchiver unarchiveObjectWithData:game.userIdArray];
     SBUser *user = [SBUser currentUser];
     self.creatorImageView.image = [gameUserIdArray containsObject:user.userId] ? [UIImage imageNamed:@"_0000_Layer-1"] : [UIImage imageNamed:@"_0001_Layer-2"];
     self.responseStatusVerticalBar.backgroundColor = [gameUserIdArray containsObject:user.userId] ? [UIColor greenAccept] : [UIColor redDecline];
+}
+
+- (void)setDistanceLabelBasedOnLocation:(NSNotification*)note {
+    NSString *locationString = @"";
+    CLLocation *userLocation;
+    
+    if (note) {
+        userLocation = note.object;
+    } else {
+        AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
+        userLocation = appDelegate.lastUserLocation;
+    }
+    
+    if (userLocation) {
+        CLLocation *gameLocation = [[CLLocation alloc] initWithLatitude:[self.game.locationLat floatValue] longitude:[self.game.locationLong floatValue]];
+        CLLocationDistance distanceInMeters = [gameLocation distanceFromLocation:userLocation];
+        NSInteger milesRounded = distanceInMeters/1609.34; //1609 meters to mile
+        locationString = [NSString stringWithFormat:@"%lu mi away - ",milesRounded];
+    }
+    self.distanceAddressLabel.text = [NSString stringWithFormat:@"%@%@",locationString,self.game.address];
 }
 
 - (void)closeScrollView {
@@ -293,6 +318,10 @@ static NSInteger labelSeparationBuffer = 5;
 - (void)prepareForReuse {
     self.scrollViewContainer.contentOffset = CGPointZero;
     self.responseStatusVerticalBar.alpha = 1;
+}
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 @end

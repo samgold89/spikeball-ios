@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
+#import <CoreLocation/CoreLocation.h>
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
@@ -23,6 +24,8 @@
 - (void)setupRootViewControllersFromLogin:(BOOL)fromLogin;
 - (void)requestLocationAccess;
 - (void)registerForPushNotifications;
+
+- (CLLocation*)lastUserLocation;
 
 @end
 

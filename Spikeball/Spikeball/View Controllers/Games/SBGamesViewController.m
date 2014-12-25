@@ -55,7 +55,7 @@
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return  10;
+    return  8;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -76,16 +76,6 @@
     }
     
     NSArray *allGames = [Game MR_findAll];
-    while ([allGames count] <= indexPath.section) {
-        Game *game = [Game MR_createInContext:[NSManagedObjectContext MR_defaultContext]];
-        game.startTime = [NSDate dateWithTimeIntervalSinceNow:60*arc4random_uniform(3)];
-        game.address = @"536 Waller St";
-        game.userIdArray = [NSKeyedArchiver archivedDataWithRootObject:indexPath.section%2 == 0 ? @[@3,@4] : @[@1,@2,@3,@4]];
-        game.locationLat = [NSNumber numberWithFloat:37.784726];
-        game.locationLong = [NSNumber numberWithFloat:-122.402879];
-        [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
-        allGames = [Game MR_findAll];
-    }
     
     cell.delegate = self;
     Game *game = [allGames objectAtIndex:indexPath.section];

@@ -10,7 +10,7 @@
 #import "SBProductSummaryIntroScreenViewController.h"
 #import "SBLibrary.h"
 #import <CoreData+MagicalRecord.h>
-#import <CoreLocation/CoreLocation.h>
+#import "Game.h"
 
 //Tab Bar View Controllers
 #import "SBGamesViewController.h"
@@ -24,6 +24,8 @@
 @property (nonatomic, strong) UITabBarController *tabBarController;
 @property (nonatomic, strong) CLLocationManager *locationManager;
 
+@property (nonatomic, assign) BOOL backgroundedAppWhileMonitoringLocation;
+
 @end
 
 @implementation AppDelegate
@@ -36,6 +38,7 @@
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     
+    [self BULLSHITERASEME];
     BOOL userIsLoggedIn = YES;
     if (userIsLoggedIn) {
         [self setupRootViewControllersFromLogin:NO];
@@ -50,6 +53,60 @@
     }
     
     return YES;
+}
+
+- (void)BULLSHITERASEME{
+[Game MR_truncateAllInContext:[NSManagedObjectContext MR_defaultContext]];
+
+Game *game1 = [Game MR_createInContext:[NSManagedObjectContext MR_defaultContext]];
+game1.userIdArray = [NSKeyedArchiver archivedDataWithRootObject:arc4random_uniform(2)%2 == 0 ? @[@3,@4] : @[@1,@2,@3,@4]];
+game1.locationLat = [NSNumber numberWithFloat:37.759889];
+game1.locationLong = [NSNumber numberWithFloat:-122.427018];
+game1.address = @"Mission Dolores Park";
+
+Game *game2 = [Game MR_createInContext:[NSManagedObjectContext MR_defaultContext]];
+game2.userIdArray = [NSKeyedArchiver archivedDataWithRootObject:arc4random_uniform(2)%2 == 0 ? @[@3,@4] : @[@1,@2,@3,@4]];
+game2.locationLat = [NSNumber numberWithFloat:37.766867];
+game2.locationLong = [NSNumber numberWithFloat:-122.442688];
+game2.address = @"Buena Vista Park";
+
+Game *game3 = [Game MR_createInContext:[NSManagedObjectContext MR_defaultContext]];
+game3.userIdArray = [NSKeyedArchiver archivedDataWithRootObject:arc4random_uniform(2)%2 == 0 ? @[@3,@4] : @[@1,@2,@3,@4]];
+game3.locationLat = [NSNumber numberWithFloat:37.772447];
+game3.locationLong = [NSNumber numberWithFloat:-122.446867];
+game3.address = @"San Francisco Bicycle Route 30";
+
+Game *game4 = [Game MR_createInContext:[NSManagedObjectContext MR_defaultContext]];
+game4.userIdArray = [NSKeyedArchiver archivedDataWithRootObject:arc4random_uniform(2)%2 == 0 ? @[@3,@4] : @[@1,@2,@3,@4]];
+game4.locationLat = [NSNumber numberWithFloat:35.099008];
+game4.locationLong = [NSNumber numberWithFloat:-89.853844];
+game4.address = @"6243 Poplar Pike";
+
+Game *game5 = [Game MR_createInContext:[NSManagedObjectContext MR_defaultContext]];
+game5.userIdArray = [NSKeyedArchiver archivedDataWithRootObject:arc4random_uniform(2)%2 == 0 ? @[@3,@4] : @[@1,@2,@3,@4]];
+game5.locationLat = [NSNumber numberWithFloat:35.072780];
+game5.locationLong = [NSNumber numberWithFloat:-89.808768];
+game5.address = @"Hacks Cross Road Park";
+
+Game *game6 = [Game MR_createInContext:[NSManagedObjectContext MR_defaultContext]];
+game6.userIdArray = [NSKeyedArchiver archivedDataWithRootObject:arc4random_uniform(2)%2 == 0 ? @[@3,@4] : @[@1,@2,@3,@4]];
+game6.locationLat = [NSNumber numberWithFloat:35.116250];
+game6.locationLong = [NSNumber numberWithFloat:-89.836239];
+game6.address = @"Poplar Estates Parkway";
+
+Game *game7 = [Game MR_createInContext:[NSManagedObjectContext MR_defaultContext]];
+game7.userIdArray = [NSKeyedArchiver archivedDataWithRootObject:arc4random_uniform(2)%2 == 0 ? @[@3,@4] : @[@1,@2,@3,@4]];
+game7.locationLat = [NSNumber numberWithFloat:35.114395];
+game7.locationLong = [NSNumber numberWithFloat:-89.871687];
+game7.address = @"5668 Poplar Ave";
+
+Game *game8 = [Game MR_createInContext:[NSManagedObjectContext MR_defaultContext]];
+game8.userIdArray = [NSKeyedArchiver archivedDataWithRootObject:arc4random_uniform(2)%2 == 0 ? @[@3,@4] : @[@1,@2,@3,@4]];
+game8.locationLat = [NSNumber numberWithFloat:37.769556];
+game8.locationLong = [NSNumber numberWithFloat:-122.432676];
+game8.address = @"Duboce Park";
+
+[[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
 }
 
 - (void)setupLoginFlow {
@@ -109,6 +166,7 @@
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+    [self.locationManager stopUpdatingLocation];
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
@@ -210,6 +268,7 @@
     NSLog(@"didChange location :: %i",status);
     if ([CLLocationManager authorizationStatus] >= kCLAuthorizationStatusAuthorizedAlways) { //got permission
         [[NSNotificationCenter defaultCenter] postNotificationName:SBNotificationDidRegisterForLocationServices object:nil];
+        [self.locationManager startUpdatingLocation];
     }
 }
 
@@ -219,8 +278,12 @@
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
     NSLog(@"update location");
+    [[NSNotificationCenter defaultCenter] postNotificationName:SBNotificationUserLocationUpdated object:[locations firstObject]];
 }
 
+- (CLLocation*)lastUserLocation {
+    return self.locationManager.location;
+}
 
 #pragma mark - Core Data stack
 
@@ -270,7 +333,6 @@
     
     return _persistentStoreCoordinator;
 }
-
 
 - (NSManagedObjectContext *)managedObjectContext {
     // Returns the managed object context for the application (which is already bound to the persistent store coordinator for the application.)

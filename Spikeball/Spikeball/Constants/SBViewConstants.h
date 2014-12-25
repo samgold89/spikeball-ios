@@ -27,5 +27,6 @@ FOUNDATION_EXPORT NSString *const SBNotificationDidRegisterForLocationServices;
 FOUNDATION_EXPORT NSString *const SBNotificationFailedToRegisterForLocationServices;
 
 FOUNDATION_EXPORT NSString *const SBNotificationGameCellSwipeBeganWithCell;
+FOUNDATION_EXPORT NSString *const SBNotificationUserLocationUpdated;
 
 @end
