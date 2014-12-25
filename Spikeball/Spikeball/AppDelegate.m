@@ -277,7 +277,6 @@ game8.address = @"Duboce Park";
 }
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
-    NSLog(@"update location");
     [[NSNotificationCenter defaultCenter] postNotificationName:SBNotificationUserLocationUpdated object:[locations firstObject]];
 }
 

@@ -11,8 +11,14 @@
 #import "SBUser+SBUserHelper.h"
 #import <CoreData+MagicalRecord.h>
 #import "AppDelegate.h"
+#import "SBMapWithGameViewController.h"
 
 @interface SBGameTableViewCell () <UIScrollViewDelegate>
+
+@property (nonatomic, strong) UIView *mapTopBorder;
+@property (nonatomic, strong) SBMapWithGameViewController *mapGameViewController;
+
+@property (nonatomic, assign) BOOL anotherCellIsExpanded;
 
 @property (nonatomic, strong) UIScrollView *scrollViewContainer;
 @property (nonatomic, strong) UIButton *closeScrollOrShowGameButton;
@@ -26,6 +32,8 @@
 
 @property (nonatomic, strong) NSLayoutConstraint *acceptButtonWidthConstraint;
 @property (nonatomic, strong) NSLayoutConstraint *declineButtonWidthConstraint;
+@property (nonatomic, strong) NSLayoutConstraint *collapsedCellConstraint;
+@property (nonatomic, strong) NSLayoutConstraint *responseStatusVerticalBarRightConstraint;
 
 @property (nonatomic, strong) UIButton *acceptButton;
 @property (nonatomic, strong) UIButton *declineButton;
@@ -37,6 +45,7 @@ static NSInteger imageToLabelBuffer = 38;// image to label buffer
 static NSInteger imageToEdgeBuffer = 7;
 static NSInteger labelToResponseBarBuffer = 15;
 static NSInteger labelSeparationBuffer = 5;
+static NSInteger kMapExpandedSize = 183;
 
 @implementation SBGameTableViewCell
 
@@ -46,6 +55,8 @@ static NSInteger labelSeparationBuffer = 5;
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(cellSwipeBegan:) name:SBNotificationGameCellSwipeBeganWithCell object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setDistanceLabelBasedOnLocation:) name:SBNotificationUserLocationUpdated object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(cellIsExpandingNotification:) name:SBNotificationGameCellExpanding object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(allCellsAreCollapsed:) name:SBNotificationGameCellAllAreCollapsing object:nil];
         
         self.scrollViewContainer = [[UIScrollView alloc] init];
         self.scrollViewContainer.translatesAutoresizingMaskIntoConstraints = NO;
@@ -124,6 +135,17 @@ static NSInteger labelSeparationBuffer = 5;
         self.declineButton.titleLabel.lineBreakMode = NSLineBreakByClipping;
         [self.scrollViewContainer insertSubview:self.declineButton belowSubview:self.containerView];
         
+        //all cells will have a map that first has 0 height
+        self.mapGameViewController = [[SBMapWithGameViewController alloc] init];
+        self.mapGameViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
+        [self.contentView addSubview:self.mapGameViewController.view];
+        
+        self.mapTopBorder = [[UIView alloc] init];
+        self.mapTopBorder.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.4];
+        self.mapTopBorder.alpha = 0;
+        self.mapTopBorder.translatesAutoresizingMaskIntoConstraints = NO;
+        [self.contentView addSubview:self.mapTopBorder];
+        
         [self setCellStateForXOffset:self.scrollViewContainer.contentOffset.x];
         [self setupConstraints];
     }
@@ -131,7 +153,11 @@ static NSInteger labelSeparationBuffer = 5;
 }
 
 - (void)setupConstraints {
-    [NSLayoutConstraint extentOfChild:self.scrollViewContainer toExtentOfParent:self];
+//    [NSLayoutConstraint extentOfChild:self.scrollViewContainer toExtentOfParent:self];
+    [NSLayoutConstraint view:self.scrollViewContainer toFixedHeight:kCellHeight];
+    [NSLayoutConstraint sidesOfChild:self.scrollViewContainer toSidesOfParent:self.contentView];
+    [NSLayoutConstraint topOfChild:self.scrollViewContainer toTopOfParent:self.contentView];
+    
     [NSLayoutConstraint extentOfChild:self.closeScrollOrShowGameButton toExtentOfSibling:self.containerView inParent:self.scrollViewContainer];
     
     [NSLayoutConstraint rightOfChild:self.gameNamesLabel toLeftOfSibling:self.responseStatusVerticalBar withFixedMargin:-labelToResponseBarBuffer inParent:self.containerView];
@@ -153,25 +179,34 @@ static NSInteger labelSeparationBuffer = 5;
     
     [NSLayoutConstraint topOfChild:self.responseStatusVerticalBar toTopOfParent:self.containerView];
     [NSLayoutConstraint bottomOfChild:self.responseStatusVerticalBar toBottomOfParent:self.containerView];
-    [NSLayoutConstraint rightOfChild:self.responseStatusVerticalBar toRightOfParent:self.containerView withFixedMargin:0];
+    self.responseStatusVerticalBarRightConstraint = [NSLayoutConstraint rightOfChild:self.responseStatusVerticalBar toRightOfParent:self.containerView withFixedMargin:0];
     [NSLayoutConstraint view:self.responseStatusVerticalBar toFixedWidth:5];
     
     [NSLayoutConstraint topOfChild:self.acceptButton toTopOfParent:self.contentView];
-    [NSLayoutConstraint bottomOfChild:self.acceptButton toBottomOfParent:self.contentView];
+    [NSLayoutConstraint view:self.acceptButton toFixedHeight:kCellHeight];
     [NSLayoutConstraint rightOfChild:self.acceptButton toRightOfParent:self.contentView withFixedMargin:0];
     self.acceptButtonWidthConstraint =[NSLayoutConstraint view:self.acceptButton toFixedWidth:0]; //start at 0 - expanded during scrollview scroll
 
     [NSLayoutConstraint topOfChild:self.declineButton toTopOfParent:self.contentView];
-    [NSLayoutConstraint bottomOfChild:self.declineButton toBottomOfParent:self.contentView];
+    [NSLayoutConstraint view:self.declineButton toFixedHeight:kCellHeight];
     [NSLayoutConstraint rightOfChild:self.declineButton toLeftOfSibling:self.acceptButton withFixedMargin:0 inParent:self.contentView];
     self.declineButtonWidthConstraint = [NSLayoutConstraint view:self.declineButton toFixedWidth:0]; //start at 0 - expanded during scrollview scroll
+    
+    [NSLayoutConstraint topOfChild:self.mapTopBorder toTopOfSibling:self.mapGameViewController.view withFixedMargin:0 inParent:self.contentView];
+    [NSLayoutConstraint view:self.mapTopBorder toFixedHeight:0.5];
+    [NSLayoutConstraint sidesOfChild:self.mapTopBorder toSidesOfParent:self.contentView];
+    
+    self.collapsedCellConstraint = [NSLayoutConstraint view:self.mapGameViewController.view toFixedHeight:0];
+    [NSLayoutConstraint sidesOfChild:self.mapGameViewController.view toSidesOfParent:self.contentView];
+    [NSLayoutConstraint topOfChild:self.mapGameViewController.view toBottomOfSibling:self.scrollViewContainer withFixedMargin:0 inParent:self.contentView];
+    [NSLayoutConstraint bottomOfChild:self.mapGameViewController.view toBottomOfParent:self.contentView];
 }
 
 - (void)layoutSubviews {
     [super layoutSubviews];
     
-    self.containerView.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
-    self.scrollViewContainer.contentSize = CGSizeMake(self.frame.size.width+2*kAccessoryButtonWidth, self.frame.size.height);
+    self.containerView.frame = CGRectMake(0, 0, self.frame.size.width, kCellHeight);
+    self.scrollViewContainer.contentSize = CGSizeMake(self.frame.size.width+2*kAccessoryButtonWidth, self.scrollViewContainer.frame.size.height-.5); //sometimes off by .5...just to make sure
 }
 
 - (SBCellSlideState)cellSlideState {
@@ -183,7 +218,9 @@ static NSInteger labelSeparationBuffer = 5;
 }
 
 #pragma mark Content Setup
-- (void)setupCellContentWithGame:(Game*)game {
+- (void)setupCellContentWithGame:(Game*)game setOtherCellIsExpanded:(BOOL)otherCellIsEpanded {
+    self.anotherCellIsExpanded = otherCellIsEpanded;
+    
     self.game = game;
     self.gameNamesLabel.text = @"Sarah, John & Mike";
     self.startsWhenLabel.text = @"Starts in 10 min!";
@@ -191,6 +228,8 @@ static NSInteger labelSeparationBuffer = 5;
     
     //get location and distance
     [self setDistanceLabelBasedOnLocation:nil];
+    //set map now that we have coordinates
+    self.mapGameViewController.latLongGameLocation = CLLocationCoordinate2DMake([self.game.locationLat floatValue], [self.game.locationLong floatValue]);
     
     NSArray *gameUserIdArray = [NSKeyedUnarchiver unarchiveObjectWithData:game.userIdArray];
     SBUser *user = [SBUser currentUser];
@@ -239,6 +278,50 @@ static NSInteger labelSeparationBuffer = 5;
     if (![cell isEqual:self]) {
         [self closeScrollView];
     }
+}
+
+#pragma mark Cell Expansion Mode
+- (void)cellIsExpandingNotification:(NSNotification*)note {
+    self.anotherCellIsExpanded = ![self isEqual:note.object];
+}
+
+- (void)allCellsAreCollapsed:(NSNotification*)note {
+    self.anotherCellIsExpanded = NO;
+}
+
+- (void)setAnotherCellIsExpanded:(BOOL)anotherCellIsExpanded {
+    _anotherCellIsExpanded = anotherCellIsExpanded;
+    if (_anotherCellIsExpanded) {
+        [self collapseCellFromExpanded];
+        self.scrollViewContainer.alpha = 0.4;
+    } else {
+        self.scrollViewContainer.alpha = 1;
+    }
+}
+
+- (void)setCellExpandedMode {
+    [[NSNotificationCenter defaultCenter] postNotificationName:SBNotificationGameCellExpanding object:self];
+    
+    self.scrollViewContainer.scrollEnabled = NO;
+    AppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
+    if (appDelegate.lastUserLocation) {
+        [self.mapGameViewController setMapViewZoomForGameWithLocation:appDelegate.lastUserLocation animated:NO];
+    }
+    
+    self.mapTopBorder.alpha = 1;
+    self.gameNamesLabel.alpha = self.startsWhenLabel.alpha = self.distanceAddressLabel.alpha = 0;
+    self.collapsedCellConstraint.constant = kMapExpandedSize;
+    self.responseStatusVerticalBarRightConstraint.constant = self.frame.size.width;
+    [self layoutIfNeeded];
+}
+
+- (void)collapseCellFromExpanded {
+    self.scrollViewContainer.scrollEnabled = YES;
+    self.mapTopBorder.alpha = 0;
+    self.gameNamesLabel.alpha = self.startsWhenLabel.alpha = self.distanceAddressLabel.alpha = 1;
+    self.collapsedCellConstraint.constant = 0;
+    self.responseStatusVerticalBarRightConstraint.constant = 0;
+    [self layoutIfNeeded];
 }
 
 #pragma mark Button Handlers

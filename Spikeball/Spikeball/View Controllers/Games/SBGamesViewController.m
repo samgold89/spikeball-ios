@@ -7,7 +7,7 @@
 //
 
 #import "SBGamesViewController.h"
-#import "SBMapWithGameViewController.h"
+//#import "SBMapWithGameViewController.h"
 #import "SBGameTableViewCell.h"
 #import "SBLibrary.h"
 
@@ -17,8 +17,11 @@
 @interface SBGamesViewController () <UITableViewDataSource, UITableViewDelegate, SBGameTableViewCellDelegate>
 
 @property (nonatomic,strong) UITableView *gameTableView;
+@property (nonatomic,strong) NSIndexPath *selectedIndexPath;
 
 @end
+
+static NSInteger kNumberOfCells = 8;
 
 @implementation SBGamesViewController
 
@@ -40,14 +43,37 @@
 
 #pragma mark SBGameCell Delegate
 - (void)cellTouchedShowGameForCell:(SBGameTableViewCell*)cell {
-    SBMapWithGameViewController *mapGameViewController = [[SBMapWithGameViewController alloc] init];
-    mapGameViewController.latLongGameLocation = CLLocationCoordinate2DMake([cell.game.locationLat floatValue], [cell.game.locationLong floatValue]);
-    [self.navigationController pushViewController:mapGameViewController animated:YES];
+    NSIndexPath *path = [self.gameTableView indexPathForCell:cell];
+    if ([self.selectedIndexPath isEqual:path]) {
+        self.selectedIndexPath = nil;
+        [[NSNotificationCenter defaultCenter] postNotificationName:SBNotificationGameCellAllAreCollapsing object:self];
+    } else {
+        self.selectedIndexPath = path;
+    }
+    
+    [UIView animateWithDuration:0.35 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+        [self.gameTableView beginUpdates];
+        if ([self.selectedIndexPath isEqual:path]) {
+            [cell setCellExpandedMode];
+        } else {
+            [cell collapseCellFromExpanded];
+        }
+        [self.gameTableView endUpdates];
+        if (self.selectedIndexPath) {
+            [self.gameTableView scrollToRowAtIndexPath:[self.gameTableView indexPathForCell:cell] atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
+        }
+    } completion:nil];
 }
+
+//- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+//    if ([self.navigationController.tabBarController.selectedViewController isKindOfClass:[SBGamesViewController class]]) {
+//        [self.tabBarController.tabBar setHidden:UIDeviceOrientationIsLandscape([[UIDevice currentDevice] orientation])];
+//    }
+//}
 
 #pragma mark Tableview Delegate & Datasource
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return kCellHeight;
+    return [self.selectedIndexPath isEqual:indexPath] ? kCellSelectedHeight : kCellHeight;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -55,15 +81,11 @@
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return  8;
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    return  kNumberOfCells;
 }
 
 - (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath {
-    SBGameTableViewCell *cell = (SBGameTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
-    return cell.cellSlideState == SBCellSlieStateClosed;
+    return NO;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -79,7 +101,7 @@
     
     cell.delegate = self;
     Game *game = [allGames objectAtIndex:indexPath.section];
-    [cell setupCellContentWithGame:game];
+    [cell setupCellContentWithGame:game setOtherCellIsExpanded:self.selectedIndexPath && ![self.selectedIndexPath isEqual:indexPath]];
     
     return cell;
 }

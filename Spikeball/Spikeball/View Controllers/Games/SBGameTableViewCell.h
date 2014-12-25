@@ -10,6 +10,7 @@
 #import "Game.h"
 
 static CGFloat kCellHeight = 79;
+static CGFloat kCellSelectedHeight = 286;
 
 typedef enum {
     SBCellSlieStateOpened,
@@ -29,6 +30,8 @@ typedef enum {
 @property (nonatomic, strong) Game *game;
 @property (nonatomic, assign) SBCellSlideState cellSlideState;
 
-- (void)setupCellContentWithGame:(Game*)game;
+- (void)setupCellContentWithGame:(Game*)game setOtherCellIsExpanded:(BOOL)otherCellIsEpanded;
+- (void)setCellExpandedMode;
+- (void)collapseCellFromExpanded;
 
 @end

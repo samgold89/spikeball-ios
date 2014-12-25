@@ -38,54 +38,60 @@
     [self setupConstraints];
 }
 
+- (void)setMapViewZoomForGameWithLocation:(CLLocation*)location animated:(BOOL)animated {
+    // FIND REGION
+    CLLocationCoordinate2D upperCoordinates = CLLocationCoordinate2DMake(location.coordinate.latitude > self.latLongGameLocation.latitude ? location.coordinate.latitude : self.latLongGameLocation.latitude, location.coordinate.longitude > self.latLongGameLocation.longitude ? location.coordinate.longitude : self.latLongGameLocation.longitude);
+    CLLocationCoordinate2D lowerCoordinates = CLLocationCoordinate2DMake(location.coordinate.latitude < self.latLongGameLocation.latitude ? location.coordinate.latitude : self.latLongGameLocation.latitude, location.coordinate.longitude < self.latLongGameLocation.longitude ? location.coordinate.longitude : self.latLongGameLocation.longitude);
+    
+    CGFloat regionLatLongBuffer = .005;
+    MKCoordinateSpan locationSpan;
+    locationSpan.latitudeDelta = upperCoordinates.latitude - lowerCoordinates.latitude + regionLatLongBuffer;
+    locationSpan.longitudeDelta = upperCoordinates.longitude - lowerCoordinates.longitude + regionLatLongBuffer;
+    CLLocationCoordinate2D centerPoint = CLLocationCoordinate2DMake((upperCoordinates.latitude+lowerCoordinates.latitude)/2, (upperCoordinates.longitude+lowerCoordinates.longitude)/2);
+    
+    MKCoordinateRegion region = MKCoordinateRegionMake(centerPoint, locationSpan);
+    [self.mapView setRegion:region animated:animated];
+}
+
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation {
     if (!self.foundUserOnce) { //don't wnat to change very time the location updates
         //set region on distance from user to game
-
-        MKPointAnnotation *gameLocationPin = [[MKPointAnnotation alloc] init];
-        gameLocationPin.coordinate = self.latLongGameLocation;
-        [self.mapView addAnnotation:gameLocationPin];
-        
-        // FIND REGION
-        CLLocationCoordinate2D upperCoordinates = CLLocationCoordinate2DMake(mapView.userLocation.coordinate.latitude > self.latLongGameLocation.latitude ? mapView.userLocation.coordinate.latitude : self.latLongGameLocation.latitude, mapView.userLocation.coordinate.longitude > self.latLongGameLocation.longitude ? mapView.userLocation.coordinate.longitude : self.latLongGameLocation.longitude);
-        CLLocationCoordinate2D lowerCoordinates = CLLocationCoordinate2DMake(mapView.userLocation.coordinate.latitude < self.latLongGameLocation.latitude ? mapView.userLocation.coordinate.latitude : self.latLongGameLocation.latitude, mapView.userLocation.coordinate.longitude < self.latLongGameLocation.longitude ? mapView.userLocation.coordinate.longitude : self.latLongGameLocation.longitude);
-        
-        CGFloat regionLatLongBuffer = .005;
-        MKCoordinateSpan locationSpan;
-        locationSpan.latitudeDelta = upperCoordinates.latitude - lowerCoordinates.latitude + regionLatLongBuffer;
-        locationSpan.longitudeDelta = upperCoordinates.longitude - lowerCoordinates.longitude + regionLatLongBuffer;
-        CLLocationCoordinate2D centerPoint = CLLocationCoordinate2DMake((upperCoordinates.latitude+lowerCoordinates.latitude)/2, (upperCoordinates.longitude+lowerCoordinates.longitude)/2);
-        
-        MKCoordinateRegion region = MKCoordinateRegionMake(centerPoint, locationSpan);
-        [self.mapView setRegion:region animated:YES];
+        [self setMapViewZoomForGameWithLocation:userLocation.location animated:YES];
     }
     
     self.foundUserOnce = YES;
 }
 
-- (void)setLatLongLocation:(CLLocationCoordinate2D)latLongGameLocation {
+- (void)setLatLongGameLocation:(CLLocationCoordinate2D)latLongGameLocation {
     if (_latLongGameLocation.latitude != latLongGameLocation.latitude || _latLongGameLocation.longitude != latLongGameLocation.longitude) {
         _latLongGameLocation = latLongGameLocation;
+        
+        //remove old annotations
+        [self.mapView removeAnnotations:[self.mapView annotations]];
+        //add new location pin
+        MKPointAnnotation *gameLocationPin = [[MKPointAnnotation alloc] init];
+        gameLocationPin.coordinate = self.latLongGameLocation;
+        [self.mapView addAnnotation:gameLocationPin];
     }
     
-    [self.mapView setCenterCoordinate:_latLongGameLocation animated:YES];
+//    [self.mapView setCenterCoordinate:_latLongGameLocation animated:YES];
 }
 
 - (void)mapView:(MKMapView *)mapView didAddAnnotationViews:(NSArray *)views {
-    for (MKAnnotationView *view in views) {
-        view.transform = CGAffineTransformMakeScale(1, 0.01);
-        [UIView animateWithDuration:0.8 delay:0 usingSpringWithDamping:0.75 initialSpringVelocity:0.65 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-            view.transform = CGAffineTransformIdentity;
-        } completion:nil];
+    for (id view in views) {
+        if ([view isKindOfClass:[MKPinAnnotationView class]]) {
+            [view setAnimatesDrop:NO];
+            [view setDraggable:NO];
+        }
     }
 }
 
 - (void)mapViewDidFinishLoadingMap:(MKMapView *)mapView {
-    NSLog(@"DID FINISH LOADING MAP");
+    
 }
 
 - (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated {
-    NSLog(@"DID CHANGE****");
+    
 }
 
 - (void)setupConstraints {

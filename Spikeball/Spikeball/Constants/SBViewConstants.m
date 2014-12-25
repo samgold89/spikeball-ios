@@ -27,6 +27,8 @@ NSString *const SBNotificationDidRegisterForLocationServices = @"didRegisterForL
 NSString *const SBNotificationFailedToRegisterForLocationServices = @"failedToRegisterForLocationServices";
 
 NSString *const SBNotificationGameCellSwipeBeganWithCell = @"SBNotificationGameCellSwipeBeganWithCell";
+NSString *const SBNotificationGameCellExpanding = @"SBNotificationGameCellExpanding";
+NSString *const SBNotificationGameCellAllAreCollapsing = @"SBNotificationGameCellAllAreCollapsing";
 NSString *const SBNotificationUserLocationUpdated = @"SBNotificationUserLocationUpdated";
 
 @end

@@ -11,6 +11,8 @@
 
 @interface SBMapWithGameViewController : UIViewController
 
+- (void)setMapViewZoomForGameWithLocation:(CLLocation*)location animated:(BOOL)animated;
+
 @property (nonatomic, assign) CLLocationCoordinate2D latLongGameLocation;
 
 @end
