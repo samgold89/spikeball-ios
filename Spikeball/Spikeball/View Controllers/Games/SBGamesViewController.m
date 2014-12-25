@@ -7,20 +7,18 @@
 //
 
 #import "SBGamesViewController.h"
-//#import "SWTableViewCell+GameInfoSetup.h"
+#import "SBMapWithGameViewController.h"
 #import "SBGameTableViewCell.h"
 #import "SBLibrary.h"
 
 //TAKE ME OUT
 #import <CoreData+MagicalRecord.h>
 
-@interface SBGamesViewController () <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate>//, SWTableViewCellDelegate>
+@interface SBGamesViewController () <UITableViewDataSource, UITableViewDelegate, SBGameTableViewCellDelegate>
 
 @property (nonatomic,strong) UITableView *gameTableView;
 
 @end
-
-static NSInteger kHeaderHeight = 27;
 
 @implementation SBGamesViewController
 
@@ -40,12 +38,16 @@ static NSInteger kHeaderHeight = 27;
     [NSLayoutConstraint extentOfChild:self.gameTableView toExtentOfParent:self.view];
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return kCellHeight;
+#pragma mark SBGameCell Delegate
+- (void)cellTouchedShowGameForCell:(SBGameTableViewCell*)cell {
+    SBMapWithGameViewController *mapGameViewController = [[SBMapWithGameViewController alloc] init];
+    mapGameViewController.latLongGameLocation = CLLocationCoordinate2DMake([cell.game.locationLat floatValue], [cell.game.locationLong floatValue]);
+    [self.navigationController pushViewController:mapGameViewController animated:YES];
 }
 
-- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
-    NSLog(@"sdf");
+#pragma mark Tableview Delegate & Datasource
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return kCellHeight;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -56,10 +58,17 @@ static NSInteger kHeaderHeight = 27;
     return  10;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+}
+
+- (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath {
+    SBGameTableViewCell *cell = (SBGameTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
+    return cell.cellSlideState == SBCellSlieStateClosed;
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *cellIdentifier = @"Cell";
     
-//    SWTableViewCell *cell = (SWTableViewCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     SBGameTableViewCell *cell = (SBGameTableViewCell*)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     
     if (cell == nil) {
@@ -72,10 +81,13 @@ static NSInteger kHeaderHeight = 27;
         game.startTime = [NSDate dateWithTimeIntervalSinceNow:60*arc4random_uniform(3)];
         game.address = @"536 Waller St";
         game.userIdArray = [NSKeyedArchiver archivedDataWithRootObject:indexPath.section%2 == 0 ? @[@3,@4] : @[@1,@2,@3,@4]];
+        game.locationLat = [NSNumber numberWithFloat:37.784726];
+        game.locationLong = [NSNumber numberWithFloat:-122.402879];
         [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreAndWait];
         allGames = [Game MR_findAll];
     }
     
+    cell.delegate = self;
     Game *game = [allGames objectAtIndex:indexPath.section];
     [cell setupCellContentWithGame:game];
     
@@ -85,21 +97,6 @@ static NSInteger kHeaderHeight = 27;
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     return 0.1;//kHeaderHeight;
 }
-//
-//- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-//    UIView *header = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, kHeaderHeight)];
-//    header.backgroundColor = [UIColor lightGrayGameCellsBackground];
-//    
-//    UIView *topSeparator = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 0.5)];
-//    topSeparator.backgroundColor = [[UIColor darkGrayColor] colorWithAlphaComponent:0.5];
-//    [header addSubview:topSeparator];
-//    
-//    UIView *bottomSeparator = [[UIView alloc] initWithFrame:CGRectMake(0, kHeaderHeight-0.5, self.view.frame.size.width, 0.5)];
-//    bottomSeparator.backgroundColor = [[UIColor darkGrayColor] colorWithAlphaComponent:0.5];
-//    [header addSubview:bottomSeparator];
-//    
-//    return header;
-//}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

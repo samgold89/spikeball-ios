@@ -8,12 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		A93B4EC91A4A53C5003FFC9E /* SBGameTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A93B4EC81A4A53C5003FFC9E /* SBGameTableViewCell.m */; };
-		A93B4ED71A4A58E5003FFC9E /* NSMutableArray+SWUtilityButtons.m in Sources */ = {isa = PBXBuildFile; fileRef = A93B4ECC1A4A58E5003FFC9E /* NSMutableArray+SWUtilityButtons.m */; };
-		A93B4ED81A4A58E5003FFC9E /* SWCellScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = A93B4ECE1A4A58E5003FFC9E /* SWCellScrollView.m */; };
-		A93B4ED91A4A58E5003FFC9E /* SWLongPressGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = A93B4ED01A4A58E5003FFC9E /* SWLongPressGestureRecognizer.m */; };
-		A93B4EDA1A4A58E5003FFC9E /* SWTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A93B4ED21A4A58E5003FFC9E /* SWTableViewCell.m */; };
-		A93B4EDB1A4A58E5003FFC9E /* SWUtilityButtonTapGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = A93B4ED41A4A58E5003FFC9E /* SWUtilityButtonTapGestureRecognizer.m */; };
-		A93B4EDC1A4A58E5003FFC9E /* SWUtilityButtonView.m in Sources */ = {isa = PBXBuildFile; fileRef = A93B4ED61A4A58E5003FFC9E /* SWUtilityButtonView.m */; };
 		A9568E361A214B900075CB35 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A9568E351A214B900075CB35 /* main.m */; };
 		A9568E391A214B900075CB35 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A9568E381A214B900075CB35 /* AppDelegate.m */; };
 		A9568E3C1A214B900075CB35 /* Spikeball.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A9568E3A1A214B900075CB35 /* Spikeball.xcdatamodeld */; };
@@ -25,6 +19,7 @@
 		A96114E81A4A7589008948C3 /* _0000_Layer-1.png in Resources */ = {isa = PBXBuildFile; fileRef = A96114E61A4A7589008948C3 /* _0000_Layer-1.png */; };
 		A96114E91A4A7589008948C3 /* _0001_Layer-2.png in Resources */ = {isa = PBXBuildFile; fileRef = A96114E71A4A7589008948C3 /* _0001_Layer-2.png */; };
 		A96114EF1A4BD765008948C3 /* NSLayoutConstraint+SBLayoutContraintHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = A96114EE1A4BD765008948C3 /* NSLayoutConstraint+SBLayoutContraintHelpers.m */; };
+		A96114F41A4BE92F008948C3 /* SBMapWithGameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A96114F31A4BE92F008948C3 /* SBMapWithGameViewController.m */; };
 		A98587F91A4924E3006C0035 /* SBLoginCompleteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A98587F81A4924E3006C0035 /* SBLoginCompleteViewController.m */; };
 		A98588021A4934BE006C0035 /* SBAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A98588011A4934BE006C0035 /* SBAccountViewController.m */; };
 		A98588051A4934C9006C0035 /* SBGamesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A98588041A4934C9006C0035 /* SBGamesViewController.m */; };
@@ -53,7 +48,6 @@
 		A9B1A5751A48B5B900359FC0 /* yellow_to_black_gradient@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9B1A5741A48B5B900359FC0 /* yellow_to_black_gradient@2x.png */; };
 		A9D9FF311A47C64A00AEF5EA /* spikeball_small_logo_white@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9D9FF301A47C64A00AEF5EA /* spikeball_small_logo_white@2x.png */; };
 		A9D9FF381A47F81000AEF5EA /* SBProductSummaryIntroScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A9D9FF371A47F81000AEF5EA /* SBProductSummaryIntroScreenViewController.m */; };
-		A9EA36C61A4A5CA60028A131 /* SWTableViewCell+GameInfoSetup.m in Sources */ = {isa = PBXBuildFile; fileRef = A9EA36C51A4A5CA60028A131 /* SWTableViewCell+GameInfoSetup.m */; };
 		D88AEBA711CEB84D4F66FB39 /* libPods-Spikeball.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C821388008106AC9E68D215 /* libPods-Spikeball.a */; };
 /* End PBXBuildFile section */
 
@@ -72,18 +66,6 @@
 		3C821388008106AC9E68D215 /* libPods-Spikeball.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Spikeball.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A93B4EC71A4A53C5003FFC9E /* SBGameTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBGameTableViewCell.h; sourceTree = "<group>"; };
 		A93B4EC81A4A53C5003FFC9E /* SBGameTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBGameTableViewCell.m; sourceTree = "<group>"; };
-		A93B4ECB1A4A58E5003FFC9E /* NSMutableArray+SWUtilityButtons.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+SWUtilityButtons.h"; sourceTree = "<group>"; };
-		A93B4ECC1A4A58E5003FFC9E /* NSMutableArray+SWUtilityButtons.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+SWUtilityButtons.m"; sourceTree = "<group>"; };
-		A93B4ECD1A4A58E5003FFC9E /* SWCellScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWCellScrollView.h; sourceTree = "<group>"; };
-		A93B4ECE1A4A58E5003FFC9E /* SWCellScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWCellScrollView.m; sourceTree = "<group>"; };
-		A93B4ECF1A4A58E5003FFC9E /* SWLongPressGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWLongPressGestureRecognizer.h; sourceTree = "<group>"; };
-		A93B4ED01A4A58E5003FFC9E /* SWLongPressGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWLongPressGestureRecognizer.m; sourceTree = "<group>"; };
-		A93B4ED11A4A58E5003FFC9E /* SWTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWTableViewCell.h; sourceTree = "<group>"; };
-		A93B4ED21A4A58E5003FFC9E /* SWTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWTableViewCell.m; sourceTree = "<group>"; };
-		A93B4ED31A4A58E5003FFC9E /* SWUtilityButtonTapGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWUtilityButtonTapGestureRecognizer.h; sourceTree = "<group>"; };
-		A93B4ED41A4A58E5003FFC9E /* SWUtilityButtonTapGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWUtilityButtonTapGestureRecognizer.m; sourceTree = "<group>"; };
-		A93B4ED51A4A58E5003FFC9E /* SWUtilityButtonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWUtilityButtonView.h; sourceTree = "<group>"; };
-		A93B4ED61A4A58E5003FFC9E /* SWUtilityButtonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWUtilityButtonView.m; sourceTree = "<group>"; };
 		A9568E301A214B900075CB35 /* Spikeball.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Spikeball.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9568E341A214B900075CB35 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A9568E351A214B900075CB35 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -104,6 +86,8 @@
 		A96114E71A4A7589008948C3 /* _0001_Layer-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "_0001_Layer-2.png"; sourceTree = "<group>"; };
 		A96114ED1A4BD765008948C3 /* NSLayoutConstraint+SBLayoutContraintHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSLayoutConstraint+SBLayoutContraintHelpers.h"; sourceTree = "<group>"; };
 		A96114EE1A4BD765008948C3 /* NSLayoutConstraint+SBLayoutContraintHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSLayoutConstraint+SBLayoutContraintHelpers.m"; sourceTree = "<group>"; };
+		A96114F21A4BE92F008948C3 /* SBMapWithGameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBMapWithGameViewController.h; sourceTree = "<group>"; };
+		A96114F31A4BE92F008948C3 /* SBMapWithGameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBMapWithGameViewController.m; sourceTree = "<group>"; };
 		A98587F71A4924E3006C0035 /* SBLoginCompleteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBLoginCompleteViewController.h; sourceTree = "<group>"; };
 		A98587F81A4924E3006C0035 /* SBLoginCompleteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBLoginCompleteViewController.m; sourceTree = "<group>"; };
 		A98588001A4934BE006C0035 /* SBAccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBAccountViewController.h; sourceTree = "<group>"; };
@@ -147,8 +131,6 @@
 		A9D9FF301A47C64A00AEF5EA /* spikeball_small_logo_white@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "spikeball_small_logo_white@2x.png"; sourceTree = "<group>"; };
 		A9D9FF361A47F81000AEF5EA /* SBProductSummaryIntroScreenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBProductSummaryIntroScreenViewController.h; sourceTree = "<group>"; };
 		A9D9FF371A47F81000AEF5EA /* SBProductSummaryIntroScreenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBProductSummaryIntroScreenViewController.m; sourceTree = "<group>"; };
-		A9EA36C41A4A5CA60028A131 /* SWTableViewCell+GameInfoSetup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SWTableViewCell+GameInfoSetup.h"; sourceTree = "<group>"; };
-		A9EA36C51A4A5CA60028A131 /* SWTableViewCell+GameInfoSetup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SWTableViewCell+GameInfoSetup.m"; sourceTree = "<group>"; };
 		ACD1208F896E0C4DA9FF0AFE /* Pods-Spikeball.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spikeball.release.xcconfig"; path = "Pods/Target Support Files/Pods-Spikeball/Pods-Spikeball.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -190,25 +172,6 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
-		A93B4ECA1A4A58E5003FFC9E /* SWTableViewFiles */ = {
-			isa = PBXGroup;
-			children = (
-				A93B4ECB1A4A58E5003FFC9E /* NSMutableArray+SWUtilityButtons.h */,
-				A93B4ECC1A4A58E5003FFC9E /* NSMutableArray+SWUtilityButtons.m */,
-				A93B4ECD1A4A58E5003FFC9E /* SWCellScrollView.h */,
-				A93B4ECE1A4A58E5003FFC9E /* SWCellScrollView.m */,
-				A93B4ECF1A4A58E5003FFC9E /* SWLongPressGestureRecognizer.h */,
-				A93B4ED01A4A58E5003FFC9E /* SWLongPressGestureRecognizer.m */,
-				A93B4ED11A4A58E5003FFC9E /* SWTableViewCell.h */,
-				A93B4ED21A4A58E5003FFC9E /* SWTableViewCell.m */,
-				A93B4ED31A4A58E5003FFC9E /* SWUtilityButtonTapGestureRecognizer.h */,
-				A93B4ED41A4A58E5003FFC9E /* SWUtilityButtonTapGestureRecognizer.m */,
-				A93B4ED51A4A58E5003FFC9E /* SWUtilityButtonView.h */,
-				A93B4ED61A4A58E5003FFC9E /* SWUtilityButtonView.m */,
-			);
-			path = SWTableViewFiles;
-			sourceTree = "<group>";
-		};
 		A9568E271A214B900075CB35 = {
 			isa = PBXGroup;
 			children = (
@@ -234,7 +197,6 @@
 			children = (
 				A9EA36C71A4A5D520028A131 /* Model */,
 				A9568E3A1A214B900075CB35 /* Spikeball.xcdatamodeld */,
-				A93B4ECA1A4A58E5003FFC9E /* SWTableViewFiles */,
 				A98587FB1A4934B1006C0035 /* View Controllers */,
 				A9A744B81A478E8C0068876F /* SBLibrary.h */,
 				A9A744AD1A4540CC0068876F /* Constants */,
@@ -310,6 +272,8 @@
 		A98587FE1A4934B1006C0035 /* Games */ = {
 			isa = PBXGroup;
 			children = (
+				A96114F21A4BE92F008948C3 /* SBMapWithGameViewController.h */,
+				A96114F31A4BE92F008948C3 /* SBMapWithGameViewController.m */,
 				A98588031A4934C9006C0035 /* SBGamesViewController.h */,
 				A98588041A4934C9006C0035 /* SBGamesViewController.m */,
 				A93B4EC71A4A53C5003FFC9E /* SBGameTableViewCell.h */,
@@ -345,8 +309,6 @@
 				A96114EE1A4BD765008948C3 /* NSLayoutConstraint+SBLayoutContraintHelpers.m */,
 				A96114E01A4A6C0F008948C3 /* SBUser+SBUserHelper.h */,
 				A96114E11A4A6C0F008948C3 /* SBUser+SBUserHelper.m */,
-				A9EA36C41A4A5CA60028A131 /* SWTableViewCell+GameInfoSetup.h */,
-				A9EA36C51A4A5CA60028A131 /* SWTableViewCell+GameInfoSetup.m */,
 				A99FEB101A25068100F342B2 /* UIColor+SpikeballColors.h */,
 				A99FEB111A25068100F342B2 /* UIColor+SpikeballColors.m */,
 			);
@@ -594,28 +556,22 @@
 			buildActionMask = 2147483647;
 			files = (
 				A99FEB2B1A25218100F342B2 /* SBAnimatingLogo.m in Sources */,
-				A93B4ED81A4A58E5003FFC9E /* SWCellScrollView.m in Sources */,
 				A9A744B01A4540D90068876F /* SBViewConstants.m in Sources */,
-				A93B4ED91A4A58E5003FFC9E /* SWLongPressGestureRecognizer.m in Sources */,
 				A9D9FF381A47F81000AEF5EA /* SBProductSummaryIntroScreenViewController.m in Sources */,
 				A9568E391A214B900075CB35 /* AppDelegate.m in Sources */,
 				A98587F91A4924E3006C0035 /* SBLoginCompleteViewController.m in Sources */,
 				A96114EF1A4BD765008948C3 /* NSLayoutConstraint+SBLayoutContraintHelpers.m in Sources */,
 				A98588051A4934C9006C0035 /* SBGamesViewController.m in Sources */,
-				A93B4EDB1A4A58E5003FFC9E /* SWUtilityButtonTapGestureRecognizer.m in Sources */,
 				A985880B1A4934E0006C0035 /* SBSummonViewController.m in Sources */,
 				A99FEB121A25068100F342B2 /* UIColor+SpikeballColors.m in Sources */,
-				A93B4ED71A4A58E5003FFC9E /* NSMutableArray+SWUtilityButtons.m in Sources */,
 				A96114E21A4A6C0F008948C3 /* SBUser+SBUserHelper.m in Sources */,
-				A93B4EDA1A4A58E5003FFC9E /* SWTableViewCell.m in Sources */,
 				A98588081A4934D5006C0035 /* SBFriendsViewController.m in Sources */,
 				A9568E361A214B900075CB35 /* main.m in Sources */,
 				A96114E51A4A6C8D008948C3 /* SBUser.m in Sources */,
 				A96114DC1A4A6B49008948C3 /* Game.m in Sources */,
 				A9A744B71A47840D0068876F /* SBEmailAndNameViewController.m in Sources */,
 				A9A744AA1A4536BF0068876F /* NSString+SBValidation.m in Sources */,
-				A9EA36C61A4A5CA60028A131 /* SWTableViewCell+GameInfoSetup.m in Sources */,
-				A93B4EDC1A4A58E5003FFC9E /* SWUtilityButtonView.m in Sources */,
+				A96114F41A4BE92F008948C3 /* SBMapWithGameViewController.m in Sources */,
 				A98588021A4934BE006C0035 /* SBAccountViewController.m in Sources */,
 				A93B4EC91A4A53C5003FFC9E /* SBGameTableViewCell.m in Sources */,
 				A9A744B41A4782300068876F /* SBLocationAndNotificationsViewController.m in Sources */,

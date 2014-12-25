@@ -11,7 +11,23 @@
 
 static CGFloat kCellHeight = 79;
 
+typedef enum {
+    SBCellSlieStateOpened,
+    SBCellSlieStateClosed
+} SBCellSlideState;
+
+@class SBGameTableViewCell;
+@protocol SBGameTableViewCellDelegate <NSObject>
+
+- (void)cellTouchedShowGameForCell:(SBGameTableViewCell*)cell;
+
+@end
+
 @interface SBGameTableViewCell : UITableViewCell
+
+@property (nonatomic, weak) id <SBGameTableViewCellDelegate>delegate;
+@property (nonatomic, strong) Game *game;
+@property (nonatomic, assign) SBCellSlideState cellSlideState;
 
 - (void)setupCellContentWithGame:(Game*)game;
 

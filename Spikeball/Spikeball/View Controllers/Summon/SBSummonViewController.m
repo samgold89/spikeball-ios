@@ -13,7 +13,6 @@
 
 @interface SBSummonViewController () <MKMapViewDelegate>
 
-@property (nonatomic,assign) NSInteger unhideBarsInFlight;
 @property (nonatomic,strong) MKMapView *mapView;
 
 @end
@@ -29,16 +28,12 @@
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
     
     [self.navigationItem setRightBarButtonItem:[[UIBarButtonItem alloc] initWithTitle:@"Favorites" style:UIBarButtonItemStylePlain target:self action:@selector(favoritesButtonPressed)]];
-//    [self.navigationItem setLeftBarButtonItem:[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"geo_button"] style:UIBarButtonItemStylePlain target:self action:@selector(geoButtonPressed)]];
-    
-    self.unhideBarsInFlight = 0;
     
     self.mapView = [[MKMapView alloc] init];
     self.mapView.translatesAutoresizingMaskIntoConstraints = NO;
     self.mapView.delegate = self;
     self.mapView.showsUserLocation = YES;
     [self.mapView.userLocation setTitle:@"You are here!"];
-    self.mapView.delegate = self;
     [self.view addSubview:self.mapView];
     [self.mapView setUserTrackingMode:MKUserTrackingModeFollow animated:YES];
 
@@ -80,25 +75,9 @@
 }
 
 - (void)mapView:(MKMapView *)mapView regionWillChangeAnimated:(BOOL)animated {
-//    [UIView animateWithDuration:0.3 animations:^{
-//        [self.navigationController.navigationBar setFrame:CGRectMake(0, -self.navigationController.navigationBar.frame.size.height, self.navigationController.navigationBar.frame.size.width, self.navigationController.navigationBar.frame.size.height)];
-//        [self.tabBarController.tabBar setFrame:CGRectMake(0, self.view.frame.size.height, self.tabBarController.tabBar.frame.size.width, self.tabBarController.tabBar.frame.size.height)];
-//    }];
 }
 
 - (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated {
-//    self.unhideBarsInFlight += 1;
-//    NSLog(@"unhide %lu",self.unhideBarsInFlight);
-//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//        self.unhideBarsInFlight -= 1;
-//        NSLog(@"UNHIDE %lu",self.unhideBarsInFlight);
-//        if (self.unhideBarsInFlight == 0) {
-//            [UIView animateWithDuration:0.3 animations:^{
-//                [self.navigationController.navigationBar setFrame:CGRectMake(0, [[UIApplication sharedApplication] statusBarFrame].size.height, self.navigationController.navigationBar.frame.size.width, self.navigationController.navigationBar.frame.size.height)];
-//                [self.tabBarController.tabBar setFrame:CGRectMake(0, self.view.frame.size.height-self.tabBarController.tabBar.frame.size.height, self.tabBarController.tabBar.frame.size.width, self.tabBarController.tabBar.frame.size.height)];
-//            }];
-//        }
-//    });
 }
 
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation {

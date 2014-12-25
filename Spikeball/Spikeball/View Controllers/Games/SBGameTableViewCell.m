@@ -9,11 +9,12 @@
 #import "SBGameTableViewCell.h"
 #import "SBLibrary.h"
 #import "SBUser+SBUserHelper.h"
+#import <CoreData+MagicalRecord.h>
 
 @interface SBGameTableViewCell () <UIScrollViewDelegate>
 
-@property (nonatomic,strong) UIScrollView *scrollViewContainer;
-@property (nonatomic,strong) UIButton *closeScrollButton;
+@property (nonatomic, strong) UIScrollView *scrollViewContainer;
+@property (nonatomic, strong) UIButton *closeScrollOrShowGameButton;
 
 @property (nonatomic, strong) UIView *containerView;
 @property (nonatomic, strong) UILabel *gameNamesLabel;
@@ -22,12 +23,15 @@
 @property (nonatomic, strong) UIImageView *creatorImageView;
 @property (nonatomic, strong) UIView *responseStatusVerticalBar;
 
+@property (nonatomic, strong) NSLayoutConstraint *acceptButtonWidthConstraint;
+@property (nonatomic, strong) NSLayoutConstraint *declineButtonWidthConstraint;
+
 @property (nonatomic, strong) UIButton *acceptButton;
 @property (nonatomic, strong) UIButton *declineButton;
 
 @end
 
-static NSInteger kAccessoryButtonWidth = 65;
+static NSInteger kAccessoryButtonWidth = 68;
 static NSInteger imageToLabelBuffer = 38;// image to label buffer
 static NSInteger imageToEdgeBuffer = 7;
 static NSInteger labelToResponseBarBuffer = 15;
@@ -47,17 +51,20 @@ static NSInteger labelSeparationBuffer = 5;
         self.scrollViewContainer.delegate = self;
         [self.contentView addSubview:self.scrollViewContainer];
         
+        //clever little hack to still allow cells to be selected
+//        [self.scrollViewContainer setUserInteractionEnabled:NO];
+//        [self.contentView addGestureRecognizer:self.scrollViewContainer.panGestureRecognizer];
+        
         self.containerView = [[UIView alloc] init];
         self.containerView.userInteractionEnabled = NO;
         self.containerView.backgroundColor = [UIColor whiteColor];
         [self.scrollViewContainer addSubview:self.containerView];
         
-        self.closeScrollButton = [[UIButton alloc] init];
-        self.closeScrollButton.translatesAutoresizingMaskIntoConstraints = NO;
-        self.closeScrollButton.backgroundColor = [UIColor clearColor];
-        self.closeScrollButton.enabled = NO;
-        [self.closeScrollButton addTarget:self action:@selector(closeScrollView) forControlEvents:UIControlEventTouchUpInside];
-        [self.scrollViewContainer addSubview:self.closeScrollButton];
+        self.closeScrollOrShowGameButton = [[UIButton alloc] init];
+        self.closeScrollOrShowGameButton.translatesAutoresizingMaskIntoConstraints = NO;
+        self.closeScrollOrShowGameButton.backgroundColor = [UIColor clearColor];
+        [self.closeScrollOrShowGameButton addTarget:self action:@selector(closeScrollOrShowGameButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+        [self.scrollViewContainer addSubview:self.closeScrollOrShowGameButton];
         
         NSInteger gameNameFontSize = 15;
         self.gameNamesLabel = [[UILabel alloc] init];
@@ -95,24 +102,24 @@ static NSInteger labelSeparationBuffer = 5;
         self.acceptButton = [[UIButton alloc] init];
         self.acceptButton.translatesAutoresizingMaskIntoConstraints = NO;
         self.acceptButton.backgroundColor = [UIColor greenAccept];
-        [self.acceptButton setTitle:@"Rage" forState:UIControlStateNormal];
+        [self.acceptButton setTitle:@"I'm in!" forState:UIControlStateNormal];
         [self.acceptButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         self.acceptButton.titleLabel.font = [UIFont fontWithName:SBFontStandard size:14];
         self.acceptButton.titleLabel.textAlignment = NSTextAlignmentCenter;
         [self.acceptButton addTarget:self action:@selector(acceptButtonPressed) forControlEvents:UIControlEventTouchUpInside];
-//        [self.contentView insertSubview:self.acceptButton belowSubview:self.scrollViewContainer];
+        self.acceptButton.titleLabel.lineBreakMode = NSLineBreakByClipping;
         [self.scrollViewContainer insertSubview:self.acceptButton belowSubview:self.containerView];
         
         self.declineButton = [[UIButton alloc] init];
         self.declineButton.translatesAutoresizingMaskIntoConstraints = NO;
         self.declineButton.backgroundColor = [UIColor redDecline];
-        [self.declineButton setTitle:@"Goldfish\nDied" forState:UIControlStateNormal];
+        [self.declineButton setTitle:@"Next Time" forState:UIControlStateNormal];
         self.declineButton.titleLabel.numberOfLines = 2;
         [self.declineButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         self.declineButton.titleLabel.font = [UIFont fontWithName:SBFontStandard size:14];
         self.declineButton.titleLabel.textAlignment = NSTextAlignmentCenter;
         [self.declineButton  addTarget:self action:@selector(declineButtonPressed) forControlEvents:UIControlEventTouchUpInside];
-//        [self.contentView insertSubview:self.declineButton belowSubview:self.scrollViewContainer];
+        self.declineButton.titleLabel.lineBreakMode = NSLineBreakByClipping;
         [self.scrollViewContainer insertSubview:self.declineButton belowSubview:self.containerView];
         
         [self setCellStateForXOffset:self.scrollViewContainer.contentOffset.x];
@@ -123,7 +130,7 @@ static NSInteger labelSeparationBuffer = 5;
 
 - (void)setupConstraints {
     [NSLayoutConstraint extentOfChild:self.scrollViewContainer toExtentOfParent:self];
-    [NSLayoutConstraint extentOfChild:self.closeScrollButton toExtentOfSibling:self.containerView inParent:self.scrollViewContainer];
+    [NSLayoutConstraint extentOfChild:self.closeScrollOrShowGameButton toExtentOfSibling:self.containerView inParent:self.scrollViewContainer];
     
     [NSLayoutConstraint rightOfChild:self.gameNamesLabel toLeftOfSibling:self.responseStatusVerticalBar withFixedMargin:-labelToResponseBarBuffer inParent:self.containerView];
     [NSLayoutConstraint leftOfChild:self.gameNamesLabel toRightOfSibling:self.creatorImageView withFixedMargin:imageToLabelBuffer inParent:self.containerView];
@@ -150,12 +157,12 @@ static NSInteger labelSeparationBuffer = 5;
     [NSLayoutConstraint topOfChild:self.acceptButton toTopOfParent:self.contentView];
     [NSLayoutConstraint bottomOfChild:self.acceptButton toBottomOfParent:self.contentView];
     [NSLayoutConstraint rightOfChild:self.acceptButton toRightOfParent:self.contentView withFixedMargin:0];
-    [NSLayoutConstraint view:self.acceptButton toFixedWidth:kAccessoryButtonWidth];
+    self.acceptButtonWidthConstraint =[NSLayoutConstraint view:self.acceptButton toFixedWidth:0]; //start at 0 - expanded during scrollview scroll
 
     [NSLayoutConstraint topOfChild:self.declineButton toTopOfParent:self.contentView];
     [NSLayoutConstraint bottomOfChild:self.declineButton toBottomOfParent:self.contentView];
     [NSLayoutConstraint rightOfChild:self.declineButton toLeftOfSibling:self.acceptButton withFixedMargin:0 inParent:self.contentView];
-    [NSLayoutConstraint view:self.declineButton toFixedWidth:kAccessoryButtonWidth];
+    self.declineButtonWidthConstraint = [NSLayoutConstraint view:self.declineButton toFixedWidth:0]; //start at 0 - expanded during scrollview scroll
 }
 
 - (void)layoutSubviews {
@@ -165,7 +172,16 @@ static NSInteger labelSeparationBuffer = 5;
     self.scrollViewContainer.contentSize = CGSizeMake(self.frame.size.width+2*kAccessoryButtonWidth, self.frame.size.height);
 }
 
+- (SBCellSlideState)cellSlideState {
+    if (self.scrollViewContainer.contentOffset.x == 0) {
+        return SBCellSlieStateClosed;
+    } else {
+        return SBCellSlieStateOpened;
+    }
+}
+
 - (void)setupCellContentWithGame:(Game*)game {
+    self.game = game;
     self.gameNamesLabel.text = @"Sarah, John & Mike";
     self.startsWhenLabel.text = @"Starts in 10 min!";
     self.startsWhenLabel.textColor = [UIColor greenAccept];
@@ -184,27 +200,40 @@ static NSInteger labelSeparationBuffer = 5;
 }
 
 - (void)closeScrollView {
-    NSLog(@"CLOSE scroll");
     [self.scrollViewContainer setContentOffset:CGPointMake(0, 0) animated:YES];
 }
 
 #pragma mark Button Handlers
 - (void)acceptButtonPressed {
-    NSLog(@"ACCEPT");
+    NSMutableArray *userIdArray = [[NSKeyedUnarchiver unarchiveObjectWithData:self.game.userIdArray] mutableCopy];
+    if (![userIdArray containsObject:[SBUser currentUser].userId]) {
+        [userIdArray addObject:[SBUser currentUser].userId];
+        //TODO: api call to update user
+    }
+    self.game.userIdArray = [NSKeyedArchiver archivedDataWithRootObject:userIdArray];
+    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreWithCompletion:nil];
+    self.responseStatusVerticalBar.backgroundColor = [UIColor greenAccept];
+    
     [self closeScrollView];
 }
 
 - (void)declineButtonPressed {
-    NSLog(@"DECLINE");
+    NSMutableArray *userIdArray = [[NSKeyedUnarchiver unarchiveObjectWithData:self.game.userIdArray] mutableCopy];
+    if ([userIdArray containsObject:[SBUser currentUser].userId]) {
+        [userIdArray removeObject:[SBUser currentUser].userId];
+        //TODO: api call to update user
+    }
+    self.game.userIdArray = [NSKeyedArchiver archivedDataWithRootObject:userIdArray];
+    [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreWithCompletion:nil];
+    self.responseStatusVerticalBar.backgroundColor = [UIColor redDecline];
+    
     [self closeScrollView];
 }
 
 - (void)setCellStateForXOffset:(CGFloat)offset {
     if (offset == 0) {
-        self.closeScrollButton.enabled = NO;
         self.acceptButton.enabled = self.declineButton.enabled = NO;
     } else {
-        self.closeScrollButton.enabled = YES;
         self.acceptButton.enabled = self.declineButton.enabled = YES;
     }
     
@@ -213,7 +242,31 @@ static NSInteger labelSeparationBuffer = 5;
     }];
 }
 
+- (void)closeScrollOrShowGameButtonPressed {
+    switch (self.cellSlideState) {
+        case SBCellSlieStateOpened:
+            [self closeScrollView];
+            break;
+        case SBCellSlieStateClosed:
+        default:
+            if ([self.delegate respondsToSelector:@selector(cellTouchedShowGameForCell:)]) {
+                [self.delegate cellTouchedShowGameForCell:self];
+            }
+            break;
+    }
+}
+
 #pragma mark Scroll View Delegate Methods
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    CGFloat percentOpened = scrollView.contentOffset.x/(2*kAccessoryButtonWidth);
+    if (percentOpened < 0) {
+        percentOpened = 0;
+    }
+    self.declineButtonWidthConstraint.constant = self.acceptButtonWidthConstraint.constant = kAccessoryButtonWidth*percentOpened;
+    [self layoutIfNeeded];
+}
+
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
     [self setCellStateForXOffset:scrollView.contentOffset.x];
 }
@@ -228,20 +281,12 @@ static NSInteger labelSeparationBuffer = 5;
 }
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
-    
     [[NSNotificationCenter defaultCenter] postNotificationName:SBNotificationGameCellSwipeBeganWithCell object:self];
-    
     self.responseStatusVerticalBar.alpha = 0;
-}
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    NSLog(@"DID");
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
 }
 
 - (void)prepareForReuse {
