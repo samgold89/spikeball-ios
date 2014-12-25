@@ -61,5 +61,15 @@
     return color;
 }
 
++ (UIColor *)lightGrayGameCellsBackground
+{
+    static UIColor *color;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        color = UIColorFromRGB(0xefeff4);
+        
+    });
+    return color;
+}
 
 @end

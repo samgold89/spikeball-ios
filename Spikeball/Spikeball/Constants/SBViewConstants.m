@@ -26,4 +26,6 @@ NSString *const SBNotificationFailedToRegisterForPushNotifications = @"failedToR
 NSString *const SBNotificationDidRegisterForLocationServices = @"didRegisterForLocationServices";
 NSString *const SBNotificationFailedToRegisterForLocationServices = @"failedToRegisterForLocationServices";
 
+NSString *const SBNotificationGameCellSwipeBeganWithCell = @"SBNotificationGameCellSwipeBeganWithCell";
+
 @end

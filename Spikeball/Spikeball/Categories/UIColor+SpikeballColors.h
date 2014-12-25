@@ -15,5 +15,6 @@
 + (UIColor *)spikeballBlack;
 + (UIColor *)greenAccept;
 + (UIColor *)redDecline;
++ (UIColor *)lightGrayGameCellsBackground;
 
 @end

@@ -14,7 +14,7 @@
 
 #import "UIColor+SpikeballColors.h"
 #import "SBViewConstants.h"
-#import <NSLayoutConstraint+HAWHelpers/NSLayoutConstraint+HAWHelpers.h>
+#import "NSLayoutConstraint+SBLayoutContraintHelpers.h"
 #import "NSString+SBValidation.h"
 
 #endif
