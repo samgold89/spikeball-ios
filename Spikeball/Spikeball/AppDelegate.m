@@ -61,6 +61,7 @@
     [SBUser MR_truncateAllInContext:[NSManagedObjectContext MR_defaultContext]];
 
     Game *game1 = [Game MR_createInContext:[NSManagedObjectContext MR_defaultContext]];
+    game1.creatorId = @1;
     game1.userIdArray = [NSKeyedArchiver archivedDataWithRootObject:@[@1,@2,@3]];
     game1.locationLat = [NSNumber numberWithFloat:37.759889];
     game1.locationLong = [NSNumber numberWithFloat:-122.427018];
@@ -68,17 +69,20 @@
 
     Game *game2 = [Game MR_createInContext:[NSManagedObjectContext MR_defaultContext]];
     game2.userIdArray = [NSKeyedArchiver archivedDataWithRootObject:@[@3,@4,@5]];
+    game2.creatorId = @3;
     game2.locationLat = [NSNumber numberWithFloat:37.766867];
     game2.locationLong = [NSNumber numberWithFloat:-122.442688];
     game2.address = @"Buena Vista Park";
 
     Game *game3 = [Game MR_createInContext:[NSManagedObjectContext MR_defaultContext]];
+    game3.creatorId = @4;
     game3.userIdArray = [NSKeyedArchiver archivedDataWithRootObject:@[@2,@4,@6]];
     game3.locationLat = [NSNumber numberWithFloat:37.772447];
     game3.locationLong = [NSNumber numberWithFloat:-122.446867];
     game3.address = @"San Francisco Bicycle Route 30";
 
     Game *game4 = [Game MR_createInContext:[NSManagedObjectContext MR_defaultContext]];
+    game4.creatorId = @5;
     game4.userIdArray = [NSKeyedArchiver archivedDataWithRootObject:@[@1,@2,@3,@5,@6]];
     game4.locationLat = [NSNumber numberWithFloat:35.099008];
     game4.locationLong = [NSNumber numberWithFloat:-89.853844];
@@ -86,24 +90,28 @@
 
     Game *game5 = [Game MR_createInContext:[NSManagedObjectContext MR_defaultContext]];
     game5.userIdArray = [NSKeyedArchiver archivedDataWithRootObject:@[@5,@6,@1]];
+    game5.creatorId = @6;
     game5.locationLat = [NSNumber numberWithFloat:35.072780];
     game5.locationLong = [NSNumber numberWithFloat:-89.808768];
     game5.address = @"Hacks Cross Road Park";
 
     Game *game6 = [Game MR_createInContext:[NSManagedObjectContext MR_defaultContext]];
     game6.userIdArray = [NSKeyedArchiver archivedDataWithRootObject:@[@1,@2,@4]];
+    game6.creatorId = @4;
     game6.locationLat = [NSNumber numberWithFloat:35.116250];
     game6.locationLong = [NSNumber numberWithFloat:-89.836239];
     game6.address = @"Poplar Estates Parkway";
 
     Game *game7 = [Game MR_createInContext:[NSManagedObjectContext MR_defaultContext]];
     game7.userIdArray = [NSKeyedArchiver archivedDataWithRootObject:@[@1,@2,@3,@4,@5,@6]];
+    game7.creatorId = @4;
     game7.locationLat = [NSNumber numberWithFloat:35.114395];
     game7.locationLong = [NSNumber numberWithFloat:-89.871687];
     game7.address = @"5668 Poplar Ave";
 
     Game *game8 = [Game MR_createInContext:[NSManagedObjectContext MR_defaultContext]];
     game8.userIdArray = [NSKeyedArchiver archivedDataWithRootObject:@[@1,@2,@4,@5,@6]];
+    game8.creatorId = @2;
     game8.locationLat = [NSNumber numberWithFloat:37.769556];
     game8.locationLong = [NSNumber numberWithFloat:-122.432676];
     game8.address = @"Duboce Park";

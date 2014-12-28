@@ -13,6 +13,7 @@
 #import "AppDelegate.h"
 #import "SBMapWithGameViewController.h"
 #import "SBPlayerImageCollectionViewController.h"
+#import <SDWebImage/UIImageView+WebCache.h>
 
 @interface SBGameTableViewCell () <UIScrollViewDelegate>
 
@@ -21,6 +22,7 @@
 @property (nonatomic, strong) SBPlayerImageCollectionViewController *playerHeadCollectionView;
 
 @property (nonatomic, assign) BOOL anotherCellIsExpanded;
+@property (nonatomic, assign) BOOL updateCellAfterAnimation;
 
 @property (nonatomic, strong) UIScrollView *scrollViewContainer;
 @property (nonatomic, strong) UIButton *closeScrollOrShowGameButton;
@@ -35,11 +37,14 @@
 
 @property (nonatomic, strong) NSLayoutConstraint *acceptButtonWidthConstraint;
 @property (nonatomic, strong) NSLayoutConstraint *declineButtonWidthConstraint;
+//@property (nonatomic, strong) NSLayoutConstraint *cancelButtonWidthConstraint;
 @property (nonatomic, strong) NSLayoutConstraint *collapsedCellConstraint;
 @property (nonatomic, strong) NSLayoutConstraint *responseStatusVerticalBarRightConstraint;
 
+@property (nonatomic, strong) NSArray *accessoryButtons;
 @property (nonatomic, strong) UIButton *acceptButton;
 @property (nonatomic, strong) UIButton *declineButton;
+//@property (nonatomic, strong) UIButton *cancelGameButton;
 
 @end
 
@@ -138,6 +143,17 @@ static NSInteger kMapExpandedSize = 183;
         self.declineButton.titleLabel.lineBreakMode = NSLineBreakByClipping;
         [self.scrollViewContainer insertSubview:self.declineButton belowSubview:self.containerView];
         
+//        self.cancelGameButton = [[UIButton alloc] init];
+//        self.cancelGameButton.translatesAutoresizingMaskIntoConstraints = NO;
+//        self.cancelGameButton.backgroundColor = [UIColor redDecline];
+//        [self.cancelGameButton setTitle:@"Cancel Game" forState:UIControlStateNormal];
+//        [self.cancelGameButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+//        self.cancelGameButton.titleLabel.font = [UIFont fontWithName:SBFontStandard size:14];
+//        self.cancelGameButton.titleLabel.textAlignment = NSTextAlignmentCenter;
+//        [self.cancelGameButton addTarget:self action:@selector(cancenGameButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+//        self.cancelGameButton.titleLabel.lineBreakMode = NSLineBreakByClipping;
+//        [self.scrollViewContainer insertSubview:self.cancelGameButton belowSubview:self.containerView];
+        
         //all cells will have a map that first has 0 height
         self.mapGameViewController = [[SBMapWithGameViewController alloc] init];
         self.mapGameViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
@@ -194,6 +210,11 @@ static NSInteger kMapExpandedSize = 183;
     [NSLayoutConstraint rightOfChild:self.declineButton toLeftOfSibling:self.acceptButton withFixedMargin:0 inParent:self.contentView];
     self.declineButtonWidthConstraint = [NSLayoutConstraint view:self.declineButton toFixedWidth:0]; //start at 0 - expanded during scrollview scroll
     
+//    [NSLayoutConstraint topOfChild:self.cancelGameButton toTopOfParent:self.contentView];
+//    [NSLayoutConstraint view:self.cancelGameButton toFixedHeight:kCellHeight];
+//    [NSLayoutConstraint rightOfChild:self.cancelGameButton toRightOfParent:self.contentView withFixedMargin:0];
+//    self.cancelButtonWidthConstraint = [NSLayoutConstraint view:self.cancelGameButton toFixedWidth:0]; //start at 0 - expanded during scrollview scroll
+    
     [NSLayoutConstraint topOfChild:self.mapTopBorder toTopOfSibling:self.mapGameViewController.view withFixedMargin:0 inParent:self.contentView];
     [NSLayoutConstraint view:self.mapTopBorder toFixedHeight:0.5];
     [NSLayoutConstraint sidesOfChild:self.mapTopBorder toSidesOfParent:self.contentView];
@@ -208,7 +229,7 @@ static NSInteger kMapExpandedSize = 183;
     [super layoutSubviews];
     
     self.containerView.frame = CGRectMake(0, 0, self.frame.size.width, kCellHeight);
-    self.scrollViewContainer.contentSize = CGSizeMake(self.frame.size.width+2*kAccessoryButtonWidth, self.scrollViewContainer.frame.size.height-.5); //sometimes off by .5...just to make sure
+    self.scrollViewContainer.contentSize = CGSizeMake(self.frame.size.width+self.accessoryButtons.count*kAccessoryButtonWidth, self.scrollViewContainer.frame.size.height-.5); //sometimes off by .5...just to make sure
 }
 
 - (SBCellSlideState)cellSlideState {
@@ -224,7 +245,6 @@ static NSInteger kMapExpandedSize = 183;
     self.anotherCellIsExpanded = otherCellIsEpanded;
     
     self.game = game;
-    self.gameNamesLabel.text = @"Sarah, John & Mike";
     self.startsWhenLabel.text = @"Starts in 10 min!";
     self.startsWhenLabel.textColor = [UIColor greenAccept];
     
@@ -234,9 +254,36 @@ static NSInteger kMapExpandedSize = 183;
     self.mapGameViewController.latLongGameLocation = CLLocationCoordinate2DMake([self.game.locationLat floatValue], [self.game.locationLong floatValue]);
     
     NSArray *gameUserIdArray = [NSKeyedUnarchiver unarchiveObjectWithData:game.userIdArray];
-    SBUser *user = [SBUser currentUser];
-    self.creatorImageView.image = [gameUserIdArray containsObject:user.userId] ? [UIImage imageNamed:@"_0000_Layer-1"] : [UIImage imageNamed:@"_0001_Layer-2"];
-    self.responseStatusVerticalBar.backgroundColor = [gameUserIdArray containsObject:user.userId] ? [UIColor greenAccept] : [UIColor redDecline];
+    NSMutableArray *namesArray = [@[] mutableCopy];
+    NSMutableArray *allUsers = [@[] mutableCopy];
+    for (NSNumber *userId in gameUserIdArray) {
+        SBUser *user = [SBUser MR_findFirstWithPredicate:[NSPredicate predicateWithFormat:@"(%K=%@)",@"userId",userId]];
+        NSAssert(user, @"USER SHOULD NOT BE NIL WHEN SHOWING PLAYER SCROLLER FOR GAME");
+        [allUsers addObject:user];
+        [namesArray addObject:user.nickName ?: user.firstName ?: user.lastName?: @"JohnnyDoe"];
+    }
+    if ([namesArray count] == 1) {
+        self.gameNamesLabel.text = [NSString stringWithFormat:@"%@",[namesArray objectAtIndex:0]];
+    } else if ([namesArray count] == 2) {
+        self.gameNamesLabel.text = [NSString stringWithFormat:@"%@ & %@",[namesArray objectAtIndex:0],[namesArray objectAtIndex:1]];
+    } else if ([namesArray count] == 3) {
+        self.gameNamesLabel.text = [NSString stringWithFormat:@"%@, %@ & %@",[namesArray objectAtIndex:0],[namesArray objectAtIndex:1],[namesArray objectAtIndex:2]];
+    } else {
+        self.gameNamesLabel.text = [NSString stringWithFormat:@"%@, %@ & %lu more",[namesArray objectAtIndex:0],[namesArray objectAtIndex:1],[namesArray count]-2];
+    }
+    
+    SBUser *creator = [SBUser MR_findFirstWithPredicate:[NSPredicate predicateWithFormat:@"(%K=%@)",@"userId",self.game.creatorId]];
+    if ([creator isEqual:[SBUser currentUser]]) {
+        self.accessoryButtons = @[];
+        self.acceptButton.alpha = self.declineButton.alpha = 0;
+//        self.cancelGameButton.alpha = 1;
+    } else {
+        self.accessoryButtons = @[self.declineButton,self.acceptButton];
+//        self.cancelGameButton.alpha = 0;
+        self.acceptButton.alpha = self.declineButton.alpha = 1;
+    }
+    [self.creatorImageView sd_setImageWithURL:[NSURL URLWithString:creator.imageUrl] placeholderImage:[UIImage imageNamed:SBDefaultPlayerImageName]];
+    self.responseStatusVerticalBar.backgroundColor = [self.game.creatorId isEqualToNumber:[SBUser currentUser].userId] ? [UIColor spikeballYellow] : [gameUserIdArray containsObject:[SBUser currentUser].userId] ? [UIColor greenAccept] : [UIColor redDecline];
 }
 
 - (void)setDistanceLabelBasedOnLocation:(NSNotification*)note {
@@ -253,8 +300,8 @@ static NSInteger kMapExpandedSize = 183;
     if (userLocation) {
         CLLocation *gameLocation = [[CLLocation alloc] initWithLatitude:[self.game.locationLat floatValue] longitude:[self.game.locationLong floatValue]];
         CLLocationDistance distanceInMeters = [gameLocation distanceFromLocation:userLocation];
-        NSInteger milesRounded = distanceInMeters/1609.34; //1609 meters to mile
-        locationString = [NSString stringWithFormat:@"%lu mi away - ",milesRounded];
+        CGFloat milesRounded = distanceInMeters/1609.34; //1609 meters to mile
+        locationString = [NSString stringWithFormat:@"%.1f mi away - ",milesRounded];
     }
     self.distanceAddressLabel.text = [NSString stringWithFormat:@"%@%@",locationString,self.game.address];
 }
@@ -265,9 +312,9 @@ static NSInteger kMapExpandedSize = 183;
 
 - (void)setCellStateForXOffset:(CGFloat)offset {
     if (offset == 0) {
-        self.acceptButton.enabled = self.declineButton.enabled = NO;
+        self.acceptButton.enabled = self.declineButton.enabled = /*self.cancelGameButton.enabled =*/ NO;
     } else {
-        self.acceptButton.enabled = self.declineButton.enabled = YES;
+        self.acceptButton.enabled = self.declineButton.enabled = /*self.cancelGameButton.enabled =*/ YES;
     }
     
     [UIView animateWithDuration:0.3 animations:^{
@@ -296,8 +343,10 @@ static NSInteger kMapExpandedSize = 183;
     if (_anotherCellIsExpanded) {
         [self collapseCellFromExpandedAnimated:YES];
         self.scrollViewContainer.alpha = 0.4;
+        self.scrollViewContainer.scrollEnabled = NO;
     } else {
         self.scrollViewContainer.alpha = 1;
+        self.scrollViewContainer.scrollEnabled = YES;
     }
 }
 
@@ -333,9 +382,7 @@ static NSInteger kMapExpandedSize = 183;
         self.collapsedCellConstraint.constant = 0;
         self.responseStatusVerticalBarRightConstraint.constant = 0;
         [self layoutIfNeeded];
-    } completion:^(BOOL finished) {
-        self.scrollViewContainer.scrollEnabled = YES;
-        
+    } completion:^(BOOL finished) {        
         [self.playerHeadCollectionView.view removeFromSuperview];
         self.playerHeadCollectionView = nil;
     }];
@@ -388,6 +435,7 @@ static NSInteger kMapExpandedSize = 183;
     [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreWithCompletion:nil];
     self.responseStatusVerticalBar.backgroundColor = [UIColor greenAccept];
     
+    self.updateCellAfterAnimation = YES;
     [self closeScrollView];
 }
 
@@ -401,7 +449,12 @@ static NSInteger kMapExpandedSize = 183;
     [[NSManagedObjectContext MR_defaultContext] MR_saveToPersistentStoreWithCompletion:nil];
     self.responseStatusVerticalBar.backgroundColor = [UIColor redDecline];
     
+    self.updateCellAfterAnimation = YES;
     [self closeScrollView];
+}
+
+- (void)cancenGameButtonPressed {
+    
 }
 
 - (void)closeScrollOrShowGameButtonPressed {
@@ -421,23 +474,29 @@ static NSInteger kMapExpandedSize = 183;
 #pragma mark Scroll View Delegate Methods
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    CGFloat percentOpened = scrollView.contentOffset.x/(2*kAccessoryButtonWidth);
+    CGFloat percentOpened = scrollView.contentOffset.x/(self.accessoryButtons.count*kAccessoryButtonWidth);
     if (percentOpened < 0) {
         percentOpened = 0;
     }
-    self.declineButtonWidthConstraint.constant = self.acceptButtonWidthConstraint.constant = kAccessoryButtonWidth*percentOpened;
+    self.declineButtonWidthConstraint.constant = self.acceptButtonWidthConstraint.constant = /*self.cancelButtonWidthConstraint.constant = */kAccessoryButtonWidth*percentOpened;
     [self layoutIfNeeded];
 }
 
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
     [self setCellStateForXOffset:scrollView.contentOffset.x];
+    if (self.updateCellAfterAnimation) {
+        if ([self.delegate respondsToSelector:@selector(updateCell:)]) {
+            [self.delegate updateCell:self];
+        }
+        self.updateCellAfterAnimation = NO;
+    }
 }
 
 - (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset {
     if (velocity.x < 0 || (velocity.x == 0 && scrollView.contentOffset.x < kAccessoryButtonWidth)) {
         targetContentOffset->x = 0;
     } else {
-        targetContentOffset->x = 2*kAccessoryButtonWidth;
+        targetContentOffset->x = self.accessoryButtons.count*kAccessoryButtonWidth;
     }
     [self setCellStateForXOffset:targetContentOffset->x];
 }

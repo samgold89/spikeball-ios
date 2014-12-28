@@ -19,6 +19,8 @@
 @property (nonatomic,strong) UITableView *gameTableView;
 @property (nonatomic,strong) NSIndexPath *selectedIndexPath;
 
+@property (nonatomic,strong) NSArray *gamesArrayDataSource;
+
 @end
 
 static NSInteger kNumberOfCells = 8;
@@ -39,6 +41,8 @@ static NSInteger kNumberOfCells = 8;
     self.gameTableView.showsVerticalScrollIndicator = NO;
     [self.view addSubview:self.gameTableView];
     [NSLayoutConstraint extentOfChild:self.gameTableView toExtentOfParent:self.view];
+    
+    self.gamesArrayDataSource = [Game MR_findAll];
 }
 
 #pragma mark SBGameCell Delegate
@@ -63,6 +67,12 @@ static NSInteger kNumberOfCells = 8;
             [self.gameTableView scrollToRowAtIndexPath:[self.gameTableView indexPathForCell:cell] atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
         }
     } completion:nil];
+}
+
+- (void)updateCell:(SBGameTableViewCell *)cell {
+    self.gamesArrayDataSource = [Game MR_findAll];
+    NSIndexPath *path = [self.gameTableView indexPathForCell:cell];
+    [self.gameTableView reloadRowsAtIndexPaths:@[path] withRowAnimation:UITableViewRowAnimationFade];
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
@@ -99,10 +109,8 @@ static NSInteger kNumberOfCells = 8;
         cell = [[SBGameTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
     
-    NSArray *allGames = [Game MR_findAll];
-    
     cell.delegate = self;
-    Game *game = [allGames objectAtIndex:indexPath.section];
+    Game *game = [self.gamesArrayDataSource objectAtIndex:indexPath.section];
     [cell setupCellContentWithGame:game setOtherCellIsExpanded:self.selectedIndexPath && ![self.selectedIndexPath isEqual:indexPath]];
     
     return cell;

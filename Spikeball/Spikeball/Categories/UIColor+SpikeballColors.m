@@ -7,6 +7,7 @@
 //
 
 #import "UIColor+SpikeballColors.h"
+#import "NSArray+GFCRandomElement.h"
 
 #define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
@@ -15,6 +16,10 @@
 + (UIColor *)colorWithWebRed:(NSInteger)red green:(NSInteger)green blue:(NSInteger)blue
 {
     return [self colorWithRed:red / 255.0f green:green / 255.0f blue:blue / 255.0f alpha:1];
+}
+
++ (UIColor *)randomColor {
+    return [@[[UIColor redColor],[UIColor greenAccept],[UIColor yellowColor],[UIColor orangeColor],[UIColor brownColor],[UIColor blackColor],[UIColor purpleColor],[UIColor lightGrayColor],[UIColor whiteColor],[UIColor grayColor],[UIColor spikeballBlack],[UIColor spikeballYellow],[UIColor lightGrayGameCellsBackground],[UIColor magentaColor]] randomElement];
 }
 
 + (UIColor *)spikeballYellow

@@ -18,4 +18,14 @@
     return constraints;
 }
 
++ (NSLayoutConstraint*)centerXOfChild:(UIView*)child toCenterXOfSibling:(UIView *)sibling inParent:(UIView *)parent withMargin:(CGFloat)margin {
+    return [self attrOfChild:child toSameAttrOfSibling:sibling inParent:parent attr:NSLayoutAttributeCenterX constant:margin];
+}
+
++ (NSLayoutConstraint*)attrOfChild:(UIView*)child toSameAttrOfSibling:(UIView*)sibling inParent:(UIView*)parent attr:(NSLayoutAttribute)attr constant:(CGFloat)constant {
+    NSLayoutConstraint *constraint = [NSLayoutConstraint constraintWithItem:child attribute:attr relatedBy:NSLayoutRelationEqual toItem:sibling attribute:attr multiplier:1.0 constant:constant];
+    [parent addConstraint:constraint];
+    return constraint;
+}
+
 @end

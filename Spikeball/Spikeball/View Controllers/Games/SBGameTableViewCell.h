@@ -21,6 +21,7 @@ typedef enum {
 @protocol SBGameTableViewCellDelegate <NSObject>
 
 - (void)cellTouchedShowGameForCell:(SBGameTableViewCell*)cell;
+- (void)updateCell:(SBGameTableViewCell*)cell;
 
 @end
 

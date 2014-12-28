@@ -43,7 +43,7 @@
 }
 
 - (void)configureCellWithUser:(SBUser*)user {
-    [self.playerImageView sd_setImageWithURL:[NSURL URLWithString:user.imageUrl]  placeholderImage:[UIImage imageNamed:@"player_placeholder_image"]];
+    [self.playerImageView sd_setImageWithURL:[NSURL URLWithString:user.imageUrl]  placeholderImage:[UIImage imageNamed:SBDefaultPlayerImageName]];
     self.playerNameLabel.text = user.nickName ? user.nickName : user.firstName ? user.firstName : user.lastName ? user.lastName : @"JonhDoe";
 }
 

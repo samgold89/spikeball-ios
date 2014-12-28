@@ -31,4 +31,6 @@ NSString *const SBNotificationGameCellExpanding = @"SBNotificationGameCellExpand
 NSString *const SBNotificationGameCellAllAreCollapsing = @"SBNotificationGameCellAllAreCollapsing";
 NSString *const SBNotificationUserLocationUpdated = @"SBNotificationUserLocationUpdated";
 
+NSString *const SBDefaultPlayerImageName = @"player_placeholder_image";
+
 @end

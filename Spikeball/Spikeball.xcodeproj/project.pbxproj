@@ -10,6 +10,7 @@
 		A9328ADD1A4CBF2B005B915D /* SBPlayerImageCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A9328ADC1A4CBF2B005B915D /* SBPlayerImageCollectionViewController.m */; };
 		A9328AE31A4CBF74005B915D /* SBPlayerCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A9328AE21A4CBF74005B915D /* SBPlayerCollectionViewCell.m */; };
 		A9328AE81A4CCC91005B915D /* NSArray+GFCRandomElement.m in Sources */ = {isa = PBXBuildFile; fileRef = A9328AE71A4CCC91005B915D /* NSArray+GFCRandomElement.m */; };
+		A9328AEA1A4CF7B4005B915D /* player_placeholder_image@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9328AE91A4CF7B4005B915D /* player_placeholder_image@2x.png */; };
 		A93B4EC91A4A53C5003FFC9E /* SBGameTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A93B4EC81A4A53C5003FFC9E /* SBGameTableViewCell.m */; };
 		A9568E361A214B900075CB35 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A9568E351A214B900075CB35 /* main.m */; };
 		A9568E391A214B900075CB35 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A9568E381A214B900075CB35 /* AppDelegate.m */; };
@@ -19,8 +20,6 @@
 		A96114DC1A4A6B49008948C3 /* Game.m in Sources */ = {isa = PBXBuildFile; fileRef = A96114DB1A4A6B49008948C3 /* Game.m */; };
 		A96114E21A4A6C0F008948C3 /* SBUser+SBUserHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = A96114E11A4A6C0F008948C3 /* SBUser+SBUserHelper.m */; };
 		A96114E51A4A6C8D008948C3 /* SBUser.m in Sources */ = {isa = PBXBuildFile; fileRef = A96114E41A4A6C8D008948C3 /* SBUser.m */; };
-		A96114E81A4A7589008948C3 /* _0000_Layer-1.png in Resources */ = {isa = PBXBuildFile; fileRef = A96114E61A4A7589008948C3 /* _0000_Layer-1.png */; };
-		A96114E91A4A7589008948C3 /* _0001_Layer-2.png in Resources */ = {isa = PBXBuildFile; fileRef = A96114E71A4A7589008948C3 /* _0001_Layer-2.png */; };
 		A96114EF1A4BD765008948C3 /* NSLayoutConstraint+SBLayoutContraintHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = A96114EE1A4BD765008948C3 /* NSLayoutConstraint+SBLayoutContraintHelpers.m */; };
 		A96114F41A4BE92F008948C3 /* SBMapWithGameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A96114F31A4BE92F008948C3 /* SBMapWithGameViewController.m */; };
 		A98587F91A4924E3006C0035 /* SBLoginCompleteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A98587F81A4924E3006C0035 /* SBLoginCompleteViewController.m */; };
@@ -49,6 +48,9 @@
 		A9A744B71A47840D0068876F /* SBEmailAndNameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A9A744B61A47840D0068876F /* SBEmailAndNameViewController.m */; };
 		A9A744BA1A4798BC0068876F /* white_checkmark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9A744B91A4798BC0068876F /* white_checkmark@2x.png */; };
 		A9B1A5751A48B5B900359FC0 /* yellow_to_black_gradient@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9B1A5741A48B5B900359FC0 /* yellow_to_black_gradient@2x.png */; };
+		A9CBD7AF1A4E6DAB00027558 /* SBNumberViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = A9CBD7AE1A4E6DAB00027558 /* SBNumberViewFlowLayout.m */; };
+		A9D8B3741A4DFA6D00CF98FD /* SBGameDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A9D8B3731A4DFA6D00CF98FD /* SBGameDetailsViewController.m */; };
+		A9D8B3771A4E438300CF98FD /* SBNumberCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A9D8B3761A4E438300CF98FD /* SBNumberCollectionViewCell.m */; };
 		A9D9FF311A47C64A00AEF5EA /* spikeball_small_logo_white@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A9D9FF301A47C64A00AEF5EA /* spikeball_small_logo_white@2x.png */; };
 		A9D9FF381A47F81000AEF5EA /* SBProductSummaryIntroScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A9D9FF371A47F81000AEF5EA /* SBProductSummaryIntroScreenViewController.m */; };
 		D88AEBA711CEB84D4F66FB39 /* libPods-Spikeball.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C821388008106AC9E68D215 /* libPods-Spikeball.a */; };
@@ -73,6 +75,7 @@
 		A9328AE21A4CBF74005B915D /* SBPlayerCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBPlayerCollectionViewCell.m; sourceTree = "<group>"; };
 		A9328AE61A4CCC91005B915D /* NSArray+GFCRandomElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+GFCRandomElement.h"; sourceTree = "<group>"; };
 		A9328AE71A4CCC91005B915D /* NSArray+GFCRandomElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+GFCRandomElement.m"; sourceTree = "<group>"; };
+		A9328AE91A4CF7B4005B915D /* player_placeholder_image@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "player_placeholder_image@2x.png"; sourceTree = "<group>"; };
 		A93B4EC71A4A53C5003FFC9E /* SBGameTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBGameTableViewCell.h; sourceTree = "<group>"; };
 		A93B4EC81A4A53C5003FFC9E /* SBGameTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBGameTableViewCell.m; sourceTree = "<group>"; };
 		A9568E301A214B900075CB35 /* Spikeball.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Spikeball.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -91,8 +94,6 @@
 		A96114E11A4A6C0F008948C3 /* SBUser+SBUserHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SBUser+SBUserHelper.m"; sourceTree = "<group>"; };
 		A96114E31A4A6C8D008948C3 /* SBUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBUser.h; sourceTree = "<group>"; };
 		A96114E41A4A6C8D008948C3 /* SBUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBUser.m; sourceTree = "<group>"; };
-		A96114E61A4A7589008948C3 /* _0000_Layer-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "_0000_Layer-1.png"; sourceTree = "<group>"; };
-		A96114E71A4A7589008948C3 /* _0001_Layer-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "_0001_Layer-2.png"; sourceTree = "<group>"; };
 		A96114ED1A4BD765008948C3 /* NSLayoutConstraint+SBLayoutContraintHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSLayoutConstraint+SBLayoutContraintHelpers.h"; sourceTree = "<group>"; };
 		A96114EE1A4BD765008948C3 /* NSLayoutConstraint+SBLayoutContraintHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSLayoutConstraint+SBLayoutContraintHelpers.m"; sourceTree = "<group>"; };
 		A96114F21A4BE92F008948C3 /* SBMapWithGameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBMapWithGameViewController.h; sourceTree = "<group>"; };
@@ -137,6 +138,12 @@
 		A9A744B81A478E8C0068876F /* SBLibrary.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SBLibrary.h; sourceTree = "<group>"; };
 		A9A744B91A4798BC0068876F /* white_checkmark@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "white_checkmark@2x.png"; sourceTree = "<group>"; };
 		A9B1A5741A48B5B900359FC0 /* yellow_to_black_gradient@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "yellow_to_black_gradient@2x.png"; sourceTree = "<group>"; };
+		A9CBD7AD1A4E6DAB00027558 /* SBNumberViewFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBNumberViewFlowLayout.h; sourceTree = "<group>"; };
+		A9CBD7AE1A4E6DAB00027558 /* SBNumberViewFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBNumberViewFlowLayout.m; sourceTree = "<group>"; };
+		A9D8B3721A4DFA6D00CF98FD /* SBGameDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBGameDetailsViewController.h; sourceTree = "<group>"; };
+		A9D8B3731A4DFA6D00CF98FD /* SBGameDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBGameDetailsViewController.m; sourceTree = "<group>"; };
+		A9D8B3751A4E438300CF98FD /* SBNumberCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBNumberCollectionViewCell.h; sourceTree = "<group>"; };
+		A9D8B3761A4E438300CF98FD /* SBNumberCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBNumberCollectionViewCell.m; sourceTree = "<group>"; };
 		A9D9FF301A47C64A00AEF5EA /* spikeball_small_logo_white@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "spikeball_small_logo_white@2x.png"; sourceTree = "<group>"; };
 		A9D9FF361A47F81000AEF5EA /* SBProductSummaryIntroScreenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBProductSummaryIntroScreenViewController.h; sourceTree = "<group>"; };
 		A9D9FF371A47F81000AEF5EA /* SBProductSummaryIntroScreenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBProductSummaryIntroScreenViewController.m; sourceTree = "<group>"; };
@@ -298,6 +305,12 @@
 		A98587FF1A4934B1006C0035 /* Summon */ = {
 			isa = PBXGroup;
 			children = (
+				A9CBD7AD1A4E6DAB00027558 /* SBNumberViewFlowLayout.h */,
+				A9CBD7AE1A4E6DAB00027558 /* SBNumberViewFlowLayout.m */,
+				A9D8B3751A4E438300CF98FD /* SBNumberCollectionViewCell.h */,
+				A9D8B3761A4E438300CF98FD /* SBNumberCollectionViewCell.m */,
+				A9D8B3721A4DFA6D00CF98FD /* SBGameDetailsViewController.h */,
+				A9D8B3731A4DFA6D00CF98FD /* SBGameDetailsViewController.m */,
 				A98588091A4934E0006C0035 /* SBSummonViewController.h */,
 				A985880A1A4934E0006C0035 /* SBSummonViewController.m */,
 			);
@@ -350,8 +363,7 @@
 		A99FEB1F1A251CC800F342B2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				A96114E61A4A7589008948C3 /* _0000_Layer-1.png */,
-				A96114E71A4A7589008948C3 /* _0001_Layer-2.png */,
+				A9328AE91A4CF7B4005B915D /* player_placeholder_image@2x.png */,
 				A98588171A49450F006C0035 /* geo_button_selected@2x.png */,
 				A98588181A49450F006C0035 /* geo_button@2x.png */,
 				A985880C1A493797006C0035 /* Tab Bar Items */,
@@ -512,14 +524,13 @@
 				A98588111A493797006C0035 /* account_tab_bar@2x.png in Resources */,
 				A99FEB261A251CC800F342B2 /* spikeball_yellow_logo_header@2x.png in Resources */,
 				A99FEB241A251CC800F342B2 /* black_to_yellow_gradient@2x.png in Resources */,
+				A9328AEA1A4CF7B4005B915D /* player_placeholder_image@2x.png in Resources */,
 				A98588131A493797006C0035 /* games_tab_bar@2x.png in Resources */,
 				A9B1A5751A48B5B900359FC0 /* yellow_to_black_gradient@2x.png in Resources */,
 				A99FEB271A251CC800F342B2 /* spikeball_yellow_logo_launch@2x.png in Resources */,
 				A98588191A49450F006C0035 /* geo_button_selected@2x.png in Resources */,
-				A96114E81A4A7589008948C3 /* _0000_Layer-1.png in Resources */,
 				A9D9FF311A47C64A00AEF5EA /* spikeball_small_logo_white@2x.png in Resources */,
 				A98588141A493797006C0035 /* summon_tab_bar@2x.png in Resources */,
-				A96114E91A4A7589008948C3 /* _0001_Layer-2.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -578,6 +589,7 @@
 				A98587F91A4924E3006C0035 /* SBLoginCompleteViewController.m in Sources */,
 				A96114EF1A4BD765008948C3 /* NSLayoutConstraint+SBLayoutContraintHelpers.m in Sources */,
 				A98588051A4934C9006C0035 /* SBGamesViewController.m in Sources */,
+				A9D8B3741A4DFA6D00CF98FD /* SBGameDetailsViewController.m in Sources */,
 				A9328AE31A4CBF74005B915D /* SBPlayerCollectionViewCell.m in Sources */,
 				A985880B1A4934E0006C0035 /* SBSummonViewController.m in Sources */,
 				A99FEB121A25068100F342B2 /* UIColor+SpikeballColors.m in Sources */,
@@ -589,7 +601,9 @@
 				A96114DC1A4A6B49008948C3 /* Game.m in Sources */,
 				A9A744B71A47840D0068876F /* SBEmailAndNameViewController.m in Sources */,
 				A9A744AA1A4536BF0068876F /* NSString+SBValidation.m in Sources */,
+				A9D8B3771A4E438300CF98FD /* SBNumberCollectionViewCell.m in Sources */,
 				A96114F41A4BE92F008948C3 /* SBMapWithGameViewController.m in Sources */,
+				A9CBD7AF1A4E6DAB00027558 /* SBNumberViewFlowLayout.m in Sources */,
 				A98588021A4934BE006C0035 /* SBAccountViewController.m in Sources */,
 				A93B4EC91A4A53C5003FFC9E /* SBGameTableViewCell.m in Sources */,
 				A9A744B41A4782300068876F /* SBLocationAndNotificationsViewController.m in Sources */,
@@ -699,9 +713,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Spikeball/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -711,9 +728,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Spikeball/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

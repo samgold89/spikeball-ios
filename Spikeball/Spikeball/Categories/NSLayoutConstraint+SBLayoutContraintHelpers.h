@@ -12,5 +12,6 @@
 @interface NSLayoutConstraint (SBLayoutContraintHelpers)
 
 + (NSArray*)extentOfChild:(UIView*)child toExtentOfSibling:(UIView*)sibling inParent:(UIView*)parent;
++ (NSLayoutConstraint*)centerXOfChild:(UIView*)child toCenterXOfSibling:(UIView *)sibling inParent:(UIView *)parent withMargin:(CGFloat)margin;
 
 @end

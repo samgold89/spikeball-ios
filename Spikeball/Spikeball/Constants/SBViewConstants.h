@@ -31,4 +31,6 @@ FOUNDATION_EXPORT NSString *const SBNotificationGameCellExpanding;
 FOUNDATION_EXPORT NSString *const SBNotificationGameCellAllAreCollapsing;
 FOUNDATION_EXPORT NSString *const SBNotificationUserLocationUpdated;
 
+FOUNDATION_EXPORT NSString *const SBDefaultPlayerImageName;
+
 @end

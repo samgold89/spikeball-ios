@@ -10,10 +10,12 @@
 #import "SBLibrary.h"
 #import <MapKit/MapKit.h>
 #import "AppDelegate.h"
+#import "SBGameDetailsViewController.h"
 
 @interface SBSummonViewController () <MKMapViewDelegate>
 
 @property (nonatomic,strong) MKMapView *mapView;
+@property (nonatomic,strong) SBGameDetailsViewController *gameDetailsViewController;
 
 @end
 
@@ -27,7 +29,7 @@
     
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
     
-    [self.navigationItem setRightBarButtonItem:[[UIBarButtonItem alloc] initWithTitle:@"Favorites" style:UIBarButtonItemStylePlain target:self action:@selector(favoritesButtonPressed)]];
+    [self setBarButtonsForSummoning];
     
     self.mapView = [[MKMapView alloc] init];
     self.mapView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -51,6 +53,31 @@
 - (void)dropPinFromLongPress:(UIGestureRecognizer *)gestureRecognizer {
     switch (gestureRecognizer.state) {
         case UIGestureRecognizerStateBegan: {
+            self.gameDetailsViewController = [[SBGameDetailsViewController alloc] init];
+            self.gameDetailsViewController.delegate = self;
+            self.gameDetailsViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
+            [self.gameDetailsViewController willMoveToParentViewController:self];
+            [self addChildViewController:self.gameDetailsViewController];
+            [self.gameDetailsViewController didMoveToParentViewController:self];
+            self.gameDetailsViewController.view.transform = CGAffineTransformMakeTranslation(self.view.frame.size.width, 0);
+            [self.view addSubview:self.gameDetailsViewController.view];
+            
+            [NSLayoutConstraint topOfChild:self.gameDetailsViewController.view toBottomOfSibling:self.navigationController.navigationBar withFixedMargin:0 inParent:self.view.window];
+            [NSLayoutConstraint bottomOfChild:self.gameDetailsViewController.view toBottomOfParent:self.view];
+            [NSLayoutConstraint sidesOfChild:self.gameDetailsViewController.view toSidesOfParent:self.view];
+            
+            [UIView animateWithDuration:0.35 animations:^{
+                self.gameDetailsViewController.view.transform = CGAffineTransformIdentity;
+                self.navigationController.tabBarController.tabBar.center = CGPointMake(self.navigationController.tabBarController.tabBar.center.x, self.navigationController.tabBarController.tabBar.center.y+self.navigationController.tabBarController.tabBar.frame.size.height);
+            } completion:^(BOOL finished) {
+                [self.gameDetailsViewController setLayoutConstants];
+            }];
+            
+            [self setBarButtonsForGameDetials];
+        }}
+    /*
+    switch (gestureRecognizer.state) {
+        case UIGestureRecognizerStateBegan: {
             CGPoint touchPoint = [gestureRecognizer locationInView:self.mapView];
             CLLocationCoordinate2D touchMapCoordinate = [self.mapView convertPoint:touchPoint toCoordinateFromView:self.mapView];
             [self getInformationForCoordinate:touchMapCoordinate];
@@ -65,6 +92,7 @@
         default:
             break;
     }
+     */
 }
 
 - (void)getInformationForCoordinate:(CLLocationCoordinate2D)coordinate {
@@ -133,6 +161,8 @@
 
 #pragma mark MapView Delegate Methods
 - (void)mapView:(MKMapView *)mapView didChangeUserTrackingMode:(MKUserTrackingMode)mode animated:(BOOL)animated {
+    if (self.gameDetailsViewController) return; //if the game details is showing, just return
+    
     switch (mode) {
         case MKUserTrackingModeFollow:
             [self.navigationItem setLeftBarButtonItem:[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"geo_button_selected"] style:UIBarButtonItemStylePlain target:self action:@selector(geoButtonSelectedPressed)] animated:YES];
@@ -144,26 +174,37 @@
     }
 }
 
-- (void)mapView:(MKMapView *)mapView regionWillChangeAnimated:(BOOL)animated {
+#pragma mark Navigation Bar Button Handling 
+- (void)setBarButtonsForGameDetials {
+    [self.navigationItem setLeftBarButtonItem:[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(dismissGameDetailsRight)] animated:YES];
+    [self.navigationItem setRightBarButtonItem:nil animated:YES];
 }
 
-- (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated {
+- (void)setBarButtonsForSummoning {
+    [self.navigationItem setLeftBarButtonItem:[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"geo_button_selected"] style:UIBarButtonItemStylePlain target:self action:@selector(geoButtonSelectedPressed)] animated:YES];
+    [self.navigationItem setRightBarButtonItem:[[UIBarButtonItem alloc] initWithTitle:@"Favorites" style:UIBarButtonItemStylePlain target:self action:@selector(favoritesButtonPressed)] animated:YES];
 }
 
-- (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation {
+- (void)dismissViewControllerDown {
+    [self dismissGameDetailsDown:YES];
+}
+
+- (void)dismissGameDetailsRight {
+    [self dismissGameDetailsDown:NO];
+}
+
+- (void)dismissGameDetailsDown:(BOOL)down {
+    [self setBarButtonsForSummoning];
     
-}
-
-- (void)mapViewDidFailLoadingMap:(MKMapView *)mapView withError:(NSError *)error {
-
-}
-
-- (void)mapViewDidFinishLoadingMap:(MKMapView *)mapView {
-
-}
-
-- (void)mapViewDidStopLocatingUser:(MKMapView *)mapView {
-
+    [UIView animateWithDuration:0.35 animations:^{
+        self.gameDetailsViewController.view.center = CGPointMake(self.gameDetailsViewController.view.center.x+self.view.frame.size.width*(down ? 0 : 1), self.gameDetailsViewController.view.center.y+self.view.frame.size.height*(down ? 1 : 0));
+        self.navigationController.tabBarController.tabBar.center = CGPointMake(self.navigationController.tabBarController.tabBar.center.x, self.navigationController.tabBarController.tabBar.center.y-self.navigationController.tabBarController.tabBar.frame.size.height);
+    } completion:^(BOOL finished) {
+        [self.gameDetailsViewController.view removeFromSuperview];
+        [self.gameDetailsViewController willMoveToParentViewController:nil];
+        [self.gameDetailsViewController removeFromParentViewController];
+        [self.gameDetailsViewController didMoveToParentViewController:nil];
+    }];
 }
 
 @end
